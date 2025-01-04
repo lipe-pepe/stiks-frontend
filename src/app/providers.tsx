@@ -4,7 +4,8 @@
 // when using NextJS App Router
 
 import { ChakraProvider } from "@chakra-ui/react";
+import { theme } from "@/themes/theme";
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  return <ChakraProvider>{children}</ChakraProvider>;
+  return <ChakraProvider theme={theme}>{children}</ChakraProvider>;
 }
