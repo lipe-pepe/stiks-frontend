@@ -1,7 +1,13 @@
 "use client";
 
-import { Box } from "@chakra-ui/react";
+import { GridItem, Image } from "@chakra-ui/react";
 
 export default function Home() {
-  return <Box></Box>;
+  return (
+    <>
+      <GridItem colSpan={2} colStart={2}>
+        <Image src="/images/logo/mainLogo.svg" alt="Stiks Logo" />
+      </GridItem>
+    </>
+  );
 }

@@ -2,13 +2,17 @@
 
 import { Providers } from "./providers";
 import { fonts } from "./fonts";
-import { Box } from "@chakra-ui/react";
+import { Box, Grid } from "@chakra-ui/react";
+import Header from "@/components/header";
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const gridTemplateColumns = ["repeat(4, 1fr)"];
+  const gridGap = ["1rem"];
+  const pagePadding = ["1rem"];
   return (
     <html lang="en" className={fonts.rubik.variable}>
       <body>
@@ -25,8 +29,16 @@ export default function RootLayout({
               backgroundSize="cover" // Ajusta a imagem para cobrir todo o Box
               backgroundPosition="center" // Centraliza a imagem
               backgroundRepeat="no-repeat" // Evita a repetição da imagem
+              px={pagePadding}
             >
-              {children}
+              <Header />
+              <Grid
+                gridTemplateColumns={gridTemplateColumns}
+                gap={gridGap}
+                h={"100vh"}
+              >
+                {children}
+              </Grid>
             </Box>
           </Box>
         </Providers>
