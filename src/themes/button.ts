@@ -11,7 +11,10 @@ const sm = defineStyle({
 });
 
 const md = defineStyle({
-  fontSize: "12px",
+  fontSize: "24px",
+  fontWeight: 500,
+  borderRadius: "12px",
+  py: "2rem",
 });
 
 // Variants
@@ -24,6 +27,7 @@ const secondary = defineStyle({
   borderRadius: 4,
   borderWidth: "2px",
   textColor: "white",
+  fontWeight: 500,
 });
 
 export const buttonTheme = defineStyleConfig({

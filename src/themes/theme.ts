@@ -13,6 +13,14 @@ const breakpoints = {
 };
 
 const colors = {
+  base: {
+    lightest: "#FABF87",
+    light: "#F5A469",
+    base: "#EF7B39",
+    dark: "#CD5A29",
+    darkest: "#AC3E1C",
+    transparent: "rgba(172, 62, 28, 0.2)",
+  },
   background: {
     light: "#f0b53a",
     base: "#ef7b39",
@@ -27,11 +35,17 @@ const colors = {
   },
 };
 
+const fontSizes = {
+  sm: "12px",
+  md: "16px",
+};
+
 export const theme = extendTheme({
   fonts: {
     heading: "var(--font-rubik)",
     body: "var(--font-rubik)",
   },
+  fontSizes,
   breakpoints,
   colors,
   components: {
