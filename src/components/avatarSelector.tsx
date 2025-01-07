@@ -11,7 +11,6 @@ import {
   Image,
   Modal,
   ModalBody,
-  ModalCloseButton,
   ModalContent,
   ModalFooter,
   ModalHeader,
@@ -63,8 +62,8 @@ const AvatarSelector: React.FC<AvatarSelectorProps> = ({
       <Box
         cursor={"pointer"}
         position="relative"
-        width={"12rem"}
-        height={"12rem"}
+        width={["12rem"]}
+        height={["12rem"]}
         onClick={onOpen}
       >
         <Image alt={selected} src={`/images/avatars/${selected}`} />
@@ -87,6 +86,7 @@ const AvatarSelector: React.FC<AvatarSelectorProps> = ({
       <Modal isCentered isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent
+          minW={"75vw"}
           maxH={"70vh"}
           mx={"1rem"}
           borderRadius={"16px"}
@@ -102,7 +102,15 @@ const AvatarSelector: React.FC<AvatarSelectorProps> = ({
             {t("selector_title")}
           </ModalHeader>
           <ModalBody overflow={"scroll"}>
-            <Grid templateColumns="repeat(2, 1fr)" gap={4}>
+            <Grid
+              templateColumns={[
+                "repeat(2, 1fr)",
+                "repeat(2, 1fr)",
+                "repeat(4, 1fr)",
+                "repeat(5, 1fr)",
+              ]}
+              gap={4}
+            >
               {avatars?.map((avatar, index) => (
                 <GridItem
                   onClick={() => {
