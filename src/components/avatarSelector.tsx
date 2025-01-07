@@ -35,6 +35,11 @@ const AvatarSelector: React.FC<AvatarSelectorProps> = ({
   const [avatars, setAvatars] = useState<string[] | null>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const handleSelect = (avatar: string) => {
+    setSelected(avatar);
+    onSelect(avatar);
+  };
+
   // Carrega os avatares
   useEffect(() => {
     async function fetchAvatars() {
@@ -42,7 +47,8 @@ const AvatarSelector: React.FC<AvatarSelectorProps> = ({
       const data = await response.json();
       setAvatars(data);
       // Seleciona um avatar aleatório por padrão
-      setSelected(data[Math.floor(Math.random() * data.length)]);
+      const random = data[Math.floor(Math.random() * data.length)];
+      handleSelect(random);
     }
 
     fetchAvatars();
@@ -51,11 +57,6 @@ const AvatarSelector: React.FC<AvatarSelectorProps> = ({
   useEffect(() => {
     console.log(avatars);
   }, [avatars]);
-
-  const handleSelect = (avatar: string) => {
-    setSelected(avatar);
-    onSelect(avatar);
-  };
 
   return (
     <>
@@ -85,7 +86,13 @@ const AvatarSelector: React.FC<AvatarSelectorProps> = ({
       </Box>
       <Modal isCentered isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent maxH={"70vh"} mx={"1rem"}>
+        <ModalContent
+          maxH={"70vh"}
+          mx={"1rem"}
+          borderRadius={"16px"}
+          borderColor={"base.transparent"}
+          borderWidth={3}
+        >
           <ModalHeader
             fontSize={"xl"}
             fontWeight={700}
@@ -94,7 +101,6 @@ const AvatarSelector: React.FC<AvatarSelectorProps> = ({
           >
             {t("selector_title")}
           </ModalHeader>
-          <ModalCloseButton />
           <ModalBody overflow={"scroll"}>
             <Grid templateColumns="repeat(2, 1fr)" gap={4}>
               {avatars?.map((avatar, index) => (

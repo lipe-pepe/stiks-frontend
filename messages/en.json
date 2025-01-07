@@ -11,6 +11,8 @@
     "input_placeholder": "A cool nickname",
     "join_button": "Join",
     "selector_title": "Select your avatar",
-    "selector_button": "Confirm"
+    "selector_button": "Confirm",
+    "error_required_name": "Enter a nickname to join the room",
+    "error_name_length": "Maximum 20 characters"
   }
 }

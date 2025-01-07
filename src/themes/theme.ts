@@ -45,6 +45,13 @@ const colors = {
     dark: "#7AC03C",
     darkest: "#5CA129",
   },
+  red: {
+    lightest: "#FFA887",
+    light: "#FF8669",
+    base: "#FF4F38",
+    dark: "#DB2F28",
+    darkest: "#B71C23",
+  },
 };
 
 const fontSizes = {

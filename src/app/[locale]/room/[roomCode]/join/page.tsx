@@ -1,15 +1,7 @@
 "use client";
 
 import AvatarSelector from "@/components/avatarSelector";
-import {
-  Box,
-  Button,
-  Center,
-  Flex,
-  GridItem,
-  Input,
-  Text,
-} from "@chakra-ui/react";
+import { Button, Center, Flex, GridItem, Input, Text } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
 
 import { useForm } from "react-hook-form";
@@ -23,7 +15,12 @@ interface JoinForm {
 export default function JoinPage() {
   const t = useTranslations("JoinPage");
 
-  const { register, handleSubmit, setValue } = useForm<JoinForm>();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<JoinForm>();
 
   const onSubmit = (data: JoinForm) => {
     console.log(data);
@@ -31,19 +28,19 @@ export default function JoinPage() {
 
   return (
     <>
-      <GridItem colSpan={[4]}>
-        <Flex
-          flexDir={"column"}
-          bgColor={"rgba(0, 0, 0, 0.2)"}
-          borderColor={"base.transparent"}
-          borderWidth={"4px"}
-          borderRadius={"1rem"}
-          py={["2rem"]}
-          px={["1rem"]}
-          textColor={"white"}
-          gap={["2rem"]}
-        >
-          <form onSubmit={handleSubmit(onSubmit)}>
+      <GridItem colSpan={[4, 6]}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Flex
+            flexDir={"column"}
+            bgColor={"rgba(0, 0, 0, 0.2)"}
+            borderColor={"base.transparent"}
+            borderWidth={"4px"}
+            borderRadius={"1rem"}
+            py={["2rem"]}
+            px={["1rem"]}
+            textColor={"white"}
+            gap={["2rem"]}
+          >
             <Text textAlign={"center"} fontWeight={700} fontSize={"lg"}>
               {t("form_title")}
             </Text>
@@ -52,24 +49,54 @@ export default function JoinPage() {
                 onSelect={(avatar) => setValue("avatar", avatar)}
               />
             </Center>
-            <Box>
+            <Flex flexDir={"column"} gap={2}>
               <Text>{t("input_label")}</Text>
               <Input
-                {...register("name")}
+                {...register("name", {
+                  required: t("error_required_name"),
+                  maxLength: {
+                    value: 20,
+                    message: t("error_name_length"),
+                  },
+                })}
+                py={6}
                 bgColor={"white"}
+                borderRadius={"12px"}
+                borderColor={errors.name ? "red.base" : "white"}
+                borderWidth={errors.name ? 3 : 0}
                 placeholder={t("input_placeholder")}
               ></Input>
-              <Button
-                size={"lg"}
-                leftIcon={<MdMeetingRoom />}
-                variant={"primary"}
-                type="submit"
-              >
-                {t("join_button")}
-              </Button>
-            </Box>
-          </form>
-        </Flex>
+              {errors.name && (
+                <Flex color={"red.base"} alignItems={"center"} gap={2}>
+                  <Flex
+                    rounded="full"
+                    borderColor="red.dark"
+                    borderWidth={1}
+                    bgColor="red.base"
+                    justifyContent="center"
+                    alignItems="center"
+                    textColor="white"
+                    minW={"1.25rem"}
+                    maxH={"1.25rem"}
+                  >
+                    !
+                  </Flex>
+                  <Text color="white" fontSize="sm" mt={1}>
+                    {errors.name.message}
+                  </Text>
+                </Flex>
+              )}
+            </Flex>
+            <Button
+              size={"lg"}
+              leftIcon={<MdMeetingRoom />}
+              variant={"primary"}
+              type="submit"
+            >
+              {t("join_button")}
+            </Button>
+          </Flex>
+        </form>
       </GridItem>
     </>
   );
