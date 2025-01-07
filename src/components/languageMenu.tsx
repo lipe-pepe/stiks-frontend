@@ -2,7 +2,7 @@
 
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import { useParams, usePathname, useRouter } from "next/navigation";
-import { MdLanguage } from "react-icons/md";
+import { TfiWorld } from "react-icons/tfi";
 
 interface Option {
   text: string;
@@ -34,11 +34,16 @@ const LanguageMenu = () => {
     <Menu>
       <MenuButton>
         <Button
-          size={"sm"}
+          size={"xs"}
           variant={"secondary"}
-          leftIcon={<MdLanguage />}
+          leftIcon={<TfiWorld />}
           bgColor={"rgba(0, 0, 0, 0.2)"}
           textTransform="uppercase"
+          borderColor="white"
+          borderRadius={4}
+          borderWidth="1px"
+          textColor="white"
+          fontWeight={500}
         >
           {locale}
         </Button>

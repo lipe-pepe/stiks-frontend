@@ -4,6 +4,8 @@ import { defineStyle, defineStyleConfig } from "@chakra-ui/react";
 
 const xs = defineStyle({
   fontSize: "12px",
+  px: "0.5rem",
+  py: "0.25rem",
 });
 
 const sm = defineStyle({
@@ -21,20 +23,11 @@ const md = defineStyle({
 
 const primary = defineStyle({ bgColor: "blue.base", textColor: "white" });
 
-const secondary = defineStyle({
-  bgColor: "transparent",
-  borderColor: "white",
-  borderRadius: 4,
-  borderWidth: "2px",
-  textColor: "white",
-  fontWeight: 500,
-});
-
 export const buttonTheme = defineStyleConfig({
   defaultProps: {
     variant: "primary",
     size: "md",
   },
-  variants: { primary, secondary },
+  variants: { primary },
   sizes: { xs, sm, md },
 });

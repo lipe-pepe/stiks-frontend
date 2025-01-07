@@ -3,10 +3,12 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 
+import { Providers } from "../providers";
+import { fonts } from "../fonts";
+
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Box, Grid } from "@chakra-ui/react";
-import { Providers } from "../providers";
 
 export default async function LocaleLayout({
   children,
@@ -33,7 +35,7 @@ export default async function LocaleLayout({
   const pagePadding = ["1rem"];
 
   return (
-    <html lang={locale}>
+    <html lang={locale} className={fonts.inter.variable}>
       <body>
         <NextIntlClientProvider messages={messages}>
           <Providers>

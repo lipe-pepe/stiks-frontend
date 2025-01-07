@@ -42,8 +42,8 @@ const fontSizes = {
 
 export const theme = extendTheme({
   fonts: {
-    heading: "var(--font-rubik)",
-    body: "var(--font-rubik)",
+    heading: "var(--font-inter)",
+    body: "var(--font-inter)",
   },
   fontSizes,
   breakpoints,
