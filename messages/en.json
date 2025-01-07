@@ -4,5 +4,13 @@
   },
   "HomePage": {
     "create_room_button": "Create room"
+  },
+  "JoinPage": {
+    "form_title": "Choose your AVATAR and NICKNAME!",
+    "input_label": "Nickname",
+    "input_placeholder": "A cool nickname",
+    "join_button": "Join",
+    "selector_title": "Select your avatar",
+    "selector_button": "Confirm"
   }
 }

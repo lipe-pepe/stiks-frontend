@@ -1,15 +1,17 @@
 import { extendTheme } from "@chakra-ui/react";
 
 import { buttonTheme } from "./button";
+import { inputTheme } from "./input";
 
 // This file customizes Chakra UI theme with the project's color palette, breakpoints and more.
 
 const breakpoints = {
-  xs: "360px",
-  sm: "720px",
-  md: "1280px",
-  lg: "1440px",
-  xl: "1920px",
+  base: "0px",
+  sm: "360px",
+  md: "720px",
+  lg: "1280px",
+  xl: "1440px",
+  "2xl": "1920px",
 };
 
 const colors = {
@@ -33,12 +35,24 @@ const colors = {
     dark: "#0568D4",
     darkest: "#034EB1",
   },
+  gray: {
+    1: "#EAEAEA",
+  },
+  green: {
+    lightest: "#D1F598",
+    light: "#BBEC7C",
+    base: "#9CE053",
+    dark: "#7AC03C",
+    darkest: "#5CA129",
+  },
 };
 
 const fontSizes = {
-  sm: "12px",
+  xs: "12px",
+  sm: "14px",
   md: "16px",
-  lg: "24px",
+  lg: "20px",
+  xl: "24px",
 };
 
 export const theme = extendTheme({
@@ -51,5 +65,6 @@ export const theme = extendTheme({
   colors,
   components: {
     Button: buttonTheme,
+    Input: inputTheme,
   },
 });

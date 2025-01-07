@@ -8,7 +8,7 @@ const Header = () => {
 
   return (
     <Flex py={4} justifyContent={"end"} alignItems={"center"} gap={"1rem"}>
-      <Text fontSize={"12px"} fontWeight={"bold"} textColor={"white"}>
+      <Text fontSize={["xs", "sm"]} fontWeight={"bold"} textColor={"white"}>
         {t("how_to_play")}
       </Text>
       <LanguageMenu />

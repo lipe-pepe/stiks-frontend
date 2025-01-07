@@ -30,13 +30,13 @@ export default function HomePage() {
     <>
       <GridItem
         colSpan={2}
-        colStart={2}
+        colStart={[2, 3]}
         my={["1.5rem"]}
         alignSelf={"self-start"}
       >
         <Image src="/images/logo/mainLogo.svg" alt="Stiks Logo" fit={"cover"} />
       </GridItem>
-      <GridItem colSpan={4}>
+      <GridItem colSpan={[4, 6]} colStart={[1, 1]}>
         <Flex
           flexDir={"column"}
           bgColor={"rgba(0, 0, 0, 0.2)"}
@@ -53,6 +53,7 @@ export default function HomePage() {
               handleCreateRoom();
             }}
             variant={"primary"}
+            size={["lg"]}
             leftIcon={<MdVideogameAsset />}
             mx={["1.5rem"]}
           >

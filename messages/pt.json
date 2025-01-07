@@ -4,5 +4,13 @@
   },
   "HomePage": {
     "create_room_button": "Criar sala"
+  },
+  "JoinPage": {
+    "form_title": "Escolha seu AVATAR e APELIDO!",
+    "input_label": "Apelido",
+    "input_placeholder": "Um apelido maneiro",
+    "join_button": "Entrar",
+    "selector_title": "Selecione seu avatar",
+    "selector_button": "Confirmar"
   }
 }

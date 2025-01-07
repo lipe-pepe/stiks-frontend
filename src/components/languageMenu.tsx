@@ -41,9 +41,9 @@ const LanguageMenu = () => {
     <Menu>
       <MenuButton>
         <Button
-          size={"xs"}
+          size={["xs", "sm", "md"]}
           leftIcon={
-            <Box pb={"2px"}>
+            <Box pb={["2px", "0px"]}>
               <TfiWorld />
             </Box>
           }
@@ -58,18 +58,16 @@ const LanguageMenu = () => {
           {locale}
         </Button>
       </MenuButton>
-      <MenuList
-        borderColor="base.dark"
-        textColor={"black"}
-        fontWeight={"semibold"}
-        fontSize={"sm"}
-      >
+      <MenuList borderColor="base.dark" fontWeight={"semibold"} fontSize={"sm"}>
         {options.map((opt, index) => (
           <MenuItem
             onClick={() => {
               changeLanguage(opt.value);
             }}
             key={index}
+            bgColor={"white"}
+            textColor={opt.value === locale ? "blue.base" : "black"}
+            fontWeight={opt.value === locale ? "bold" : "regular"}
           >
             {opt.text}
           </MenuItem>

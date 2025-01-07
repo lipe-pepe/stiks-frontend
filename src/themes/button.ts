@@ -3,20 +3,22 @@ import { defineStyle, defineStyleConfig } from "@chakra-ui/react";
 // Sizes
 
 const xs = defineStyle({
-  fontSize: "12px",
-  px: "0.5rem",
-  py: "0.25rem",
+  fontSize: "xs",
 });
 
 const sm = defineStyle({
-  fontSize: "12px",
+  fontSize: "sm",
 });
 
 const md = defineStyle({
-  fontSize: "24px",
-  fontWeight: 500,
-  borderRadius: "12px",
+  fontSize: "md",
+});
+
+const lg = defineStyle({
+  fontSize: "lg",
+  px: "4rem",
   py: "2rem",
+  borderRadius: 12,
 });
 
 // Variants
@@ -29,5 +31,5 @@ export const buttonTheme = defineStyleConfig({
     size: "md",
   },
   variants: { primary },
-  sizes: { xs, sm, md },
+  sizes: { xs, sm, md, lg },
 });

@@ -7,7 +7,7 @@ import { Providers } from "../providers";
 import { fonts } from "../fonts";
 
 import Header from "@/components/header";
-import Footer from "@/components/footer";
+// import Footer from "@/components/footer";
 import { Box, Grid } from "@chakra-ui/react";
 
 export default async function LocaleLayout({
@@ -30,9 +30,13 @@ export default async function LocaleLayout({
   // side is the easiest way to get started
   const messages = await getMessages();
 
-  const gridTemplateColumns = ["repeat(4, 1fr)"];
-  const gridGap = ["1rem"];
-  const pagePadding = ["1rem"];
+  const gridTemplateColumns = [
+    "repeat(4, 1fr)",
+    "repeat(6, 1fr)",
+    "repeat(12, 1fr)",
+  ];
+  const gridGap = ["16px", "16px", "16px", "20px", "24px"];
+  const pagePadding = ["16px", "80px", "120px", "160px", "240px"];
 
   return (
     <html lang={locale} className={fonts.inter.variable}>
@@ -62,7 +66,7 @@ export default async function LocaleLayout({
                   h={"100vh"}
                 >
                   {children}
-                  <Footer />
+                  {/* <Footer /> */}
                 </Grid>
               </Box>
             </Box>
