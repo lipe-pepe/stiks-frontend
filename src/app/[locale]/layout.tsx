@@ -62,8 +62,8 @@ export default async function LocaleLayout({
                   h={"100vh"}
                 >
                   {children}
+                  <Footer />
                 </Grid>
-                <Footer />
               </Box>
             </Box>
           </Providers>

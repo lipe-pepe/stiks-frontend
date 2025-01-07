@@ -1,6 +1,13 @@
 "use client";
 
-import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+} from "@chakra-ui/react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { TfiWorld } from "react-icons/tfi";
 
@@ -35,8 +42,11 @@ const LanguageMenu = () => {
       <MenuButton>
         <Button
           size={"xs"}
-          variant={"secondary"}
-          leftIcon={<TfiWorld />}
+          leftIcon={
+            <Box pb={"2px"}>
+              <TfiWorld />
+            </Box>
+          }
           bgColor={"rgba(0, 0, 0, 0.2)"}
           textTransform="uppercase"
           borderColor="white"
@@ -49,10 +59,10 @@ const LanguageMenu = () => {
         </Button>
       </MenuButton>
       <MenuList
-        bgColor={"base.darkest"}
-        borderColor="white"
-        textColor={"white"}
+        borderColor="base.dark"
+        textColor={"black"}
         fontWeight={"semibold"}
+        fontSize={"sm"}
       >
         {options.map((opt, index) => (
           <MenuItem
@@ -60,7 +70,6 @@ const LanguageMenu = () => {
               changeLanguage(opt.value);
             }}
             key={index}
-            bgColor={"base.darkest"}
           >
             {opt.text}
           </MenuItem>

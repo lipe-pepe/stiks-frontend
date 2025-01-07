@@ -38,6 +38,7 @@ const colors = {
 const fontSizes = {
   sm: "12px",
   md: "16px",
+  lg: "24px",
 };
 
 export const theme = extendTheme({
