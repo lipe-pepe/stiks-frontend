@@ -9,6 +9,7 @@ import {
   MenuList,
 } from "@chakra-ui/react";
 import { useParams, usePathname, useRouter } from "next/navigation";
+import React from "react";
 import { TfiWorld } from "react-icons/tfi";
 
 interface Option {
@@ -16,7 +17,13 @@ interface Option {
   value: string;
 }
 
-const LanguageMenu = () => {
+interface LanguageMenuProps {
+  variant: "header" | "menu";
+}
+
+const LanguageMenu: React.FC<LanguageMenuProps> = ({
+  variant,
+}: LanguageMenuProps) => {
   const router = useRouter();
   const { locale } = useParams();
   const pathname = usePathname();
@@ -47,7 +54,7 @@ const LanguageMenu = () => {
               <TfiWorld />
             </Box>
           }
-          bgColor={"rgba(0, 0, 0, 0.2)"}
+          bgColor={variant === "header" ? "rgba(0, 0, 0, 0.2)" : "blue.base"}
           textTransform="uppercase"
           borderColor="white"
           borderRadius={4}
