@@ -18,5 +18,10 @@ interface Player {
   gameData: GameData;
 }
 
+interface PlayerCreation {
+  name: string;
+  avatar: string;
+}
+
 export { PlayerRole };
-export type { Player, GameData };
+export type { Player, GameData, PlayerCreation };

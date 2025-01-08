@@ -91,6 +91,7 @@ const HomeCarousel = () => {
       infiniteLoop={true}
       interval={5000}
       showArrows={true}
+      showThumbs={false}
       showStatus={false}
       showIndicators={false}
       renderArrowPrev={PrevArrow}

@@ -1,30 +1,49 @@
 "use client";
 
 import AvatarSelector from "@/components/avatarSelector";
+import { useRoomContext } from "@/context/roomContext";
+import { useRouter } from "@/i18n/routing";
+import createPlayer from "@/services/players/createPlayer";
+import { PlayerCreation } from "@/types/player";
 import { Button, Center, Flex, GridItem, Input, Text } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
 
 import { useForm } from "react-hook-form";
 import { MdMeetingRoom } from "react-icons/md";
 
-interface JoinForm {
-  avatar: string;
-  name: string;
-}
-
 export default function JoinPage() {
   const t = useTranslations("JoinPage");
+  const router = useRouter();
+  const { room } = useRoomContext();
 
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors },
-  } = useForm<JoinForm>();
+  } = useForm<PlayerCreation>();
 
-  const onSubmit = (data: JoinForm) => {
-    console.log(data);
-  };
+  if (!room) {
+    return <h1>Loading...</h1>;
+  }
+
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      const response = await createPlayer(room.code, data);
+      console.log(response);
+      if (response.status === 201) {
+        localStorage.setItem("playerId", response.data.player._id);
+        router.push(`/room/${room.code}/lobby`);
+      } else {
+        throw new Error(
+          "An error occurred while creating the player: " +
+            response.data.message
+        );
+      }
+    } catch (error) {
+      console.log("Error joining room: ", error);
+    }
+  });
 
   return (
     <>
@@ -33,7 +52,7 @@ export default function JoinPage() {
         colStart={[null, null, 3, 3, 4]}
         // bgColor={"turquoise"} // Used for debug
       >
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={onSubmit}>
           <Flex
             flexDir={"column"}
             bgColor={"rgba(0, 0, 0, 0.2)"}

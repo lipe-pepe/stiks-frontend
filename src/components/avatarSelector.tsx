@@ -53,10 +53,6 @@ const AvatarSelector: React.FC<AvatarSelectorProps> = ({
     fetchAvatars();
   }, []);
 
-  useEffect(() => {
-    console.log(avatars);
-  }, [avatars]);
-
   return (
     <>
       <Box

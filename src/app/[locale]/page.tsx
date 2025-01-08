@@ -28,13 +28,8 @@ export default function HomePage() {
   };
   return (
     <>
-      <GridItem
-        colSpan={2}
-        colStart={[2, 3]}
-        my={["1.5rem"]}
-        alignSelf={"self-start"}
-      >
-        <Image src="/images/logo/mainLogo.svg" alt="Stiks Logo" fit={"cover"} />
+      <GridItem colSpan={2} colStart={[2, 3]} mb={"2rem"} alignSelf={"center"}>
+        <Image src="/images/logo/mainLogo.svg" alt="Stiks Logo" fit="cover" />
       </GridItem>
       <GridItem colSpan={[4, 6]} colStart={[1, 1]}>
         <Flex
@@ -45,6 +40,8 @@ export default function HomePage() {
           borderRadius={"1rem"}
           py={["2rem"]}
           px={["1rem"]}
+          justifyContent="center"
+          alignItems="center"
         >
           {/* <Box height={"300px"}>PLACEHOLDER CARROSSEL</Box> */}
           <HomeCarousel />
