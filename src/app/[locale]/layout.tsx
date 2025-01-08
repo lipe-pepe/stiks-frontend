@@ -61,7 +61,7 @@ export default async function LocaleLayout({
               >
                 <Header />
                 <Grid
-                  // bgColor={"teal"} // Used for debug
+                  // bgColor={"teal"} // Usado para debug
                   gridTemplateColumns={gridTemplateColumns}
                   gap={gridGap}
                   h={"100vh"}
