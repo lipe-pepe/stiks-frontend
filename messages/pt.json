@@ -21,5 +21,8 @@
     "chat_tab": "Chat",
     "invite_button": "Convidar jogadores!",
     "empty_player": "Vazio"
+  },
+  "Chat": {
+    "input_placeholder": "Converse!"
   }
 }

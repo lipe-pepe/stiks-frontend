@@ -1,5 +1,7 @@
 "use client";
 
+import ChatInput from "@/components/chatInput";
+import ChatMessages from "@/components/chatMessages";
 import MainBox from "@/components/mainBox";
 import { useRoomContext } from "@/context/roomContext";
 import { Player } from "@/types/player";
@@ -21,6 +23,34 @@ import { MdOutlinePerson, MdSend } from "react-icons/md";
 import { SlOptions } from "react-icons/sl";
 
 const MAX_PLAYERS = 6;
+
+// TEMPORARIO
+const mensagens = [
+  { player: "eu", message: "fala!" },
+  { player: "eu", message: "fala!" },
+  { player: "eu", message: "fala!" },
+  { player: "eu", message: "fala!" },
+  { player: "eu", message: "fala!" },
+  { player: "eu", message: "fala!" },
+  { player: "eu", message: "fala!" },
+  { player: "eu", message: "fala!" },
+  { player: "eu", message: "fala!" },
+  { player: "eu", message: "fala!" },
+  { player: "eu", message: "fala!" },
+  { player: "eu", message: "fala!" },
+  { player: "eu", message: "fala!" },
+  { player: "eu", message: "fala!" },
+  { player: "eu", message: "fala!" },
+  { player: "eu", message: "fala!" },
+  { player: "eu", message: "fala!" },
+  { player: "eu", message: "fala!" },
+  { player: "eu", message: "fala!" },
+  { player: "eu", message: "fala!" },
+  { player: "eu", message: "fala!" },
+  { player: "eu", message: "fala!" },
+  { player: "eu", message: "fala!" },
+  { player: "eu", message: "fala!" },
+];
 
 interface PlayerDisplayProps {
   player: Player | null;
@@ -148,7 +178,8 @@ export default function LobbyPage() {
           </TabPanel>
           <TabPanel p={0}>
             <MainBox borderTopRadius={[0]}>
-              <Text></Text>
+              <ChatMessages messages={mensagens} />
+              <ChatInput playerName="TESTE" />
             </MainBox>
           </TabPanel>
         </TabPanels>
