@@ -1,13 +1,14 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Button, Flex, GridItem, Image } from "@chakra-ui/react";
+import { Button, GridItem, Image } from "@chakra-ui/react";
 
 import { MdVideogameAsset } from "react-icons/md";
 import createRoom from "@/services/rooms/createRoom";
 import { useRouter } from "@/i18n/routing";
 
 import HomeCarousel from "@/components/homeCarousel";
+import MainBox from "@/components/mainBox";
 
 export default function HomePage() {
   const t = useTranslations("HomePage");
@@ -32,18 +33,7 @@ export default function HomePage() {
         <Image src="/images/logo/mainLogo.svg" alt="Stiks Logo" fit="cover" />
       </GridItem>
       <GridItem colSpan={[4, 6]} colStart={[1, 1]}>
-        <Flex
-          flexDir={"column"}
-          bgColor={"rgba(0, 0, 0, 0.2)"}
-          borderColor={"base.transparent"}
-          borderWidth={"4px"}
-          borderRadius={"1rem"}
-          py={["2rem"]}
-          px={["1rem"]}
-          justifyContent="center"
-          alignItems="center"
-        >
-          {/* <Box height={"300px"}>PLACEHOLDER CARROSSEL</Box> */}
+        <MainBox pt={["2rem"]} pb={["2rem"]}>
           <HomeCarousel />
           <Button
             onClick={() => {
@@ -56,7 +46,7 @@ export default function HomePage() {
           >
             {t("create_room_button")}
           </Button>
-        </Flex>
+        </MainBox>
       </GridItem>
     </>
   );

@@ -52,6 +52,13 @@ const colors = {
     dark: "#DB2F28",
     darkest: "#B71C23",
   },
+  yellow: {
+    lightest: "#FFEC67",
+    light: "#FFE541",
+    base: "#FFD902",
+    dark: "#DBB701",
+    darkest: "#B79601",
+  },
 };
 
 const fontSizes = {

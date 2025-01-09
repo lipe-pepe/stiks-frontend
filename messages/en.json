@@ -14,5 +14,12 @@
     "selector_button": "Confirm",
     "error_required_name": "Enter a nickname to join the room",
     "error_name_length": "Maximum 20 characters"
+  },
+  "LobbyPage": {
+    "lobby_title": "Lobby",
+    "players_tab": "Players",
+    "chat_tab": "Chat",
+    "invite_button": "Invite players!",
+    "empty_player": "Empty"
   }
 }

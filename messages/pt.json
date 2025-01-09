@@ -14,5 +14,12 @@
     "selector_button": "Confirmar",
     "error_required_name": "Digite um apelido para entrar na sala",
     "error_name_length": "Seu apelido deve ter no máximo 20 caracteres"
+  },
+  "LobbyPage": {
+    "lobby_title": "Lobby",
+    "players_tab": "Jogadores",
+    "chat_tab": "Chat",
+    "invite_button": "Convidar jogadores!",
+    "empty_player": "Vazio"
   }
 }

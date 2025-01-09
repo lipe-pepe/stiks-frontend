@@ -1,10 +1,9 @@
 "use client";
 
-import { Box, Flex, Grid, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Image, Text } from "@chakra-ui/react";
 import LanguageMenu from "./languageMenu";
 
 import { useTranslations } from "next-intl";
-import { useEffect } from "react";
 import { usePathname } from "@/i18n/routing";
 import { MdArrowBack } from "react-icons/md";
 import HeaderMenu from "./headerMenu";

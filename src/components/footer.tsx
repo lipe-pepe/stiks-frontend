@@ -7,7 +7,8 @@ const Footer = () => {
       colStart={2}
       textColor={"white"}
       fontSize={["xs"]}
-      py={[3]}
+      mt={[8]}
+      mb={[3]}
     >
       <Flex alignItems={"center"} flexDir={"column"} gap={[6]}>
         <Flex alignItems={"center"} flexDir={"column"} gap={[2]}>

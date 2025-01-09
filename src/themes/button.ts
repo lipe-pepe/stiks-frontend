@@ -12,6 +12,9 @@ const sm = defineStyle({
 
 const md = defineStyle({
   fontSize: "md",
+  px: "3rem",
+  py: "1.5rem",
+  borderRadius: 10,
 });
 
 const lg = defineStyle({
@@ -25,11 +28,13 @@ const lg = defineStyle({
 
 const primary = defineStyle({ bgColor: "blue.base", textColor: "white" });
 
+const secondary = defineStyle({ bgColor: "white", textColor: "blue.base" });
+
 export const buttonTheme = defineStyleConfig({
   defaultProps: {
     variant: "primary",
     size: "md",
   },
-  variants: { primary },
+  variants: { primary, secondary },
   sizes: { xs, sm, md, lg },
 });
