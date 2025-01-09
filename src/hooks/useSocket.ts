@@ -1,7 +1,11 @@
+import { Room } from "@/types/room";
 import { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
-const useSocket = (roomCode: string) => {
+const useSocket = (
+  roomCode: string,
+  setRoomData: React.Dispatch<React.SetStateAction<Room | null>>
+) => {
   const [socket, setSocket] = useState<Socket | null>(null);
 
   // Configurar Socket.io
@@ -14,6 +18,11 @@ const useSocket = (roomCode: string) => {
 
     socketInstance.on("disconnect", () => {
       console.log("Socket desconectado com ID: ", socketInstance.id);
+    });
+
+    // Ouvir a chegada de novos jogadores na sala
+    socketInstance.on("player-joined", (updatedRoom: Room) => {
+      setRoomData(updatedRoom); // Atualiza o estado da sala
     });
 
     setSocket(socketInstance);

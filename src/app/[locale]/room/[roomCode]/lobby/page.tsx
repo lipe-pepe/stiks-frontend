@@ -18,6 +18,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { MdOutlinePerson, MdSend } from "react-icons/md";
 import { SlOptions } from "react-icons/sl";
@@ -94,6 +95,7 @@ const PlayerDisplay: React.FC<PlayerDisplayProps> = ({
 export default function LobbyPage() {
   const t = useTranslations("LobbyPage");
   const { room, socket } = useRoomContext();
+  const { locale } = useParams();
 
   const [players, setPlayers] = useState<Player[]>(room?.players || []);
 
@@ -110,6 +112,16 @@ export default function LobbyPage() {
       });
     }
   }, []);
+
+  const handleInviteLink = async () => {
+    try {
+      await navigator.clipboard.writeText(
+        `${window.location.host}/${locale}/room/${room?.code}/join/`
+      );
+    } catch (error) {
+      console.error("Fail copying text:", error);
+    }
+  };
 
   return (
     <GridItem colSpan={[4, 6, 8, 8, 6]} colStart={[null, null, 3, 3, 4]}>
@@ -180,6 +192,7 @@ export default function LobbyPage() {
                 leftIcon={<MdSend />}
                 size={"md"}
                 variant={"secondary"}
+                onClick={handleInviteLink}
               >
                 {t("invite_button")}{" "}
               </Button>

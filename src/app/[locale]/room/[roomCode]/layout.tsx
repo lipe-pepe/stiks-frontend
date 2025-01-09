@@ -20,7 +20,7 @@ export default function RoomLayout({
   const [roomData, setRoomData] = useState<Room | null>(null);
 
   // Hook personalizado do socket
-  const { socket } = useSocket(String(roomCode));
+  const { socket } = useSocket(String(roomCode), setRoomData);
 
   // Pega os dados da sala ao carregar a página
   useEffect(() => {
