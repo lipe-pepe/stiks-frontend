@@ -93,14 +93,23 @@ const PlayerDisplay: React.FC<PlayerDisplayProps> = ({
 
 export default function LobbyPage() {
   const t = useTranslations("LobbyPage");
-  const { room } = useRoomContext();
+  const { room, socket } = useRoomContext();
 
   const [players, setPlayers] = useState<Player[]>(room?.players || []);
 
+  // Atualiza os jogadores sempre que a sala muda
   useEffect(() => {
-    // Atualiza os jogadores sempre que a sala muda
     setPlayers(room?.players || []);
   }, [room]);
+
+  // Quando o jogador entra no lobby, ele deve enviar um socket emitindo a entrada.
+  useEffect(() => {
+    if (socket) {
+      socket.emit("player-joined", {
+        roomCode: room?.code,
+      });
+    }
+  }, []);
 
   return (
     <GridItem colSpan={[4, 6, 8, 8, 6]} colStart={[null, null, 3, 3, 4]}>

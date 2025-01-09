@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import getRoom from "@/services/rooms/getRoom";
 import { Room } from "@/types/room";
 import { RoomContext } from "@/context/roomContext";
+import useSocket from "@/hooks/useSocket";
 
 // No App Router, o arquivo layout.js é usado para compartilhar estado ou lógica entre todas as páginas filhas.
 // Esse layout carrega os dados da sala e fornece às páginas filhas.
@@ -17,6 +18,9 @@ export default function RoomLayout({
   const { roomCode } = useParams(); // Pega o código da sala da URL
   const [loading, setLoading] = useState(true);
   const [roomData, setRoomData] = useState<Room | null>(null);
+
+  // Hook personalizado do socket
+  const { socket } = useSocket(String(roomCode));
 
   // Pega os dados da sala ao carregar a página
   useEffect(() => {
@@ -47,7 +51,7 @@ export default function RoomLayout({
   }
 
   return (
-    <RoomContext.Provider value={{ room: roomData }}>
+    <RoomContext.Provider value={{ room: roomData, socket }}>
       {children}
     </RoomContext.Provider>
   );
