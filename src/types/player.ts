@@ -21,6 +21,7 @@ interface Player {
 interface PlayerCreation {
   name: string;
   avatar: string;
+  role: PlayerRole;
 }
 
 export { PlayerRole };

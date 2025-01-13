@@ -5,9 +5,11 @@ import MainBox from "@/components/mainBox";
 import { useRoomContext } from "@/context/roomContext";
 import { useRouter } from "@/i18n/routing";
 import createPlayer from "@/services/players/createPlayer";
-import { PlayerCreation } from "@/types/player";
+import { PlayerCreation, PlayerRole } from "@/types/player";
 import { Button, Center, Flex, GridItem, Input, Text } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 import { useForm } from "react-hook-form";
 import { MdMeetingRoom } from "react-icons/md";
@@ -16,6 +18,15 @@ export default function JoinPage() {
   const t = useTranslations("JoinPage");
   const router = useRouter();
   const { room } = useRoomContext();
+
+  const role = useSearchParams().get("role");
+  const validatedRole = Object.keys(PlayerRole).includes(role ?? "")
+    ? (PlayerRole[role as keyof typeof PlayerRole] as PlayerRole)
+    : PlayerRole.player;
+
+  useEffect(() => {
+    setValue("role", validatedRole);
+  }, [validatedRole]);
 
   const {
     register,

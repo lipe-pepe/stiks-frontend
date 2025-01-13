@@ -18,7 +18,7 @@ export default function HomePage() {
     try {
       const res = await createRoom();
       if (res.status === 201) {
-        router.push(`/room/${res.data.room.code}/join`);
+        router.push(`/room/${res.data.room.code}/join?role=host`);
       } else {
         // TODO: EXIBIR O ERRO SE DER ERRADO!
       }
