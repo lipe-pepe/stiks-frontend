@@ -1,6 +1,10 @@
 {
   "Header": {
-    "how_to_play": "Como jogar"
+    "how_to_play": "Como jogar",
+    "leave_modal_title": "Saindo da sala!",
+    "leave_modal_body": "Você tem certeza que quer sair da sala?",
+    "leave_modal_button_cancel": "Cancelar",
+    "leave_modal_button_leave": "Sair"
   },
   "HomePage": {
     "create_room_button": "Criar sala"

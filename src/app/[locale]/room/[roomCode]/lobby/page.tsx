@@ -5,6 +5,7 @@ import ChatMessages from "@/components/chatMessages";
 import MainBox from "@/components/mainBox";
 import { useRoomContext } from "@/context/roomContext";
 import { Player } from "@/types/player";
+import getSavedPlayerId from "@/utils/getSavedPlayerId";
 import {
   Button,
   Flex,
@@ -24,35 +25,6 @@ import { MdOutlinePerson, MdSend } from "react-icons/md";
 import { SlOptions } from "react-icons/sl";
 
 const MAX_PLAYERS = 6;
-
-// TEMPORARIO
-const mensagens = [
-  { player: "eu", message: "fala!" },
-  { player: "eu", message: "fala!" },
-  { player: "eu", message: "fala!" },
-  { player: "eu", message: "fala!" },
-  { player: "eu", message: "fala!" },
-  { player: "eu", message: "fala!" },
-  { player: "eu", message: "fala!" },
-  { player: "eu", message: "fala!" },
-  { player: "eu", message: "fala!" },
-  { player: "eu", message: "fala!" },
-  { player: "eu", message: "fala!" },
-  { player: "eu", message: "fala!" },
-  { player: "eu", message: "fala!" },
-  { player: "eu", message: "fala!" },
-  { player: "eu", message: "fala!" },
-  { player: "eu", message: "fala!" },
-  { player: "eu", message: "fala!" },
-  { player: "eu", message: "fala!" },
-  { player: "eu", message: "fala!" },
-  { player: "eu", message: "fala!" },
-  { player: "eu", message: "fala!" },
-  { player: "eu", message: "fala!" },
-  { player: "eu", message: "fala!" },
-  { player: "eu", message: "fala!" },
-];
-
 interface PlayerDisplayProps {
   player: Player | null;
   emptyString: string;
@@ -94,15 +66,23 @@ const PlayerDisplay: React.FC<PlayerDisplayProps> = ({
 
 export default function LobbyPage() {
   const t = useTranslations("LobbyPage");
-  const { room, socket } = useRoomContext();
+  const { room, socket, chat } = useRoomContext();
   const { locale } = useParams();
 
   const [players, setPlayers] = useState<Player[]>(room?.players || []);
+  const [playerName, setPlayerName] = useState<string>("");
 
   // Atualiza os jogadores sempre que a sala muda
   useEffect(() => {
     setPlayers(room?.players || []);
   }, [room]);
+
+  // Seta o nome do jogador atual sempre que carregam os novos jogadores
+  useEffect(() => {
+    const id = getSavedPlayerId();
+    const p = players.find((p) => p._id === id);
+    setPlayerName(p?.name || "");
+  }, [players]);
 
   // Quando o jogador entra no lobby, ele deve enviar um socket emitindo a entrada.
   useEffect(() => {
@@ -200,8 +180,14 @@ export default function LobbyPage() {
           </TabPanel>
           <TabPanel p={0}>
             <MainBox borderTopRadius={[0]}>
-              <ChatMessages messages={mensagens} />
-              <ChatInput playerName="TESTE" />
+              <ChatMessages messages={chat} />
+              {socket !== null && (
+                <ChatInput
+                  playerName={playerName}
+                  roomCode={String(room?.code)}
+                  socket={socket}
+                />
+              )}
             </MainBox>
           </TabPanel>
         </TabPanels>

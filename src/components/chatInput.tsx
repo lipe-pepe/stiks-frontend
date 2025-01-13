@@ -12,19 +12,32 @@ import { useTranslations } from "next-intl";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { MdChatBubbleOutline, MdSend } from "react-icons/md";
+import { Socket } from "socket.io-client";
 
 interface ChatInputProps {
   playerName: string;
+  socket: Socket;
+  roomCode: string;
 }
 
 const ChatInput: React.FC<ChatInputProps> = ({
   playerName,
+  socket,
+  roomCode,
 }: ChatInputProps) => {
   const t = useTranslations("Chat");
-  const { register, handleSubmit, setValue } = useForm<ChatMessage>();
+  const { register, handleSubmit, setValue, resetField } =
+    useForm<ChatMessage>();
 
   const onSubmit = handleSubmit(async (data) => {
-    console.log(data);
+    if (socket) {
+      socket.emit("chat-message-sent", {
+        roomCode: roomCode,
+        player: data.player,
+        message: data.message,
+      });
+      resetField("message");
+    }
   });
 
   useEffect(() => {

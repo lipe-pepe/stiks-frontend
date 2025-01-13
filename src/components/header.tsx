@@ -1,16 +1,32 @@
 "use client";
 
-import { Box, Flex, Image, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Image,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import LanguageMenu from "./languageMenu";
 
 import { useTranslations } from "next-intl";
-import { usePathname } from "@/i18n/routing";
+import { usePathname, useRouter } from "@/i18n/routing";
 import { MdArrowBack } from "react-icons/md";
 import HeaderMenu from "./headerMenu";
 
 const Header = () => {
   const t = useTranslations("Header");
   const pathname = usePathname();
+  const router = useRouter();
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <Box py={4}>
@@ -23,7 +39,7 @@ const Header = () => {
         </Flex>
       ) : (
         <Flex alignItems={"center"} justifyContent={"space-between"}>
-          <MdArrowBack size={"2rem"} color="white" />
+          <MdArrowBack size={"2rem"} color="white" onClick={onOpen} />
           <Image
             height={"1.25rem"}
             src="/images/logo/lightLogo.svg"
@@ -32,12 +48,25 @@ const Header = () => {
           <HeaderMenu />
         </Flex>
       )}
-      {/* <Flex py={4} justifyContent={"end"} alignItems={"center"} gap={"1rem"}>
-        <Text fontSize={["xs", "sm"]} fontWeight={"bold"} textColor={"white"}>
-          {t("how_to_play")}
-        </Text>
-        <LanguageMenu />
-      </Flex> */}
+      <Modal isCentered isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent mx={"1rem"} borderColor={"red.dark"} borderWidth={[2]}>
+          <ModalHeader>{t("leave_modal_title")}</ModalHeader>
+          <ModalBody>{t("leave_modal_body")}</ModalBody>
+          <ModalFooter gap={"1rem"}>
+            <Button onClick={onClose}>{t("leave_modal_button_cancel")}</Button>
+            <Button
+              bgColor={"red.base"}
+              onClick={() => {
+                router.push("/");
+                onClose();
+              }}
+            >
+              {t("leave_modal_button_leave")}
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };

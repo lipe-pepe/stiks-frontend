@@ -1,10 +1,12 @@
+import { ChatMessage } from "@/types/chat";
 import { Room } from "@/types/room";
 import { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
 const useSocket = (
   roomCode: string,
-  setRoomData: React.Dispatch<React.SetStateAction<Room | null>>
+  setRoomData: React.Dispatch<React.SetStateAction<Room | null>>,
+  setChat: React.Dispatch<React.SetStateAction<ChatMessage[]>>
 ) => {
   const [socket, setSocket] = useState<Socket | null>(null);
 
@@ -23,6 +25,19 @@ const useSocket = (
     // Ouvir a chegada de novos jogadores na sala
     socketInstance.on("player-joined", (updatedRoom: Room) => {
       setRoomData(updatedRoom); // Atualiza o estado da sala
+    });
+
+    socketInstance.on("player-left", (updatedRoom: Room) => {
+      console.log("SAIU UM JOGADOR!!!");
+      setRoomData(updatedRoom); // Atualiza o estado da sala
+    });
+
+    socketInstance.on("chat-message-received", (data) => {
+      const newMessage: ChatMessage = {
+        player: data.player,
+        message: data.message,
+      };
+      setChat((prevChat: ChatMessage[]) => [...prevChat, newMessage]);
     });
 
     setSocket(socketInstance);
