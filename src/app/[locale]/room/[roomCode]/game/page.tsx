@@ -33,7 +33,7 @@ export default function GamePage() {
   };
 
   return (
-    <GridItem colSpan={[4]} colStart={[null]} textColor={"white"}>
+    <GridItem colSpan={[4]} colStart={[1]} textColor={"white"}>
       <Text textAlign={"center"} fontSize={"md"} fontWeight={700}>
         {t("round", { number: room?.match.round })}
       </Text>

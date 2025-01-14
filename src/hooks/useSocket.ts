@@ -51,6 +51,7 @@ const useSocket = (
     // --------------------------------------------------------------------------------
 
     socketInstance.on("player-chose", (data) => {
+      console.log("ENTROU AQUI");
       setRoomData((prev: Room | null) => {
         // Verifica se 'prev' é válido e tem jogadores
         if (!prev || !prev.players) return prev;
