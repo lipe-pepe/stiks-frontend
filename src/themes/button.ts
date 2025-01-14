@@ -30,11 +30,25 @@ const primary = defineStyle({ bgColor: "blue.base", textColor: "white" });
 
 const secondary = defineStyle({ bgColor: "white", textColor: "blue.base" });
 
+const number = defineStyle({
+  bgColor: "gray.1",
+  textColor: "black",
+  rounded: "full",
+});
+
+const game = defineStyle({
+  bgColor: "yellow.base",
+  color: "black",
+  borderColor: "black",
+  borderWidth: 2,
+  textTransform: "uppercase",
+});
+
 export const buttonTheme = defineStyleConfig({
   defaultProps: {
     variant: "primary",
     size: "md",
   },
-  variants: { primary, secondary },
+  variants: { primary, secondary, number, game },
   sizes: { xs, sm, md, lg },
 });

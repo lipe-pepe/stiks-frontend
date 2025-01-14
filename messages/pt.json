@@ -24,9 +24,30 @@
     "players_tab": "Jogadores",
     "chat_tab": "Chat",
     "invite_button": "Convidar jogadores!",
-    "empty_player": "Vazio"
+    "empty_player": "Vazio",
+    "start_button": "Começar jogo",
+    "current_player_tag": "você",
+    "kick_button": "Expulsar"
   },
   "Chat": {
     "input_placeholder": "Converse!"
+  },
+  "GamePage": {
+    "round": "Rodada {number}",
+    "show_chat": "Exibir chat",
+    "choosing": "escolhendo...",
+    "current_player_tag": "você",
+    "choose_instruction": "Escolha o número de palitinhos para jogar",
+    "confirm_button": "Confirmar",
+    "player_guessing": "{playerName} está fazendo seu palpite...",
+    "guessing": "palpitando...",
+    "next_guess": "próximo a palpitar",
+    "guess": "Palpite",
+    "guess_instruction": "Faça seu palpite",
+    "player_revealing": "{name} está revelando...",
+    "total": "Total",
+    "player_won": "{name} acertou!",
+    "lose_stick": "Perde um palitinho",
+    "winners": "Vencedores"
   }
 }

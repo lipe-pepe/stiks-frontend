@@ -44,13 +44,9 @@ const PrevArrow = (
       left={0}
       transform="translate(0%, -50%)"
       onClick={clickHandler}
-      rounded="full"
       aria-label={label}
-      bgColor="white"
       opacity={hasNext ? 1 : 0.2}
-      justifyContent="center"
-      alignItems="center"
-      textColor="base.dark"
+      textColor="white"
     >
       <MdChevronLeft size={"2.5rem"} />
     </Flex>
@@ -69,13 +65,9 @@ const NextArrow = (
       right={0}
       transform="translate(0%, -50%)"
       onClick={clickHandler}
-      rounded="full"
       aria-label={label}
-      bgColor="white"
       opacity={hasNext ? 1 : 0.2}
-      justifyContent="center"
-      alignItems="center"
-      textColor="base.dark"
+      textColor="white"
     >
       <MdChevronRight size={"2.5rem"} />
     </Flex>

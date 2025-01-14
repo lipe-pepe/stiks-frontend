@@ -3,14 +3,16 @@
 import ChatInput from "@/components/chatInput";
 import ChatMessages from "@/components/chatMessages";
 import MainBox from "@/components/mainBox";
+import PlayerLobbyDisplay from "@/components/playerLobbyDisplay";
 import { useRoomContext } from "@/context/roomContext";
+import createMatch from "@/services/matches/createMatch";
 import { Player } from "@/types/player";
 import getSavedPlayerId from "@/utils/getSavedPlayerId";
 import {
   Button,
+  Center,
   Flex,
   GridItem,
-  Image,
   Tab,
   TabList,
   TabPanel,
@@ -21,48 +23,9 @@ import {
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { MdOutlinePerson, MdSend } from "react-icons/md";
-import { SlOptions } from "react-icons/sl";
+import { MdSend, MdVideogameAsset } from "react-icons/md";
 
 const MAX_PLAYERS = 6;
-interface PlayerDisplayProps {
-  player: Player | null;
-  emptyString: string;
-}
-const PlayerDisplay: React.FC<PlayerDisplayProps> = ({
-  player,
-  emptyString,
-}: PlayerDisplayProps) => {
-  return (
-    <Flex
-      alignItems={"center"}
-      justifyContent={player != null ? "space-between" : "normal"}
-      color={player != null ? "white" : "base.darkest"}
-    >
-      <Flex alignItems={"center"} gap={["1rem"]}>
-        {player != null ? (
-          <Image
-            height={"5rem"}
-            src={`/images/avatars/${player.avatar}`}
-            alt={`Player ${player.name} avatar`}
-          />
-        ) : (
-          <MdOutlinePerson size={"4.75rem"} />
-        )}
-
-        <Text
-          fontSize={["sm"]}
-          fontStyle={player != null ? "italic" : "normal"}
-          fontWeight={player != null ? "semibold" : "normal"}
-          textTransform={player != null ? "none" : "uppercase"}
-        >
-          {player?.name || emptyString}
-        </Text>
-      </Flex>
-      {player != null && <SlOptions size={"1.5rem"} color="width" />}
-    </Flex>
-  );
-};
 
 export default function LobbyPage() {
   const t = useTranslations("LobbyPage");
@@ -71,6 +34,7 @@ export default function LobbyPage() {
 
   const [players, setPlayers] = useState<Player[]>(room?.players || []);
   const [playerName, setPlayerName] = useState<string>("");
+  const [isHost, setIsHost] = useState<boolean>(false);
 
   // Atualiza os jogadores sempre que a sala muda
   useEffect(() => {
@@ -82,6 +46,7 @@ export default function LobbyPage() {
     const id = getSavedPlayerId();
     const p = players.find((p) => p._id === id);
     setPlayerName(p?.name || "");
+    setIsHost(p?.role === "host");
   }, [players]);
 
   // Quando o jogador entra no lobby, ele deve enviar um socket emitindo a entrada.
@@ -100,6 +65,30 @@ export default function LobbyPage() {
       );
     } catch (error) {
       console.error("Fail copying text:", error);
+    }
+  };
+
+  const handleStartGame = async () => {
+    try {
+      const response = await createMatch(String(room?.code));
+      if (response.status === 201) {
+        if (socket) {
+          socket.emit("host-started-game", {
+            roomCode: room?.code,
+          });
+        }
+      }
+    } catch (error) {
+      console.log("An error ocurred leaving the room: ", error);
+    }
+  };
+
+  const onKickPlayer = () => {
+    // Emite para o backend o evento de que o player saiu da sala
+    if (socket) {
+      socket.emit("player-left", {
+        roomCode: room?.code,
+      });
     }
   };
 
@@ -149,19 +138,25 @@ export default function LobbyPage() {
                 overflow={"scroll"}
               >
                 {players.map((player, index) => (
-                  <PlayerDisplay
+                  <PlayerLobbyDisplay
                     key={index}
                     player={player}
-                    emptyString={t("empty_player")}
+                    isHost={isHost}
+                    translations={t}
+                    isCurrentPlayer={playerName === player.name}
+                    onKick={onKickPlayer}
                   />
                 ))}
                 {Array.from(
                   { length: MAX_PLAYERS - players.length },
                   (_, index) => (
-                    <PlayerDisplay
+                    <PlayerLobbyDisplay
+                      isHost={isHost}
                       key={index}
                       player={null}
-                      emptyString={t("empty_player")}
+                      translations={t}
+                      isCurrentPlayer={false}
+                      onKick={onKickPlayer}
                     />
                   )
                 )}
@@ -192,6 +187,18 @@ export default function LobbyPage() {
           </TabPanel>
         </TabPanels>
       </Tabs>
+      {isHost && (
+        <Center mt={["1rem"]}>
+          <Button
+            size={"md"}
+            leftIcon={<MdVideogameAsset />}
+            variant={"primary"}
+            onClick={() => handleStartGame()}
+          >
+            {t("start_button")}
+          </Button>
+        </Center>
+      )}
     </GridItem>
   );
 }

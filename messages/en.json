@@ -24,9 +24,30 @@
     "players_tab": "Players",
     "chat_tab": "Chat",
     "invite_button": "Invite players!",
-    "empty_player": "Empty"
+    "empty_player": "Empty",
+    "start_button": "Start game",
+    "current_player_tag": "you",
+    "kick_button": "Kick out"
   },
   "Chat": {
     "input_placeholder": "Chat!"
+  },
+  "GamePage": {
+    "round": "Round {number}",
+    "show_chat": "Show chat",
+    "choosing": "choosing...",
+    "current_player_tag": "you",
+    "choose_instruction": "Choose the number of sticks to play",
+    "confirm_button": "Confirm",
+    "player_guessing": "{playerName} is making their guess...",
+    "guessing": "guessing...",
+    "next_guess": "next to guess",
+    "guess": "Guess",
+    "guess_instruction": "Make your guess",
+    "player_revealing": "{name} is revealing...",
+    "total": "Total",
+    "player_won": "{name} guessed correctly!",
+    "lose_stick": "Lose a stick",
+    "winners": "Winners"
   }
 }
