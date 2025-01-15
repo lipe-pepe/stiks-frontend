@@ -64,6 +64,12 @@ const PlayerGameDisplay: React.FC<PlayerGameDisplayProps> = ({
         {turn === player._id && gameStatus === GameStatus.guessing && (
           <Text>{translations("guessing")}</Text>
         )}
+        {gameStatus === GameStatus.guessing &&
+          player.gameData.guess != null && (
+            <Text>
+              {translations("guess", { number: player.gameData.guess })}
+            </Text>
+          )}
       </Flex>
       {player.gameData.chosen != null && (
         <Flex position={"absolute"} right={0}>

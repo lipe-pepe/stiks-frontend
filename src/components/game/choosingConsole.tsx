@@ -33,7 +33,12 @@ const ChoosingConsole = ({
 
   return (
     <form onSubmit={onSubmit}>
-      <Timer duration={30} onEnd={onTimerEnd} />
+      <Timer
+        duration={30}
+        onEnd={onTimerEnd}
+        color="green.base"
+        endColor="red.base"
+      />
       <Flex
         mt={["0.5rem"]}
         flexDir={"column"}

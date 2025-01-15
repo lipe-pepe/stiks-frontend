@@ -1,7 +1,7 @@
 "use client";
 
 import { GameStatus } from "@/types/room";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Text, VStack } from "@chakra-ui/react";
 import React from "react";
 import { Player } from "@/types/player";
 import { useTranslations } from "next-intl";
@@ -10,6 +10,7 @@ import getGameTotalSticks from "@/utils/game/getGameTotalSticks";
 import getGameGuesses from "@/utils/game/getGameGuesses";
 import ChoosingConsole from "./choosingConsole";
 import GuessingConsole from "./guessingConsole";
+import Timer from "../timer";
 
 interface ConsoleProps {
   socket: Socket;
@@ -41,7 +42,13 @@ const Console: React.FC<ConsoleProps> = ({
   };
 
   const handlePlayerGuess = (value: number) => {
-    console.log(value);
+    if (socket) {
+      socket.emit("player-guessed", {
+        roomCode: roomCode,
+        playerId: player?._id,
+        value: value,
+      });
+    }
   };
 
   return (
@@ -69,6 +76,21 @@ const Console: React.FC<ConsoleProps> = ({
           onGuess={handlePlayerGuess}
           translations={t}
         />
+      )}
+      {gameStatus === GameStatus.guessing && turnPlayer !== player._id && (
+        <VStack>
+          <Timer
+            duration={30}
+            onEnd={() => {}}
+            color="blue.base"
+            endColor="blue.base"
+          />
+          <Text fontSize={["sm"]} textColor="black">
+            {t("player_guessing", {
+              name: players.find((p) => p._id === turnPlayer)?.name,
+            })}
+          </Text>
+        </VStack>
       )}
     </Flex>
   );

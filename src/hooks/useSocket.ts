@@ -2,6 +2,7 @@ import { useRouter } from "@/i18n/routing";
 import { ChatMessage } from "@/types/chat";
 import { Player } from "@/types/player";
 import { GameStatus, Room } from "@/types/room";
+import getNextTurnPlayer from "@/utils/game/getNextTurnPlayer";
 import { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
@@ -25,13 +26,11 @@ const useSocket = (
       console.log("Socket desconectado com ID: ", socketInstance.id);
     });
 
-    // Ouvir a chegada de novos jogadores na sala
     socketInstance.on("player-joined", (updatedRoom: Room) => {
       setRoomData(updatedRoom); // Atualiza o estado da sala
     });
 
     socketInstance.on("player-left", (updatedRoom: Room) => {
-      console.log("SAIU UM JOGADOR!!!");
       setRoomData(updatedRoom); // Atualiza o estado da sala
     });
 
@@ -51,7 +50,6 @@ const useSocket = (
     // --------------------------------------------------------------------------------
 
     socketInstance.on("player-chose", (data) => {
-      console.log("ENTROU AQUI");
       setRoomData((prev: Room | null) => {
         // Verifica se 'prev' é válido e tem jogadores
         if (!prev || !prev.players) return prev;
@@ -77,6 +75,42 @@ const useSocket = (
             ? GameStatus.guessing
             : GameStatus.choosing,
           turn: updatedPlayers[0]._id,
+          players: updatedPlayers, // Atualiza os players no roomData
+        };
+      });
+    });
+
+    // --------------------------------------------------------------------------------
+
+    socketInstance.on("player-guessed", (data) => {
+      setRoomData((prev: Room | null) => {
+        // Verifica se 'prev' é válido e tem jogadores
+        if (!prev || !prev.players) return prev;
+
+        const updatedPlayers = prev.players.map((p) => {
+          if (p._id === data.playerId) {
+            return {
+              ...p,
+              gameData: {
+                ...p.gameData,
+                guess: data.value, // Atualiza apenas o campo necessário
+              },
+            };
+          }
+
+          return p; // Retorna o jogador original
+        });
+
+        // Pega o próximo jogador
+        const nextPlayer =
+          prev.turn != null
+            ? getNextTurnPlayer(prev.turn, prev.players)
+            : prev.firstTurn;
+
+        // Retorna o novo estado atualizado
+        return {
+          ...prev,
+          turn: nextPlayer,
           players: updatedPlayers, // Atualiza os players no roomData
         };
       });

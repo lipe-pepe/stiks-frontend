@@ -5,9 +5,16 @@ import { MdAlarm } from "react-icons/md";
 interface TimerProps {
   duration: number; // tempo em segundos
   onEnd: () => void; // Callback quando chegar a 0
+  color: string;
+  endColor: string;
 }
 
-const Timer: React.FC<TimerProps> = ({ duration, onEnd }: TimerProps) => {
+const Timer: React.FC<TimerProps> = ({
+  duration,
+  onEnd,
+  color,
+  endColor,
+}: TimerProps) => {
   const [timeLeft, setTimeLeft] = useState(duration);
 
   useEffect(() => {
@@ -40,7 +47,7 @@ const Timer: React.FC<TimerProps> = ({ duration, onEnd }: TimerProps) => {
           top={0}
           left={0}
           rounded={"full"}
-          bgColor={timeLeft / duration > 0.2 ? "green.base" : "red.base"}
+          bgColor={timeLeft / duration > 0.2 ? color : endColor}
           height={"100%"}
           w={`${(timeLeft / duration) * 100}%`}
           zIndex={99}

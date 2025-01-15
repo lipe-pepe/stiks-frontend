@@ -46,7 +46,7 @@
     "choose_instruction": "Choose the number of sticks to play",
     "guess_instruction": "Make your guess",
     "confirm_button": "Confirm",
-    "player_guessing": "{playerName} is making their guess...",
+    "player_guessing": "{name} is making their guess...",
     "player_revealing": "{name} is revealing...",
     "player_won": "{name} guessed correctly!",
     "lose_stick": "Lose a stick",

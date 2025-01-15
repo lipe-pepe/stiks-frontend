@@ -1,4 +1,4 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Button, Flex, Text } from "@chakra-ui/react";
 import Timer from "../timer";
 import { useForm } from "react-hook-form";
 
@@ -26,7 +26,12 @@ const GuessingConsole = ({
   const onTimerEnd = () => {};
   return (
     <form onSubmit={onSubmit}>
-      <Timer duration={30} onEnd={onTimerEnd} />
+      <Timer
+        duration={30}
+        onEnd={onTimerEnd}
+        color="green.base"
+        endColor="red.base"
+      />
       <Flex
         mt={["0.5rem"]}
         flexDir={"column"}
@@ -37,7 +42,7 @@ const GuessingConsole = ({
         <Text textColor={"blue.base"} fontSize={["sm"]} fontWeight={["medium"]}>
           {translations("guess_instruction")}
         </Text>
-        <Flex gap={["1rem"]} flexWrap={"wrap"}>
+        <Flex gap={["1rem"]} flexWrap={"wrap"} justifyContent={"center"}>
           {Array.from({ length: maxGuess + 1 }, (_, index) => (
             <Flex
               w={["2rem"]}
@@ -55,6 +60,9 @@ const GuessingConsole = ({
             </Flex>
           ))}
         </Flex>
+        <Button type="submit" size={["sm"]} variant={"game"}>
+          {translations("confirm_button")}
+        </Button>
       </Flex>
     </form>
   );
