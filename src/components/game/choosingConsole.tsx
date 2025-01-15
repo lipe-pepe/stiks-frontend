@@ -21,7 +21,15 @@ const ChoosingConsole = ({
     onChoose(data.value);
   });
 
-  const onTimerEnd = () => {};
+  const onTimerEnd = () => {
+    // Quando o tempo acaba, o jogo escolhe o valor selecionado ou um valor aleatório
+    if (value != null) {
+      onChoose(value);
+    } else {
+      const random = Math.floor(Math.random() * (total + 1));
+      onChoose(random);
+    }
+  };
 
   return (
     <form onSubmit={onSubmit}>

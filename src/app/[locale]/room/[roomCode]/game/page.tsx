@@ -39,6 +39,7 @@ export default function GamePage() {
         <PlayerGameDisplay
           key={index}
           player={p}
+          currentPlayerId={String(player?._id)}
           translations={t}
           turn={String(room?.turn)}
           gameStatus={room?.status}

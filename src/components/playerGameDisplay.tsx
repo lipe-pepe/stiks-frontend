@@ -2,9 +2,11 @@ import { Player } from "@/types/player";
 import { GameStatus } from "@/types/room";
 import { Flex, Image, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import Hand from "./hand";
 
 interface PlayerGameDisplayProps {
   player: Player;
+  currentPlayerId: string; // Id do jogador que está renderizando a tela
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   translations: any;
   turn: string;
@@ -12,6 +14,7 @@ interface PlayerGameDisplayProps {
 }
 const PlayerGameDisplay: React.FC<PlayerGameDisplayProps> = ({
   player,
+  currentPlayerId,
   translations,
   turn,
   gameStatus,
@@ -19,10 +22,7 @@ const PlayerGameDisplay: React.FC<PlayerGameDisplayProps> = ({
   const [tone, setTone] = useState<string>();
 
   useEffect(() => {
-    console.log(player.avatar);
     const skinTone = player.avatar.split("_")[1];
-
-    console.log(skinTone);
     setTone(skinTone);
   }, [player]);
 
@@ -66,12 +66,12 @@ const PlayerGameDisplay: React.FC<PlayerGameDisplayProps> = ({
         )}
       </Flex>
       {player.gameData.chosen != null && (
-        <Flex position={"absolute"} right={0} transform="rotate(90deg)">
-          <Image
-            height={"3rem"}
-            width={"3rem"}
-            src={`/images/hands/closed_${tone}`}
-            alt={`Closed hand`}
+        <Flex position={"absolute"} right={0}>
+          <Hand
+            transform="rotate(90deg)"
+            sticks={player.gameData.chosen}
+            tone={String(tone)}
+            isCurrentPlayer={player._id === currentPlayerId}
           />
         </Flex>
       )}
