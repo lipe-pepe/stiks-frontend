@@ -21,6 +21,15 @@ export default function GamePage() {
     setPlayer(room?.players.find((p) => p._id === getSavedPlayerId()));
   }, [room]);
 
+  useEffect(() => {
+    // Reinsere o socket na sala ao recarregar a página
+    if (socket) {
+      socket.emit("loaded-game", {
+        roomCode: room?.code,
+      });
+    }
+  }, []);
+
   const handlePlayerChose = (value: number) => {
     console.log("Escolhido: ", value);
     if (socket) {
@@ -35,7 +44,7 @@ export default function GamePage() {
   return (
     <GridItem colSpan={[4]} colStart={[1]} textColor={"white"}>
       <Text textAlign={"center"} fontSize={"md"} fontWeight={700}>
-        {t("round", { number: room?.match.round })}
+        {t("round", { number: room?.round })}
       </Text>
       {players.map((p, index) => (
         <PlayerGameDisplay key={index} player={p} translations={t} />

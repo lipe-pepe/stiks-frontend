@@ -1,7 +1,7 @@
 import { useRouter } from "@/i18n/routing";
 import { ChatMessage } from "@/types/chat";
 import { Player } from "@/types/player";
-import { Room } from "@/types/room";
+import { GameStatus, Room } from "@/types/room";
 import { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
@@ -69,10 +69,13 @@ const useSocket = (
 
           return p; // Retorna o jogador original
         });
-        console.log("Todos escolheram: ", allPlayersChose(updatedPlayers));
+
         // Retorna o novo estado atualizado
         return {
           ...prev,
+          status: allPlayersChose(updatedPlayers)
+            ? GameStatus.guessing
+            : GameStatus.choosing,
           players: updatedPlayers, // Atualiza os players no roomData
         };
       });

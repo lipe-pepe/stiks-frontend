@@ -5,7 +5,6 @@ import ChatMessages from "@/components/chatMessages";
 import MainBox from "@/components/mainBox";
 import PlayerLobbyDisplay from "@/components/playerLobbyDisplay";
 import { useRoomContext } from "@/context/roomContext";
-import createMatch from "@/services/matches/createMatch";
 import { Player } from "@/types/player";
 import getSavedPlayerId from "@/utils/getSavedPlayerId";
 import {
@@ -69,17 +68,10 @@ export default function LobbyPage() {
   };
 
   const handleStartGame = async () => {
-    try {
-      const response = await createMatch(String(room?.code));
-      if (response.status === 201) {
-        if (socket) {
-          socket.emit("host-started-game", {
-            roomCode: room?.code,
-          });
-        }
-      }
-    } catch (error) {
-      console.log("An error ocurred leaving the room: ", error);
+    if (socket) {
+      socket.emit("host-started-game", {
+        roomCode: room?.code,
+      });
     }
   };
 
