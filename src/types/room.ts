@@ -12,6 +12,8 @@ export interface Room {
   players: Player[]; // Lista de jogadores
   round: number; // Número da rodada
   status: GameStatus; // Status da partida
+  firstTurn: string; // Primeiro jogador a jogar na partida
+  turn?: string;
 }
 
 export { GameStatus };

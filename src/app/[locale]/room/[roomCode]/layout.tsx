@@ -29,7 +29,7 @@ export default function RoomLayout({
     const fetchRoomData = async () => {
       try {
         const data = await getRoom(String(roomCode));
-        setRoomData(data.room);
+        setRoomData(data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching room data:", error);

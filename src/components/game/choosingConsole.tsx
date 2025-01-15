@@ -1,14 +1,19 @@
-import { Button, Flex, HStack, Text } from "@chakra-ui/react";
+import { Button, Flex, HStack } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import Timer from "../timer";
 
-interface ChoosingFormProps {
+interface ChoosingConsoleProps {
   total: number;
   onChoose: (value: number) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   translations: any;
 }
 
-const ChoosingForm = ({ total, onChoose, translations }: ChoosingFormProps) => {
+const ChoosingConsole = ({
+  total,
+  onChoose,
+  translations,
+}: ChoosingConsoleProps) => {
   const { handleSubmit, setValue, watch } = useForm<{ value: number }>();
   const value = watch("value");
 
@@ -28,9 +33,6 @@ const ChoosingForm = ({ total, onChoose, translations }: ChoosingFormProps) => {
         justifyContent={"center"}
         alignItems={"center"}
       >
-        <Text textColor={"blue.base"} fontSize={["sm"]} fontWeight={["medium"]}>
-          {translations("choose_instruction")}
-        </Text>
         <HStack>
           {Array.from({ length: total + 1 }, (_, index) => (
             <Flex
@@ -57,4 +59,4 @@ const ChoosingForm = ({ total, onChoose, translations }: ChoosingFormProps) => {
   );
 };
 
-export default ChoosingForm;
+export default ChoosingConsole;

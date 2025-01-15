@@ -37,17 +37,19 @@
     "show_chat": "Show chat",
     "choosing": "choosing...",
     "current_player_tag": "you",
-    "choose_instruction": "Choose the number of sticks to play",
-    "confirm_button": "Confirm",
-    "player_guessing": "{playerName} is making their guess...",
     "guessing": "guessing...",
     "next_guess": "next to guess",
-    "guess": "Guess",
+    "guess": "Guess: {number}",
+    "winners": "Winners"
+  },
+  "Console": {
+    "choose_instruction": "Choose the number of sticks to play",
     "guess_instruction": "Make your guess",
+    "confirm_button": "Confirm",
+    "player_guessing": "{playerName} is making their guess...",
     "player_revealing": "{name} is revealing...",
-    "total": "Total",
     "player_won": "{name} guessed correctly!",
     "lose_stick": "Lose a stick",
-    "winners": "Winners"
+    "total": "Total"
   }
 }

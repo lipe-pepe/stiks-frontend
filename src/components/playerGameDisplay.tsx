@@ -1,4 +1,5 @@
 import { Player } from "@/types/player";
+import { GameStatus } from "@/types/room";
 import { Flex, Image, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
@@ -6,10 +7,14 @@ interface PlayerGameDisplayProps {
   player: Player;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   translations: any;
+  turn: string;
+  gameStatus: GameStatus | undefined;
 }
 const PlayerGameDisplay: React.FC<PlayerGameDisplayProps> = ({
   player,
   translations,
+  turn,
+  gameStatus,
 }: PlayerGameDisplayProps) => {
   const [tone, setTone] = useState<string>();
 
@@ -52,8 +57,12 @@ const PlayerGameDisplay: React.FC<PlayerGameDisplayProps> = ({
         <Text fontSize={["sm"]} fontStyle={"italic"} fontWeight={"semibold"}>
           {player.name}
         </Text>
-        {player.gameData.chosen == null && (
-          <Text>{translations("choosing")}</Text>
+        {player.gameData.chosen == null &&
+          gameStatus === GameStatus.choosing && (
+            <Text>{translations("choosing")}</Text>
+          )}
+        {turn === player._id && gameStatus === GameStatus.guessing && (
+          <Text>{translations("guessing")}</Text>
         )}
       </Flex>
       {player.gameData.chosen != null && (

@@ -76,6 +76,7 @@ const useSocket = (
           status: allPlayersChose(updatedPlayers)
             ? GameStatus.guessing
             : GameStatus.choosing,
+          turn: updatedPlayers[0]._id,
           players: updatedPlayers, // Atualiza os players no roomData
         };
       });
