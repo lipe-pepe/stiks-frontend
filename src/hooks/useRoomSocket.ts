@@ -1,5 +1,4 @@
 import { useRouter } from "@/i18n/routing";
-import matchEvents from "@/socket/matchEvents";
 import { ChatMessage } from "@/types/chat";
 import { Room } from "@/types/room";
 import getRoomJson from "@/utils/room/getRoomJson";
@@ -31,7 +30,7 @@ const useRoomSocket = (
     });
 
     socketInstance.on("player-left", (updatedRoom: Room) => {
-      setRoomData(updatedRoom); // Atualiza o estado da sala
+      setRoomData(getRoomJson(updatedRoom)); // Atualiza o estado da sala
     });
 
     socketInstance.on("chat-message-received", (data) => {
@@ -43,11 +42,9 @@ const useRoomSocket = (
     });
 
     socketInstance.on("host-started-game", (updatedRoom: Room) => {
-      setRoomData(updatedRoom);
+      setRoomData(getRoomJson(updatedRoom));
       router.push(`/room/${roomCode}/match`);
     });
-
-    matchEvents(socketInstance);
 
     // --------------------------------------------------------------------------------
 

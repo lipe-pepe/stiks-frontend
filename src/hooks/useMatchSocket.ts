@@ -1,4 +1,3 @@
-import matchEvents from "@/socket/matchEvents";
 import { ChatMessage } from "@/types/chat";
 import { Match } from "@/types/match";
 import React, { useEffect, useState } from "react";
@@ -31,9 +30,26 @@ const useMatchSocket = (
       setChat((prevChat: ChatMessage[]) => [...prevChat, newMessage]);
     });
 
-    matchEvents(socketInstance);
-
-    // --------------------------------------------------------------------------------
+    socketInstance.on("player-chose", (data) => {
+      console.log(data);
+      setMatchData((prev) => {
+        const updatedPlayers = prev.playersGameData.map((p) => {
+          if (p.id === data.playerId) {
+            return {
+              ...p,
+              chosen: data.value,
+            };
+          }
+          return p; // Retorna o jogador original
+        });
+        console.log(updatedPlayers);
+        // Retorna o novo estado atualizado
+        return {
+          ...prev,
+          playersGameData: updatedPlayers,
+        };
+      });
+    });
 
     setSocket(socketInstance);
 
@@ -42,8 +58,6 @@ const useMatchSocket = (
       socketInstance.disconnect();
     };
   }, []);
-
-  // ---------------------------------------------------------------------------------------
 
   // const allPlayersChose = (players: Player[]) => {
   //   return players.every((p) => p.gameData.chosen != null);

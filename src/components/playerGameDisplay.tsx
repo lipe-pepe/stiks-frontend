@@ -1,11 +1,9 @@
-import { Player } from "@/types/player";
 import { MatchStatus, PlayerGameData } from "@/types/match";
 import { Flex, Image, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import Hand from "./hand";
 
 interface PlayerGameDisplayProps {
-  player: Player;
   playerGameData: PlayerGameData;
   currentPlayerId: string; // Id do jogador que está renderizando a tela
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -14,7 +12,6 @@ interface PlayerGameDisplayProps {
   matchStatus: MatchStatus | undefined;
 }
 const PlayerGameDisplay: React.FC<PlayerGameDisplayProps> = ({
-  player,
   playerGameData,
   currentPlayerId,
   translations,
@@ -24,9 +21,9 @@ const PlayerGameDisplay: React.FC<PlayerGameDisplayProps> = ({
   const [tone, setTone] = useState<string>();
 
   useEffect(() => {
-    const skinTone = player.avatar.split("_")[1];
+    const skinTone = playerGameData.avatar.split("_")[1];
     setTone(skinTone);
-  }, [player]);
+  }, [playerGameData]);
 
   return (
     <Flex
@@ -37,8 +34,8 @@ const PlayerGameDisplay: React.FC<PlayerGameDisplayProps> = ({
     >
       <Image
         height={"5rem"}
-        src={`/images/avatars/${player.avatar}`}
-        alt={`Player ${player.name} avatar`}
+        src={`/images/avatars/${playerGameData.avatar}`}
+        alt={`Player ${playerGameData.name} avatar`}
       />
       <Flex
         position={"absolute"}
@@ -57,13 +54,13 @@ const PlayerGameDisplay: React.FC<PlayerGameDisplayProps> = ({
       </Flex>
       <Flex flexDir={"column"}>
         <Text fontSize={["sm"]} fontStyle={"italic"} fontWeight={"semibold"}>
-          {player.name}
+          {playerGameData.name}
         </Text>
         {playerGameData.chosen == null &&
           matchStatus === MatchStatus.choosing && (
             <Text>{translations("choosing")}</Text>
           )}
-        {turn === player.id && matchStatus === MatchStatus.guessing && (
+        {turn === playerGameData.id && matchStatus === MatchStatus.guessing && (
           <Text>{translations("guessing")}</Text>
         )}
         {matchStatus === MatchStatus.guessing &&
@@ -79,7 +76,7 @@ const PlayerGameDisplay: React.FC<PlayerGameDisplayProps> = ({
             transform="rotate(90deg)"
             sticks={playerGameData.chosen}
             tone={String(tone)}
-            isCurrentPlayer={player.id === currentPlayerId}
+            isCurrentPlayer={playerGameData.id === currentPlayerId}
             open={playerGameData.revealed}
           />
         </Flex>

@@ -21,9 +21,15 @@ export default function MatchPage() {
 
   // Atualiza os jogadores sempre que a sala muda
   useEffect(() => {
+    console.log("ATUALIZOU MATCH: ", match);
     setPlayers(match.playersGameData);
     setPlayer(match.playersGameData.find((p) => p.id === getSavedPlayerId()));
   }, [match]);
+
+  useEffect(() => {
+    console.log("ENTROU AQUIIII");
+    console.log("Player: ", player);
+  }, [player]);
 
   useEffect(() => {
     // Reinsere o socket na sala ao recarregar a página
@@ -35,14 +41,13 @@ export default function MatchPage() {
   }, [roomCode, socket]);
 
   return (
-    <GridItem colSpan={[4]} colStart={[1]} textColor={"white"} h={"full"}>
+    <GridItem colSpan={[4]} colStart={[1]} textColor={"white"}>
       <Text textAlign={"center"} fontSize={"md"} fontWeight={700}>
         {t("round", { number: match.round })}
       </Text>
       {players.map((p, index) => (
         <PlayerGameDisplay
           key={index}
-          player={p}
           playerGameData={match.playersGameData[0]}
           currentPlayerId={String(player?.id)}
           translations={t}
@@ -51,16 +56,7 @@ export default function MatchPage() {
         />
       ))}
       {player != null && socket != null && (
-        <Flex
-          position="fixed"
-          bottom={0}
-          left={0}
-          right={0}
-          height={"3rem"}
-          w={"3rem"}
-          mx={[4]}
-          mb={[12]}
-        >
+        <Flex position="fixed" bottom={0} left={0} right={0} mx={[4]} mb={[12]}>
           <Console
             socket={socket}
             roomCode={String(roomCode)}

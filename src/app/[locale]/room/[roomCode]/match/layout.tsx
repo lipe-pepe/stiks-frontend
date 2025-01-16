@@ -14,7 +14,7 @@ export default function MatchLayout({
   children: React.ReactNode;
 }>) {
   const { room } = useRoomContext();
-
+  console.log("sala carregada no matchlayout: ", room);
   const matchLoad: Match = {
     status: MatchStatus.choosing,
     round: 1,
@@ -31,6 +31,7 @@ export default function MatchLayout({
       }) || [],
     totalSticks: 0,
   };
+  console.log("match LOADDDD: ", matchLoad);
   const { roomCode } = useParams(); // Pega o código da sala da URL
   const [matchData, setMatchData] = useState<Match>(matchLoad);
   const [chat, setChat] = useState<ChatMessage[]>([]);
