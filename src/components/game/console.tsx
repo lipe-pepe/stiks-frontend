@@ -70,13 +70,22 @@ const Console: React.FC<ConsoleProps> = ({
       borderRadius={[12]}
       p={[4]}
     >
-      {matchStatus === MatchStatus.choosing && (
-        <ChoosingConsole
-          total={playerGameData.total}
-          onChoose={handlePlayerChose}
-          translations={t}
-        />
-      )}
+      {matchStatus === MatchStatus.choosing &&
+        playerGameData.chosen == null && (
+          <ChoosingConsole
+            total={playerGameData.total}
+            onChoose={handlePlayerChose}
+            translations={t}
+          />
+        )}
+      {matchStatus === MatchStatus.choosing &&
+        playerGameData.chosen != null && (
+          <>
+            <Text fontSize={["sm"]} textColor="black">
+              {t("wait_instruction")}
+            </Text>
+          </>
+        )}
       {matchStatus === MatchStatus.guessing &&
         turnPlayer === playerGameData.id && (
           <GuessingConsole

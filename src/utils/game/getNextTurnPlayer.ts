@@ -1,6 +1,6 @@
-import { Player } from "@/types/player";
+import { PlayerGameData } from "@/types/match";
 
-function getNextTurnPlayer(curTurn: string, players: Player[]) {
+function getNextTurnPlayer(curTurn: string, players: PlayerGameData[]) {
   let i = players.findIndex((p) => p.id === curTurn);
   i++;
   if (i >= players.length) {

@@ -40,10 +40,6 @@ export default function RoomLayout({
     fetchRoomData();
   }, [roomCode]);
 
-  useEffect(() => {
-    console.log("ROOM DATA LAYOUT: ", roomData);
-  }, [roomData]);
-
   if (loading) {
     return <div>Loading...</div>; // TO-DO: FAZER UM componente DECENTE PARA ISSO
   }

@@ -44,6 +44,7 @@
   },
   "Console": {
     "choose_instruction": "Choose the number of sticks to play",
+    "wait_instruction": "Waiting for the other players",
     "guess_instruction": "Make your guess",
     "confirm_button": "Confirm",
     "player_guessing": "{name} is making their guess...",

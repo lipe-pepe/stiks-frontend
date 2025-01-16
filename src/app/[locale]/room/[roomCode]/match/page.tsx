@@ -21,15 +21,9 @@ export default function MatchPage() {
 
   // Atualiza os jogadores sempre que a sala muda
   useEffect(() => {
-    console.log("ATUALIZOU MATCH: ", match);
     setPlayers(match.playersGameData);
     setPlayer(match.playersGameData.find((p) => p.id === getSavedPlayerId()));
   }, [match]);
-
-  useEffect(() => {
-    console.log("ENTROU AQUIIII");
-    console.log("Player: ", player);
-  }, [player]);
 
   useEffect(() => {
     // Reinsere o socket na sala ao recarregar a página
@@ -40,6 +34,10 @@ export default function MatchPage() {
     }
   }, [roomCode, socket]);
 
+  useEffect(() => {
+    console.log("PLAYERS: ", players);
+  }, [players]);
+
   return (
     <GridItem colSpan={[4]} colStart={[1]} textColor={"white"}>
       <Text textAlign={"center"} fontSize={"md"} fontWeight={700}>
@@ -48,7 +46,7 @@ export default function MatchPage() {
       {players.map((p, index) => (
         <PlayerGameDisplay
           key={index}
-          playerGameData={match.playersGameData[0]}
+          playerGameData={p}
           currentPlayerId={String(player?.id)}
           translations={t}
           turn={match.turn}

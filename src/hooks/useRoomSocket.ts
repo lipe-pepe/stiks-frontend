@@ -17,10 +17,6 @@ const useRoomSocket = (
   useEffect(() => {
     const socketInstance = io(process.env.NEXT_PUBLIC_BACKEND_HOST);
 
-    socketInstance.on("connect", () => {
-      console.log("Socket conectado com ID: ", socketInstance.id);
-    });
-
     socketInstance.on("disconnect", () => {
       console.log("Socket desconectado com ID: ", socketInstance.id);
     });

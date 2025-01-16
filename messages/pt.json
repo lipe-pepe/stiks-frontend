@@ -45,6 +45,7 @@
   "Console": {
     "choose_instruction": "Escolha o número de palitinhos para jogar",
     "guess_instruction": "Faça seu palpite",
+    "wait_instruction": "Aguardando os outros jogadores",
     "confirm_button": "Confirmar",
     "player_guessing": "{name} está fazendo seu palpite...",
     "player_revealing": "{name} está revelando...",
