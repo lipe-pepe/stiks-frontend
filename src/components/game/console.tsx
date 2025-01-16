@@ -115,7 +115,7 @@ const Console: React.FC<ConsoleProps> = ({
         {matchStatus === MatchStatus.revealing && (
           <>
             <Timer
-              duration={10}
+              duration={5}
               onEnd={handlePlayerReveal}
               color="blue.base"
               endColor="blue.base"

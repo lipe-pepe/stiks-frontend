@@ -69,6 +69,31 @@ const useMatchSocket = (
       updateStatus();
     });
 
+    socketInstance.on("player-revealed", (data) => {
+      setMatchData((prev) => {
+        let sticksToSum = 0;
+        const updatedPlayers = prev.playersGameData.map((p) => {
+          if (p.id === data.playerId) {
+            sticksToSum += Number(p.chosen);
+            return {
+              ...p,
+              revealed: true,
+            };
+          }
+          return p; // Retorna o jogador original
+        });
+
+        // Retorna o novo estado atualizado
+        return {
+          ...prev,
+          totalSticks: prev.totalSticks + sticksToSum, // Soma os palitos revelados
+          playersGameData: updatedPlayers,
+          turn: getNextTurnPlayer(prev.turn, prev.playersGameData),
+        };
+      });
+      updateStatus();
+    });
+
     setSocket(socketInstance);
 
     // Limpa o socket ao desmontar
@@ -87,6 +112,10 @@ const useMatchSocket = (
     return players.every((p) => p.guess != null);
   };
 
+  const checkAllPlayersRevealed = (players: PlayerGameData[]) => {
+    return players.every((p) => p.revealed == true);
+  };
+
   const updateStatus = () => {
     setMatchData((prev) => {
       if (prev.status === MatchStatus.choosing) {
@@ -102,6 +131,13 @@ const useMatchSocket = (
           status: checkAllPlayersGuessed(prev.playersGameData)
             ? MatchStatus.revealing
             : MatchStatus.guessing,
+        };
+      } else if (prev.status === MatchStatus.revealing) {
+        return {
+          ...prev,
+          status: checkAllPlayersRevealed(prev.playersGameData)
+            ? MatchStatus.results
+            : MatchStatus.revealing,
         };
       }
       return prev;
