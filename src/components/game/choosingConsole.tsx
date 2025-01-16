@@ -1,4 +1,4 @@
-import { Button, Flex, HStack } from "@chakra-ui/react";
+import { Button, Flex, HStack, Text } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import Timer from "../timer";
 
@@ -23,12 +23,12 @@ const ChoosingConsole = ({
 
   const onTimerEnd = () => {
     // Quando o tempo acaba, o jogo escolhe o valor selecionado ou um valor aleatório
-    if (value != null) {
-      onChoose(value);
-    } else {
-      const random = Math.floor(Math.random() * (total + 1));
-      onChoose(random);
-    }
+    // if (value != null) {
+    //   onChoose(value);
+    // } else {
+    //   const random = Math.floor(Math.random() * (total + 1));
+    //   onChoose(random);
+    // }
   };
 
   return (
@@ -46,6 +46,9 @@ const ChoosingConsole = ({
         justifyContent={"center"}
         alignItems={"center"}
       >
+        <Text fontSize={["sm"]} textColor={"blue.base"}>
+          {translations("choose_instruction")}
+        </Text>
         <HStack>
           {Array.from({ length: total + 1 }, (_, index) => (
             <Flex

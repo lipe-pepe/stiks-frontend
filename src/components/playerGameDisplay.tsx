@@ -1,23 +1,25 @@
 import { Player } from "@/types/player";
-import { GameStatus } from "@/types/room";
+import { MatchStatus, PlayerGameData } from "@/types/match";
 import { Flex, Image, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import Hand from "./hand";
 
 interface PlayerGameDisplayProps {
   player: Player;
+  playerGameData: PlayerGameData;
   currentPlayerId: string; // Id do jogador que está renderizando a tela
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   translations: any;
   turn: string;
-  gameStatus: GameStatus | undefined;
+  matchStatus: MatchStatus | undefined;
 }
 const PlayerGameDisplay: React.FC<PlayerGameDisplayProps> = ({
   player,
+  playerGameData,
   currentPlayerId,
   translations,
   turn,
-  gameStatus,
+  matchStatus,
 }: PlayerGameDisplayProps) => {
   const [tone, setTone] = useState<string>();
 
@@ -50,34 +52,35 @@ const PlayerGameDisplay: React.FC<PlayerGameDisplayProps> = ({
         borderColor={"black"}
       >
         <Text fontWeight={"semibold"} fontSize={["sm"]}>
-          {player.gameData.total}
+          {playerGameData.total}
         </Text>
       </Flex>
       <Flex flexDir={"column"}>
         <Text fontSize={["sm"]} fontStyle={"italic"} fontWeight={"semibold"}>
           {player.name}
         </Text>
-        {player.gameData.chosen == null &&
-          gameStatus === GameStatus.choosing && (
+        {playerGameData.chosen == null &&
+          matchStatus === MatchStatus.choosing && (
             <Text>{translations("choosing")}</Text>
           )}
-        {turn === player._id && gameStatus === GameStatus.guessing && (
+        {turn === player.id && matchStatus === MatchStatus.guessing && (
           <Text>{translations("guessing")}</Text>
         )}
-        {gameStatus === GameStatus.guessing &&
-          player.gameData.guess != null && (
+        {matchStatus === MatchStatus.guessing &&
+          playerGameData.guess != null && (
             <Text>
-              {translations("guess", { number: player.gameData.guess })}
+              {translations("guess", { number: playerGameData.guess })}
             </Text>
           )}
       </Flex>
-      {player.gameData.chosen != null && (
+      {playerGameData.chosen != null && (
         <Flex position={"absolute"} right={0}>
           <Hand
             transform="rotate(90deg)"
-            sticks={player.gameData.chosen}
+            sticks={playerGameData.chosen}
             tone={String(tone)}
-            isCurrentPlayer={player._id === currentPlayerId}
+            isCurrentPlayer={player.id === currentPlayerId}
+            open={playerGameData.revealed}
           />
         </Flex>
       )}

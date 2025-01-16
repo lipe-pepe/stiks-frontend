@@ -32,7 +32,7 @@
   "Chat": {
     "input_placeholder": "Chat!"
   },
-  "GamePage": {
+  "MatchPage": {
     "round": "Round {number}",
     "show_chat": "Show chat",
     "choosing": "choosing...",

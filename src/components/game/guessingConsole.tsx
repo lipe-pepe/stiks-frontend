@@ -24,6 +24,7 @@ const GuessingConsole = ({
   });
 
   const onTimerEnd = () => {};
+
   return (
     <form onSubmit={onSubmit}>
       <Timer

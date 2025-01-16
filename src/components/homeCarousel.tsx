@@ -92,17 +92,17 @@ const HomeCarousel = () => {
     >
       <CarouselItem
         text="Teste"
-        image="images/avatars/pepe.svg"
+        image="images/avatars/pepe_1.svg"
         text2="teste 2 do carrossel muito texto muita coisa que beleza olha só! mermao"
       />
       <CarouselItem
         text="Teste 2"
-        image="images/avatars/joe.svg"
+        image="images/avatars/joe_1.svg"
         text2="aaaaaaaaaaaaaaaaa teste do carrossel"
       />
       <CarouselItem
         text="Teste 3"
-        image="images/avatars/arnaldo.svg"
+        image="images/avatars/arnaldo_5.svg"
         text2="Vitoria da fernanda torres"
       />
     </Carousel>

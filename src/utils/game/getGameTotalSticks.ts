@@ -1,9 +1,6 @@
-import { Player } from "@/types/player";
+import { PlayerGameData } from "@/types/match";
 
-function getGameTotalSticks(players: Player[]) {
-  return players.reduce(
-    (accumulator, player) => accumulator + player.gameData.total,
-    0
-  );
+function getGameTotalSticks(players: PlayerGameData[]) {
+  return players.reduce((accumulator, player) => accumulator + player.total, 0);
 }
 export default getGameTotalSticks;

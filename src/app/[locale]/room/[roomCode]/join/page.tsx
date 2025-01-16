@@ -42,7 +42,6 @@ export default function JoinPage() {
   const onSubmit = handleSubmit(async (data) => {
     try {
       const response = await createPlayer(room.code, data);
-      console.log(response);
       if (response.status === 201) {
         localStorage.setItem("playerId", response.data.player._id);
         router.push(`/room/${room.code}/lobby`);

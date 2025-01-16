@@ -43,10 +43,12 @@ export default function LobbyPage() {
   // Seta o nome do jogador atual sempre que carregam os novos jogadores
   useEffect(() => {
     const id = getSavedPlayerId();
-    const p = players.find((p) => p._id === id);
+    const p = players.find((p) => p.id === id);
     setPlayerName(p?.name || "");
     setIsHost(p?.role === "host");
   }, [players]);
+
+  useEffect(() => {});
 
   // Quando o jogador entra no lobby, ele deve enviar um socket emitindo a entrada.
   useEffect(() => {

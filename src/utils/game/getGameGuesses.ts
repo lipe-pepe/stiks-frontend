@@ -1,6 +1,6 @@
-import { Player } from "@/types/player";
+import { PlayerGameData } from "@/types/match";
 
-function getGameGuesses(players: Player[]) {
-  return players.map((p) => p.gameData.guess);
+function getGameGuesses(players: PlayerGameData[]) {
+  return players.map((p) => Number(p.guess)) || [];
 }
 export default getGameGuesses;

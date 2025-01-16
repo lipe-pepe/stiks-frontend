@@ -32,7 +32,7 @@
   "Chat": {
     "input_placeholder": "Converse!"
   },
-  "GamePage": {
+  "MatchPage": {
     "round": "Rodada {number}",
     "show_chat": "Exibir chat",
     "choosing": "escolhendo...",

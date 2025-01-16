@@ -6,6 +6,7 @@ interface HandProps {
   transform: string;
   isCurrentPlayer: boolean; // Se a mão é do jogador que está renderizando a tela
   sticks: number; // Número de palitinhos na mão
+  open: boolean;
 }
 
 const Hand: React.FC<HandProps> = ({
@@ -13,6 +14,7 @@ const Hand: React.FC<HandProps> = ({
   transform,
   isCurrentPlayer,
   sticks,
+  open,
 }: HandProps) => {
   return (
     <Flex position="relative">
@@ -20,8 +22,10 @@ const Hand: React.FC<HandProps> = ({
         transform={transform}
         height={"3rem"}
         width={"3rem"}
-        src={`/images/hands/closed_${tone}`}
-        alt={`Closed hand`}
+        src={
+          open ? `/images/hands/open_${tone}` : `/images/hands/closed_${tone}`
+        }
+        alt={open ? "Open hand " : "Closed hand"}
       />
 
       {isCurrentPlayer && (

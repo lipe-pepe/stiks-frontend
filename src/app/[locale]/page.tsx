@@ -22,7 +22,6 @@ export default function HomePage() {
       } else {
         // TODO: EXIBIR O ERRO SE DER ERRADO!
       }
-      console.log(res);
     } catch (error) {
       console.log(error);
     }

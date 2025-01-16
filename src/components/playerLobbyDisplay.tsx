@@ -23,8 +23,7 @@ const PlayerLobbyDisplay: React.FC<PlayerLobbyDisplayProps> = ({
 
   const handleKick = async () => {
     try {
-      const response = await deletePlayer(String(player?._id));
-      console.log(response);
+      const response = await deletePlayer(String(player?.id));
       if (response.status === 200) {
         onKick();
       }
