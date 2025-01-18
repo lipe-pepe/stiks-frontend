@@ -49,8 +49,11 @@
     "confirm_button": "Confirmar",
     "player_guessing": "{name} está fazendo seu palpite...",
     "player_revealing": "{name} está revelando...",
-    "player_won": "{name} acertou!",
+    "player_won": "acertou!",
+    "you": "Você",
+    "no_one": "Ninguém",
     "lose_stick": "Perde um palitinho",
-    "total": "Total"
+    "total": "Total",
+    "next_round": "Próxima rodada"
   }
 }

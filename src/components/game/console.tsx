@@ -1,6 +1,6 @@
 "use client";
 
-import { Flex, Text } from "@chakra-ui/react";
+import { Button, Flex, Text, VStack } from "@chakra-ui/react";
 import React from "react";
 import { useTranslations } from "next-intl";
 import { Socket } from "socket.io-client";
@@ -10,6 +10,38 @@ import ChoosingConsole from "./choosingConsole";
 import GuessingConsole from "./guessingConsole";
 import Timer from "../timer";
 import { MatchStatus, PlayerGameData } from "@/types/match";
+import getPlayerName from "@/utils/game/getPlayerName";
+import { PlayerRole } from "@/types/player";
+
+interface TotalDisplayProps {
+  totalText: string;
+  total: number;
+}
+
+const TotalDisplay: React.FC<TotalDisplayProps> = ({
+  totalText,
+  total,
+}: TotalDisplayProps) => {
+  return (
+    <Flex flexDir={"column"} alignItems={"center"} gap={[2]}>
+      <Text fontSize={"xs"} textTransform={"uppercase"}>
+        {totalText}
+      </Text>
+      <Flex
+        w={["2rem"]}
+        h={["2rem"]}
+        bg={"gray.1"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        fontSize={"xl"}
+        rounded={"full"}
+        fontWeight={"bold"}
+      >
+        {total}
+      </Flex>
+    </Flex>
+  );
+};
 
 interface ConsoleProps {
   socket: Socket;
@@ -18,6 +50,8 @@ interface ConsoleProps {
   playersGameData: PlayerGameData[];
   playerGameData: PlayerGameData; // O jogador que está renderizando a tela
   turnPlayer: string | undefined; // O id do jogador da rodada atual
+  winner: string | undefined; // O id do jogador vencedor da rodada
+  total: number | undefined; // O total de palitinhos já revelados do jogo
 }
 
 const Console: React.FC<ConsoleProps> = ({
@@ -27,6 +61,8 @@ const Console: React.FC<ConsoleProps> = ({
   playersGameData,
   playerGameData,
   turnPlayer,
+  winner,
+  total,
 }: ConsoleProps) => {
   const t = useTranslations("Console");
 
@@ -130,25 +166,36 @@ const Console: React.FC<ConsoleProps> = ({
                   name: playersGameData.find((p) => p.id === turnPlayer)?.name,
                 })}
               </Text>
-              <Flex flexDir={"column"} alignItems={"center"} gap={[2]}>
-                <Text fontSize={"xs"} textTransform={"uppercase"}>
-                  {t("total")}
-                </Text>
-                <Flex
-                  w={["2rem"]}
-                  h={["2rem"]}
-                  bg={"gray.1"}
-                  justifyContent={"center"}
-                  alignItems={"center"}
-                  fontSize={"xl"}
-                  rounded={"full"}
-                  fontWeight={"bold"}
-                >
-                  {50}
-                </Flex>
-              </Flex>
+              <TotalDisplay totalText={t("total")} total={Number(total)} />
             </Flex>
           </>
+        )}
+        {matchStatus === MatchStatus.results && (
+          <Flex flexDir={"column"} alignItems={"center"} gap={["1rem"]}>
+            <Flex
+              color="black"
+              justifyContent={"space-between"}
+              alignItems={"center"}
+              gap={["1rem"]}
+            >
+              <VStack textAlign={"center"}>
+                <Flex fontSize={["lg"]} gap={2} fontWeight={"bold"}>
+                  <Text color={winner != null ? "blue.base" : "red.base"}>
+                    {getPlayerName(playersGameData, String(winner)) ||
+                      t("no_one")}
+                  </Text>
+                  <Text>{t("player_won")}</Text>
+                </Flex>
+                {winner != null && (
+                  <Text fontSize={["sm"]}>{t("lose_stick")}</Text>
+                )}
+              </VStack>
+              <TotalDisplay totalText={t("total")} total={Number(total)} />
+            </Flex>
+            {playerGameData.role === PlayerRole.host && (
+              <Button variant={"primary"}>{t("next_round")}</Button>
+            )}
+          </Flex>
         )}
       </Flex>
     </Flex>

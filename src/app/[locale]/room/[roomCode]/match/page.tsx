@@ -3,7 +3,9 @@
 import Console from "@/components/game/console";
 import PlayerGameDisplay from "@/components/playerGameDisplay";
 import { useMatchContext } from "@/context/matchContext";
-import { PlayerGameData } from "@/types/match";
+import { MatchStatus, PlayerGameData } from "@/types/match";
+import getRoundWinner from "@/utils/game/getRoundWinner";
+import getSticksRevealed from "@/utils/game/getSticksRevealed";
 import getSavedPlayerId from "@/utils/getSavedPlayerId";
 import { Flex, GridItem, Text } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
@@ -18,11 +20,18 @@ export default function MatchPage() {
     match.playersGameData
   );
   const [player, setPlayer] = useState<PlayerGameData>();
+  const [winnerId, setWinnerId] = useState<string>();
+  const [totalRevealed, setTotalRevealed] = useState<number>();
 
   // Atualiza os jogadores sempre que a sala muda
   useEffect(() => {
     setPlayers(match.playersGameData);
     setPlayer(match.playersGameData.find((p) => p.id === getSavedPlayerId()));
+
+    if (match.status === MatchStatus.results) {
+      setWinnerId(getRoundWinner(match));
+      setTotalRevealed(getSticksRevealed(match));
+    }
   }, [match]);
 
   useEffect(() => {
@@ -33,10 +42,6 @@ export default function MatchPage() {
       });
     }
   }, [roomCode, socket]);
-
-  useEffect(() => {
-    console.log("PLAYERS: ", players);
-  }, [players]);
 
   return (
     <GridItem colSpan={[4]} colStart={[1]} textColor={"white"}>
@@ -62,6 +67,8 @@ export default function MatchPage() {
             playersGameData={players}
             playerGameData={player}
             turnPlayer={match.turn}
+            winner={winnerId}
+            total={totalRevealed}
           />
         </Flex>
       )}

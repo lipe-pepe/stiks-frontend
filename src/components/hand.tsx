@@ -27,8 +27,20 @@ const Hand: React.FC<HandProps> = ({
         }
         alt={open ? "Open hand " : "Closed hand"}
       />
-
-      {isCurrentPlayer && (
+      {open && (
+        <Flex ml={2}>
+          {Array.from({ length: sticks }, (_, index) => (
+            <Image
+              height={"2rem"}
+              width={"0.5rem"}
+              key={index}
+              alt={"Stick image"}
+              src="/images/stick.svg"
+            />
+          ))}
+        </Flex>
+      )}
+      {isCurrentPlayer && !open && (
         <Flex
           position="absolute"
           w={"1.5rem"}

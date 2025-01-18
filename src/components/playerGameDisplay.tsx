@@ -63,7 +63,7 @@ const PlayerGameDisplay: React.FC<PlayerGameDisplayProps> = ({
         {turn === playerGameData.id && matchStatus === MatchStatus.guessing && (
           <Text>{translations("guessing")}</Text>
         )}
-        {matchStatus === MatchStatus.guessing &&
+        {matchStatus !== MatchStatus.choosing &&
           playerGameData.guess != null && (
             <Text>
               {translations("guess", { number: playerGameData.guess })}

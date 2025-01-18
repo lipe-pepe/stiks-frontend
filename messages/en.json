@@ -49,8 +49,11 @@
     "confirm_button": "Confirm",
     "player_guessing": "{name} is making their guess...",
     "player_revealing": "{name} is revealing...",
-    "player_won": "{name} guessed correctly!",
-    "lose_stick": "Lose a stick",
-    "total": "Total"
+    "player_won": "guessed correctly!",
+    "you": "You",
+    "no_one": "No one",
+    "lose_stick": "Loses a stick",
+    "total": "Total",
+    "next_round": "Next round"
   }
 }
