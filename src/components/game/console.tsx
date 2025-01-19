@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Flex, Text, VStack } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Socket } from "socket.io-client";
 import getGameTotalSticks from "@/utils/game/getGameTotalSticks";
@@ -47,7 +47,7 @@ interface ConsoleProps {
   socket: Socket;
   roomCode: string;
   matchStatus: MatchStatus; // O status do jogo - choosing, guessing, revealing ou results
-  playersGameData: PlayerGameData[];
+  players: PlayerGameData[];
   playerGameData: PlayerGameData; // O jogador que está renderizando a tela
   turnPlayer: string | undefined; // O id do jogador da rodada atual
   winner: string | undefined; // O id do jogador vencedor da rodada
@@ -58,7 +58,7 @@ const Console: React.FC<ConsoleProps> = ({
   socket,
   roomCode,
   matchStatus,
-  playersGameData,
+  players,
   playerGameData,
   turnPlayer,
   winner,
@@ -95,6 +95,15 @@ const Console: React.FC<ConsoleProps> = ({
     }
   };
 
+  const handleNextRound = () => {
+    if (socket) {
+      socket.emit("next-round", {
+        roomCode: roomCode,
+        winnerId: winner,
+      });
+    }
+  };
+
   return (
     <Flex
       width={"100%"}
@@ -125,8 +134,8 @@ const Console: React.FC<ConsoleProps> = ({
       {matchStatus === MatchStatus.guessing &&
         turnPlayer === playerGameData.id && (
           <GuessingConsole
-            maxGuess={getGameTotalSticks(playersGameData)}
-            guesses={getGameGuesses(playersGameData)}
+            maxGuess={getGameTotalSticks(players)}
+            guesses={getGameGuesses(players)}
             onGuess={handlePlayerGuess}
             translations={t}
           />
@@ -143,7 +152,7 @@ const Console: React.FC<ConsoleProps> = ({
               />
               <Text fontSize={["sm"]} textColor="black">
                 {t("player_guessing", {
-                  name: playersGameData.find((p) => p.id === turnPlayer)?.name,
+                  name: players.find((p) => p.id === turnPlayer)?.name,
                 })}
               </Text>
             </>
@@ -163,10 +172,10 @@ const Console: React.FC<ConsoleProps> = ({
             >
               <Text>
                 {t("player_revealing", {
-                  name: playersGameData.find((p) => p.id === turnPlayer)?.name,
+                  name: players.find((p) => p.id === turnPlayer)?.name,
                 })}
               </Text>
-              <TotalDisplay totalText={t("total")} total={Number(total)} />
+              <TotalDisplay totalText={t("total")} total={total || 0} />
             </Flex>
           </>
         )}
@@ -181,8 +190,12 @@ const Console: React.FC<ConsoleProps> = ({
               <VStack textAlign={"center"}>
                 <Flex fontSize={["lg"]} gap={2} fontWeight={"bold"}>
                   <Text color={winner != null ? "blue.base" : "red.base"}>
-                    {getPlayerName(playersGameData, String(winner)) ||
-                      t("no_one")}
+                    {getPlayerName(players, String(winner)) == null
+                      ? t("no_one")
+                      : getPlayerName(players, String(winner)) ==
+                        playerGameData.name
+                      ? t("you")
+                      : getPlayerName(players, String(winner))}
                   </Text>
                   <Text>{t("player_won")}</Text>
                 </Flex>
@@ -190,10 +203,18 @@ const Console: React.FC<ConsoleProps> = ({
                   <Text fontSize={["sm"]}>{t("lose_stick")}</Text>
                 )}
               </VStack>
-              <TotalDisplay totalText={t("total")} total={Number(total)} />
+              <TotalDisplay totalText={t("total")} total={total || 0} />
             </Flex>
             {playerGameData.role === PlayerRole.host && (
-              <Button variant={"primary"}>{t("next_round")}</Button>
+              <Button
+                size={"sm"}
+                variant={"primary"}
+                onClick={() => {
+                  handleNextRound();
+                }}
+              >
+                {t("next_round")}
+              </Button>
             )}
           </Flex>
         )}

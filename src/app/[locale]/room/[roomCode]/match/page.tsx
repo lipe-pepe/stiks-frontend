@@ -64,7 +64,7 @@ export default function MatchPage() {
             socket={socket}
             roomCode={String(roomCode)}
             matchStatus={match.status}
-            playersGameData={players}
+            players={players}
             playerGameData={player}
             turnPlayer={match.turn}
             winner={winnerId}

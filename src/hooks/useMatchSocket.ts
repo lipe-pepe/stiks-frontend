@@ -94,6 +94,33 @@ const useMatchSocket = (
       updateStatus();
     });
 
+    socketInstance.on("next-round", (data) => {
+      setMatchData((prev) => {
+        const updatedPlayers = prev.playersGameData.map((p) => {
+          return {
+            ...p,
+            chosen: undefined,
+            guess: undefined,
+            revealed: false,
+            total: p.id === data.winnerId ? p.total - 1 : p.total,
+          };
+        });
+
+        // Pula 2 jogadores para a próxima vez
+        const newTurnPlayer = getNextTurnPlayer(
+          getNextTurnPlayer(prev.turn, prev.playersGameData),
+          prev.playersGameData
+        );
+        return {
+          ...prev,
+          turn: newTurnPlayer,
+          round: prev.round + 1,
+          playersGameData: updatedPlayers,
+          status: MatchStatus.choosing,
+        };
+      });
+    });
+
     setSocket(socketInstance);
 
     // Limpa o socket ao desmontar

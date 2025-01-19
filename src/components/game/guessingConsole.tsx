@@ -51,10 +51,13 @@ const GuessingConsole = ({
               rounded="full"
               justifyContent={"center"}
               alignItems={"center"}
+              opacity={guesses.includes(index) ? "0.2" : "100"}
               bgColor={value === index ? "blue.base" : "gray.1"}
               textColor={value === index ? "white" : "black"}
-              cursor={guesses.includes(value) ? "default" : "pointer"}
-              onClick={() => setValue("value", index)}
+              cursor={guesses.includes(index) ? "default" : "pointer"}
+              onClick={() => {
+                if (!guesses.includes(index)) setValue("value", index);
+              }}
               key={index}
             >
               {index}
