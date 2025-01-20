@@ -31,8 +31,16 @@ const Header = () => {
   return (
     <Box py={4}>
       {pathname === "/" ? (
-        <Flex gap={"1rem"} alignItems={"center"} justifyContent={"end"}>
-          <Text fontSize={["sm"]} textColor={"white"} fontWeight={"semibold"}>
+        <Flex
+          gap={["1rem", "2rem", "3rem"]}
+          alignItems={"center"}
+          justifyContent={"end"}
+        >
+          <Text
+            fontSize={["sm", "sm", "md"]}
+            textColor={"white"}
+            fontWeight={"semibold"}
+          >
             {t("how_to_play")}
           </Text>
           <LanguageMenu variant="header" />

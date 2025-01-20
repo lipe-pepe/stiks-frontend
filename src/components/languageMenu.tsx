@@ -48,7 +48,7 @@ const LanguageMenu: React.FC<LanguageMenuProps> = ({
     <Menu>
       <MenuButton>
         <Button
-          size={["xs", "sm", "md"]}
+          size={["xs", "xs", "sm"]}
           leftIcon={
             <Box pb={["2px", "0px"]}>
               <TfiWorld />
@@ -57,15 +57,19 @@ const LanguageMenu: React.FC<LanguageMenuProps> = ({
           bgColor={variant === "header" ? "rgba(0, 0, 0, 0.2)" : "blue.base"}
           textTransform="uppercase"
           borderColor="white"
-          borderRadius={4}
-          borderWidth="1px"
+          borderRadius={[4, 4, 8]}
+          borderWidth={[1, 1, 2]}
           textColor="white"
           fontWeight={500}
         >
           {locale}
         </Button>
       </MenuButton>
-      <MenuList borderColor="base.dark" fontWeight={"semibold"} fontSize={"sm"}>
+      <MenuList
+        borderColor="base.dark"
+        fontWeight={"semibold"}
+        fontSize={["sm", "sm", "md"]}
+      >
         {options.map((opt, index) => (
           <MenuItem
             onClick={() => {

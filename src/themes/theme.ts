@@ -7,7 +7,7 @@ import { inputTheme } from "./input";
 
 const breakpoints = {
   base: "0px",
-  sm: "360px",
+  sm: "480px",
   md: "720px",
   lg: "1280px",
   xl: "1440px",

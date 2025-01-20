@@ -28,10 +28,19 @@ export default function HomePage() {
   };
   return (
     <>
-      <GridItem colSpan={2} colStart={[2, 3]} mb={"2rem"} alignSelf={"center"}>
+      <GridItem
+        colSpan={[2]}
+        colStart={[2, 3, 6]}
+        mb={"2rem"}
+        alignSelf={"center"}
+      >
         <Image src="/images/logo/mainLogo.svg" alt="Stiks Logo" fit="cover" />
       </GridItem>
-      <GridItem colSpan={[4, 6]} colStart={[1, 1]}>
+      <GridItem
+        colSpan={[4, 6, 8, 8, 8]}
+        colStart={[null, null, 3, 3, 3]}
+        bgColor={["teal", "pink", "teal", "pink", "teal"]} //DEBUG
+      >
         <MainBox pt={["2rem"]} pb={["2rem"]}>
           <HomeCarousel />
           <Button
