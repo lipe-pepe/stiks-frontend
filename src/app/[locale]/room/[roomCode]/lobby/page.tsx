@@ -2,13 +2,14 @@
 
 import ChatInput from "@/components/chatInput";
 import ChatMessages from "@/components/chatMessages";
+import InviteButton from "@/components/lobby/inviteButton";
 import PlayerList from "@/components/lobby/playerList";
 import MainBox from "@/components/mainBox";
-import PlayerLobbyDisplay from "@/components/lobby/playerLobbyDisplay";
 import { useRoomContext } from "@/context/roomContext";
 import { Player } from "@/types/player";
 import getSavedPlayerId from "@/utils/getSavedPlayerId";
 import {
+  Box,
   Button,
   Center,
   Flex,
@@ -21,7 +22,6 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
-import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { MdSend, MdVideogameAsset } from "react-icons/md";
 
@@ -30,7 +30,6 @@ const MAX_PLAYERS = 6;
 export default function LobbyPage() {
   const t = useTranslations("LobbyPage");
   const { room, socket, chat } = useRoomContext();
-  const { locale } = useParams();
 
   const [players, setPlayers] = useState<Player[]>(room?.players || []);
   const [playerName, setPlayerName] = useState<string>("");
@@ -60,16 +59,6 @@ export default function LobbyPage() {
     }
   }, []);
 
-  const handleInviteLink = async () => {
-    try {
-      await navigator.clipboard.writeText(
-        `${window.location.host}/${locale}/room/${room?.code}/join/`
-      );
-    } catch (error) {
-      console.error("Fail copying text:", error);
-    }
-  };
-
   const handleStartGame = async () => {
     if (socket) {
       socket.emit("host-started-game", {
@@ -98,7 +87,7 @@ export default function LobbyPage() {
       >
         {t("lobby_title")}
       </Text>
-      <Tabs isFitted>
+      <Tabs isFitted display={["block", "block", "none"]}>
         <TabList fontSize={"sm"}>
           <Tab
             _selected={{ bgColor: "base.darkest", textColor: "yellow.base" }}
@@ -139,16 +128,7 @@ export default function LobbyPage() {
                   isHost={isHost}
                 />
               </Flex>
-              <Button
-                mt={"1rem"}
-                textTransform={"uppercase"}
-                leftIcon={<MdSend />}
-                size={"md"}
-                variant={"secondary"}
-                onClick={handleInviteLink}
-              >
-                {t("invite_button")}{" "}
-              </Button>
+              <InviteButton text={t("invite_button")} />
             </MainBox>
           </TabPanel>
           <TabPanel p={0}>
@@ -165,6 +145,18 @@ export default function LobbyPage() {
           </TabPanel>
         </TabPanels>
       </Tabs>
+      <Box display={["hidden", "hidden", "block"]}>
+        <MainBox>
+          <Flex flexDir={"column"}>
+            <PlayerList
+              players={players}
+              maxPlayers={MAX_PLAYERS}
+              onKickPlayer={onKickPlayer}
+              isHost={isHost}
+            />
+          </Flex>
+        </MainBox>
+      </Box>
       {isHost && (
         <Center mt={["1rem"]}>
           <Button
