@@ -9,6 +9,7 @@ interface MainBoxProps {
   pr?: string[];
   borderTopRadius?: string[] | number[];
   borderBottomRadius?: string[] | number[];
+  height?: string;
 }
 
 const MainBox: React.FC<MainBoxProps> = ({
@@ -19,6 +20,7 @@ const MainBox: React.FC<MainBoxProps> = ({
   pr,
   borderTopRadius,
   borderBottomRadius,
+  height,
 }: MainBoxProps) => {
   return (
     <Flex
@@ -33,7 +35,8 @@ const MainBox: React.FC<MainBoxProps> = ({
       pl={pl || ["1rem"]}
       pr={pr || ["1rem"]}
       maxH={"70vh"}
-      height="100%" // Certifica que o MainBox usa toda a altura disponível
+      height={height || "100%"} // Certifica que o MainBox usa toda a altura disponível
+      overflow="hidden" // Impede que qualquer conteúdo saia do MainBox
     >
       {children}
     </Flex>

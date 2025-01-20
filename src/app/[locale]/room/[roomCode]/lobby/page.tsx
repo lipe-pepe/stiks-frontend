@@ -13,8 +13,8 @@ import {
   Box,
   Button,
   Center,
-  Flex,
   GridItem,
+  HStack,
   Tab,
   TabList,
   TabPanel,
@@ -79,15 +79,30 @@ export default function LobbyPage() {
 
   return (
     <GridItem colSpan={[4, 6, 8, 8, 6]} colStart={[null, null, 3, 3, 4]}>
-      <Text
-        fontSize={"md"}
-        fontWeight={"bold"}
-        color={"white"}
-        textAlign={"center"}
+      <HStack
+        alignItems={"end"}
+        justifyContent={["center", "center", "space-between"]}
         mb={"1rem"}
       >
-        {t("lobby_title")}
-      </Text>
+        <Text
+          fontSize={["md", "md", "lg"]}
+          fontWeight={"bold"}
+          color={"white"}
+          textAlign={"center"}
+        >
+          {t("lobby_title")}
+        </Text>
+        <Button
+          display={["none", "none", "flex"]}
+          size={"md"}
+          leftIcon={<MdVideogameAsset />}
+          variant={"primary"}
+          onClick={() => handleStartGame()}
+        >
+          {t("start_button")}
+        </Button>
+      </HStack>
+
       <Tabs isFitted display={["block", "block", "none"]}>
         <TabList fontSize={"sm"}>
           <Tab
@@ -128,44 +143,79 @@ export default function LobbyPage() {
           </TabPanel>
           <TabPanel p={0}>
             <MainBox borderTopRadius={[0]}>
-              <ChatMessages messages={chat} />
-              {socket !== null && (
-                <ChatInput
-                  playerName={playerName}
-                  roomCode={String(room?.code)}
-                  socket={socket}
-                />
-              )}
+              <FlexContainer
+                scrollableContent={<ChatMessages messages={chat} />}
+                fixedEnd={
+                  socket !== null && (
+                    <ChatInput
+                      playerName={playerName}
+                      roomCode={String(room?.code)}
+                      socket={socket}
+                    />
+                  )
+                }
+              />
             </MainBox>
           </TabPanel>
         </TabPanels>
       </Tabs>
-      <Box display={["hidden", "hidden", "block"]}>
-        <MainBox>
-          <FlexContainer
-            fixedStart={
-              <Text
-                textAlign="center"
-                fontSize={"sm"}
-                textTransform={"uppercase"}
-                fontWeight={"semibold"}
-                color="white"
-              >{`${t("players_tab")} (${players.length}/${MAX_PLAYERS})`}</Text>
-            }
-            scrollableContent={
-              <PlayerList
-                players={players}
-                maxPlayers={MAX_PLAYERS}
-                onKickPlayer={onKickPlayer}
-                isHost={isHost}
+      <Box display={["none", "none", "block"]}>
+        <MainBox height="70vh">
+          <HStack height={"100%"} gap={"2rem"}>
+            <Box
+              p={"1rem"}
+              height={"100%"}
+              borderRadius={12}
+              borderWidth={2}
+              borderColor={"base.darkest"}
+            >
+              <FlexContainer
+                fixedStart={
+                  <Text
+                    textAlign="center"
+                    fontSize={"sm"}
+                    textTransform={"uppercase"}
+                    fontWeight={"semibold"}
+                    color="white"
+                  >{`${t("players_tab")} (${
+                    players.length
+                  }/${MAX_PLAYERS})`}</Text>
+                }
+                scrollableContent={
+                  <PlayerList
+                    players={players}
+                    maxPlayers={MAX_PLAYERS}
+                    onKickPlayer={onKickPlayer}
+                    isHost={isHost}
+                  />
+                }
+                fixedEnd={<InviteButton text={t("invite_button")} />}
               />
-            }
-            fixedEnd={<InviteButton text={t("invite_button")} />}
-          />
+            </Box>
+            <Box
+              p={"1rem"}
+              height={"100%"}
+              borderRadius={12}
+              bgColor={"base.transparent"}
+            >
+              <FlexContainer
+                scrollableContent={<ChatMessages messages={chat} />}
+                fixedEnd={
+                  socket !== null && (
+                    <ChatInput
+                      playerName={playerName}
+                      roomCode={String(room?.code)}
+                      socket={socket}
+                    />
+                  )
+                }
+              />
+            </Box>
+          </HStack>
         </MainBox>
       </Box>
       {isHost && (
-        <Center mt={["1rem"]}>
+        <Center display={["block", "block", "none"]} mt={["1rem"]}>
           <Button
             size={"md"}
             leftIcon={<MdVideogameAsset />}
