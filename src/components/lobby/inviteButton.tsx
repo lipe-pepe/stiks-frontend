@@ -25,7 +25,7 @@ const InviteButton: React.FC<InviteButtonProps> = ({
     <Button
       textTransform={"uppercase"}
       leftIcon={<MdSend />}
-      size={"md"}
+      size={["md", "md", "lg"]}
       variant={"secondary"}
       onClick={handleInviteLink}
     >

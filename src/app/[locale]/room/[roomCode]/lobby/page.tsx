@@ -21,6 +21,7 @@ import {
   TabPanels,
   Tabs,
   Text,
+  VStack,
 } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
@@ -78,30 +79,16 @@ export default function LobbyPage() {
   };
 
   return (
-    <GridItem colSpan={[4, 6, 8, 8, 6]} colStart={[null, null, 3, 3, 4]}>
-      <HStack
-        alignItems={"end"}
-        justifyContent={["center", "center", "space-between"]}
-        mb={"1rem"}
+    <GridItem colSpan={[4, 6, 12]}>
+      <Text
+        fontSize={["md", "md", "lg"]}
+        fontWeight={"bold"}
+        color={"white"}
+        textAlign={"center"}
+        mb={["1rem", "1rem", "2rem"]}
       >
-        <Text
-          fontSize={["md", "md", "lg"]}
-          fontWeight={"bold"}
-          color={"white"}
-          textAlign={"center"}
-        >
-          {t("lobby_title")}
-        </Text>
-        <Button
-          display={["none", "none", "flex"]}
-          size={"md"}
-          leftIcon={<MdVideogameAsset />}
-          variant={"primary"}
-          onClick={() => handleStartGame()}
-        >
-          {t("start_button")}
-        </Button>
-      </HStack>
+        {t("lobby_title")}
+      </Text>
 
       <Tabs isFitted display={["block", "block", "none"]}>
         <TabList fontSize={"sm"}>
@@ -113,7 +100,7 @@ export default function LobbyPage() {
             textTransform={"uppercase"}
             borderWidth={0}
           >
-            {t("players_tab")}
+            {t("players")}
           </Tab>
           <Tab
             _selected={{ bgColor: "base.darkest", textColor: "yellow.base" }}
@@ -122,7 +109,7 @@ export default function LobbyPage() {
             textColor={"rgba(255,255,255,0.75)"}
             textTransform={"uppercase"}
           >
-            {t("chat_tab")}
+            {t("chat")}
           </Tab>
         </TabList>
         <TabPanels>
@@ -177,9 +164,7 @@ export default function LobbyPage() {
                     textTransform={"uppercase"}
                     fontWeight={"semibold"}
                     color="white"
-                  >{`${t("players_tab")} (${
-                    players.length
-                  }/${MAX_PLAYERS})`}</Text>
+                  >{`${t("players")} (${players.length}/${MAX_PLAYERS})`}</Text>
                 }
                 scrollableContent={
                   <PlayerList
@@ -192,30 +177,53 @@ export default function LobbyPage() {
                 fixedEnd={<InviteButton text={t("invite_button")} />}
               />
             </Box>
-            <Box
-              p={"1rem"}
-              height={"100%"}
-              borderRadius={12}
-              bgColor={"base.transparent"}
-            >
-              <FlexContainer
-                scrollableContent={<ChatMessages messages={chat} />}
-                fixedEnd={
-                  socket !== null && (
-                    <ChatInput
-                      playerName={playerName}
-                      roomCode={String(room?.code)}
-                      socket={socket}
-                    />
-                  )
-                }
-              />
-            </Box>
+            <VStack height={"100%"}>
+              <Box
+                p={"1rem"}
+                height={"100%"}
+                borderRadius={12}
+                bgColor={"base.transparent"}
+              >
+                <FlexContainer
+                  fixedStart={
+                    <Text
+                      textAlign="center"
+                      fontSize={"sm"}
+                      textTransform={"uppercase"}
+                      fontWeight={"semibold"}
+                      color="white"
+                    >
+                      {t("chat")}
+                    </Text>
+                  }
+                  scrollableContent={<ChatMessages messages={chat} />}
+                  fixedEnd={
+                    socket !== null && (
+                      <ChatInput
+                        playerName={playerName}
+                        roomCode={String(room?.code)}
+                        socket={socket}
+                      />
+                    )
+                  }
+                />
+              </Box>
+              <Center h={"30%"}>
+                <Button
+                  size={"lg"}
+                  leftIcon={<MdVideogameAsset />}
+                  variant={"primary"}
+                  onClick={() => handleStartGame()}
+                >
+                  {t("start_button")}
+                </Button>
+              </Center>
+            </VStack>
           </HStack>
         </MainBox>
       </Box>
       {isHost && (
-        <Center display={["block", "block", "none"]} mt={["1rem"]}>
+        <Center display={["flex", "flex", "none"]} mt={["1rem"]}>
           <Button
             size={"md"}
             leftIcon={<MdVideogameAsset />}

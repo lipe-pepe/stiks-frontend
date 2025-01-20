@@ -21,8 +21,8 @@
   },
   "LobbyPage": {
     "lobby_title": "Lobby",
-    "players_tab": "Players",
-    "chat_tab": "Chat",
+    "players": "Players",
+    "chat": "Chat",
     "invite_button": "Invite players!",
     "start_button": "Start game"
   },
