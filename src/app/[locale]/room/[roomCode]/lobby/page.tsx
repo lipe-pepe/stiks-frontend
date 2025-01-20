@@ -2,6 +2,7 @@
 
 import ChatInput from "@/components/chatInput";
 import ChatMessages from "@/components/chatMessages";
+import FlexContainer from "@/components/flexContainer";
 import InviteButton from "@/components/lobby/inviteButton";
 import PlayerList from "@/components/lobby/playerList";
 import MainBox from "@/components/mainBox";
@@ -23,7 +24,7 @@ import {
 } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
 import React, { useEffect, useState } from "react";
-import { MdSend, MdVideogameAsset } from "react-icons/md";
+import { MdVideogameAsset } from "react-icons/md";
 
 const MAX_PLAYERS = 6;
 
@@ -112,23 +113,17 @@ export default function LobbyPage() {
         <TabPanels>
           <TabPanel p={0}>
             <MainBox borderTopRadius={[0]}>
-              <Flex
-                flexDir={"column"}
-                borderBottomRadius={"16px"}
-                borderTopRadius={0}
-                textColor={"white"}
-                gap={["2rem", "2rem", "3rem"]}
-                p={["1rem"]}
-                overflow={"scroll"}
-              >
-                <PlayerList
-                  players={players}
-                  maxPlayers={MAX_PLAYERS}
-                  onKickPlayer={onKickPlayer}
-                  isHost={isHost}
-                />
-              </Flex>
-              <InviteButton text={t("invite_button")} />
+              <FlexContainer
+                scrollableContent={
+                  <PlayerList
+                    players={players}
+                    maxPlayers={MAX_PLAYERS}
+                    onKickPlayer={onKickPlayer}
+                    isHost={isHost}
+                  />
+                }
+                fixedEnd={<InviteButton text={t("invite_button")} />}
+              />
             </MainBox>
           </TabPanel>
           <TabPanel p={0}>
@@ -147,14 +142,17 @@ export default function LobbyPage() {
       </Tabs>
       <Box display={["hidden", "hidden", "block"]}>
         <MainBox>
-          <Flex flexDir={"column"}>
-            <PlayerList
-              players={players}
-              maxPlayers={MAX_PLAYERS}
-              onKickPlayer={onKickPlayer}
-              isHost={isHost}
-            />
-          </Flex>
+          <FlexContainer
+            scrollableContent={
+              <PlayerList
+                players={players}
+                maxPlayers={MAX_PLAYERS}
+                onKickPlayer={onKickPlayer}
+                isHost={isHost}
+              />
+            }
+            fixedEnd={<InviteButton text={t("invite_button")} />}
+          />
         </MainBox>
       </Box>
       {isHost && (
