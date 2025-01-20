@@ -53,7 +53,24 @@ const Header = () => {
             src="/images/logo/lightLogo.svg"
             alt="Stiks Logo"
           />
-          <HeaderMenu />
+          <Box display={["block", "block", "none"]}>
+            <HeaderMenu />
+          </Box>
+          <Flex
+            display={["none", "none", "flex"]}
+            gap={"3rem"}
+            alignItems={"center"}
+            justifyContent={"end"}
+          >
+            <Text
+              fontSize={["sm", "sm", "md"]}
+              textColor={"white"}
+              fontWeight={"semibold"}
+            >
+              {t("how_to_play")}
+            </Text>
+            <LanguageMenu variant="header" />
+          </Flex>
         </Flex>
       )}
       <Modal isCentered isOpen={isOpen} onClose={onClose}>
