@@ -23,7 +23,6 @@ const InviteButton: React.FC<InviteButtonProps> = ({
 
   return (
     <Button
-      mt={"1rem"}
       textTransform={"uppercase"}
       leftIcon={<MdSend />}
       size={"md"}

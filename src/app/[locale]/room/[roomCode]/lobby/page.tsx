@@ -143,6 +143,15 @@ export default function LobbyPage() {
       <Box display={["hidden", "hidden", "block"]}>
         <MainBox>
           <FlexContainer
+            fixedStart={
+              <Text
+                textAlign="center"
+                fontSize={"sm"}
+                textTransform={"uppercase"}
+                fontWeight={"semibold"}
+                color="white"
+              >{`${t("players_tab")} (${players.length}/${MAX_PLAYERS})`}</Text>
+            }
             scrollableContent={
               <PlayerList
                 players={players}
