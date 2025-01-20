@@ -24,10 +24,12 @@
     "players_tab": "Players",
     "chat_tab": "Chat",
     "invite_button": "Invite players!",
-    "empty_player": "Empty",
-    "start_button": "Start game",
+    "start_button": "Start game"
+  },
+  "PlayerList": {
     "current_player_tag": "you",
-    "kick_button": "Kick out"
+    "kick_button": "Kick out",
+    "empty_player": "Empty"
   },
   "Chat": {
     "input_placeholder": "Chat!"

@@ -9,6 +9,7 @@ interface PlayerLobbyDisplayProps {
   player: Player | null;
   isCurrentPlayer: boolean;
   isHost: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   translations: any;
   onKick: () => void;
 }
@@ -37,6 +38,7 @@ const PlayerLobbyDisplay: React.FC<PlayerLobbyDisplayProps> = ({
       alignItems={"center"}
       justifyContent={player != null ? "space-between" : "normal"}
       color={player != null ? "white" : "base.darkest"}
+      width={"100%"}
     >
       <Flex alignItems={"center"} gap={["1rem"]}>
         {player != null ? (
@@ -89,7 +91,6 @@ const PlayerLobbyDisplay: React.FC<PlayerLobbyDisplayProps> = ({
         <SlOptions
           onClick={() => setShowOptions(!showOptions)}
           size={"1.5rem"}
-          color="width"
         />
       )}
     </Flex>

@@ -24,8 +24,10 @@
     "players_tab": "Jogadores",
     "chat_tab": "Chat",
     "invite_button": "Convidar jogadores!",
+    "start_button": "Começar jogo"
+  },
+  "PlayerList": {
     "empty_player": "Vazio",
-    "start_button": "Começar jogo",
     "current_player_tag": "você",
     "kick_button": "Expulsar"
   },

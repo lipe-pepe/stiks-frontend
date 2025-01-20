@@ -2,8 +2,9 @@
 
 import ChatInput from "@/components/chatInput";
 import ChatMessages from "@/components/chatMessages";
+import PlayerList from "@/components/lobby/playerList";
 import MainBox from "@/components/mainBox";
-import PlayerLobbyDisplay from "@/components/playerLobbyDisplay";
+import PlayerLobbyDisplay from "@/components/lobby/playerLobbyDisplay";
 import { useRoomContext } from "@/context/roomContext";
 import { Player } from "@/types/player";
 import getSavedPlayerId from "@/utils/getSavedPlayerId";
@@ -131,29 +132,12 @@ export default function LobbyPage() {
                 p={["1rem"]}
                 overflow={"scroll"}
               >
-                {players.map((player, index) => (
-                  <PlayerLobbyDisplay
-                    key={index}
-                    player={player}
-                    isHost={isHost}
-                    translations={t}
-                    isCurrentPlayer={playerName === player.name}
-                    onKick={onKickPlayer}
-                  />
-                ))}
-                {Array.from(
-                  { length: MAX_PLAYERS - players.length },
-                  (_, index) => (
-                    <PlayerLobbyDisplay
-                      isHost={isHost}
-                      key={index}
-                      player={null}
-                      translations={t}
-                      isCurrentPlayer={false}
-                      onKick={onKickPlayer}
-                    />
-                  )
-                )}
+                <PlayerList
+                  players={players}
+                  maxPlayers={MAX_PLAYERS}
+                  onKickPlayer={onKickPlayer}
+                  isHost={isHost}
+                />
               </Flex>
               <Button
                 mt={"1rem"}
