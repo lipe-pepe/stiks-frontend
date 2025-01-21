@@ -37,6 +37,7 @@
   "MatchPage": {
     "round": "Rodada {number}",
     "show_chat": "Exibir chat",
+    "chat": "Chat",
     "choosing": "escolhendo...",
     "current_player_tag": "você",
     "guessing": "palpitando...",

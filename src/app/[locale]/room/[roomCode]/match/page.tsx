@@ -1,5 +1,8 @@
 "use client";
 
+import ChatInput from "@/components/chatInput";
+import ChatMessages from "@/components/chatMessages";
+import FlexContainer from "@/components/flexContainer";
 import Console from "@/components/game/console";
 import PlayerGameDisplay from "@/components/playerGameDisplay";
 import { useMatchContext } from "@/context/matchContext";
@@ -8,21 +11,36 @@ import { MatchStatus, PlayerGameData } from "@/types/match";
 import getRoundWinner from "@/utils/game/getRoundWinner";
 import getSticksRevealed from "@/utils/game/getSticksRevealed";
 import getSavedPlayerId from "@/utils/getSavedPlayerId";
-import { Box, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Grid,
+  GridItem,
+  Modal,
+  ModalCloseButton,
+  ModalContent,
+  ModalOverlay,
+  Text,
+  useDisclosure,
+  VStack,
+} from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { MdChatBubbleOutline } from "react-icons/md";
 
 export default function MatchPage() {
   const t = useTranslations("MatchPage");
   const { roomCode } = useParams();
-  const { match, socket } = useMatchContext();
+  const { match, socket, chat } = useMatchContext();
   const [players, setPlayers] = useState<PlayerGameData[]>(
     match.playersGameData
   );
   const [player, setPlayer] = useState<PlayerGameData>();
   const [winnerId, setWinnerId] = useState<string>();
   const [totalRevealed, setTotalRevealed] = useState<number>();
+
+  const chatModal = useDisclosure();
 
   // Atualiza os jogadores sempre que a sala muda
   useEffect(() => {
@@ -45,39 +63,129 @@ export default function MatchPage() {
   }, [roomCode, socket]);
 
   return (
-    <GridItem color={"white"} colSpan={[4, 6, 12]}>
-      <GridItem textAlign={"center"} fontSize={"md"} fontWeight={700}>
-        {t("round", { number: match.round })}
+    <>
+      <GridItem color={"white"} colSpan={[4, 6, 12]}>
+        <GridItem
+          textAlign={"center"}
+          fontSize={["md", "md", "xl"]}
+          fontWeight={700}
+          position={"relative"}
+        >
+          {t("round", { number: match.round })}
+          <VStack
+            display={["flex", "flex", "none"]}
+            color={"rgba(255,255,255,0.5)"}
+            position={"absolute"}
+            right={0}
+            bottom={0}
+            onClick={() => chatModal.onToggle()}
+          >
+            <MdChatBubbleOutline />
+            <Text
+              fontSize={"xs"}
+              textTransform={"lowercase"}
+              fontWeight={"normal"}
+            >
+              {t("show_chat")}
+            </Text>
+          </VStack>
+        </GridItem>
+        <Grid
+          templateColumns={gridTemplateColumns}
+          gap={gridGap}
+          templateRows="repeat(2, 1fr)"
+        >
+          {/* CONSOLE */}
+          <GridItem
+            display={["none", "none", "flex"]}
+            bg={"red"}
+            colSpan={5}
+            rowSpan={1}
+            rowStart={1}
+          >
+            CONSOLE
+          </GridItem>
+          {/* CHAT */}
+          <GridItem
+            display={["none", "none", "flex"]}
+            colSpan={5}
+            rowSpan={1}
+            rowStart={2}
+          >
+            <Box
+              p={"1rem"}
+              height={"100%"}
+              borderRadius={12}
+              bgColor={"base.transparent"}
+            >
+              <FlexContainer
+                fixedStart={
+                  <Text
+                    textAlign="center"
+                    fontSize={"sm"}
+                    textTransform={"uppercase"}
+                    fontWeight={"semibold"}
+                    color="white"
+                  >
+                    {t("chat")}
+                  </Text>
+                }
+                scrollableContent={<ChatMessages messages={chat} />}
+                fixedEnd={
+                  socket !== null && (
+                    <ChatInput
+                      playerName={String(player?.name)}
+                      roomCode={String(roomCode)}
+                      socket={socket}
+                    />
+                  )
+                }
+              />
+            </Box>
+          </GridItem>
+          {/* PLAYERS */}
+          <GridItem bg={"fuchsia"} rowSpan={2} colSpan={[4, 6, 7]}>
+            PLAYERSSS
+          </GridItem>
+        </Grid>
       </GridItem>
-      <Grid
-        bg={"lime"}
-        templateColumns={gridTemplateColumns}
-        gap={gridGap}
-        templateRows="repeat(2, 1fr)"
-      >
-        <GridItem
-          display={["none", "none", "flex"]}
-          bg={"red"}
-          colSpan={5}
-          rowSpan={1}
-          rowStart={1}
-        >
-          CONSOLE
-        </GridItem>
-        <GridItem
-          display={["none", "none", "flex"]}
-          bg={"skyblue"}
-          colSpan={5}
-          rowSpan={1}
-          rowStart={2}
-        >
-          CHAT
-        </GridItem>
-        <GridItem bg={"fuchsia"} rowSpan={2} colSpan={[4, 6, 7]}>
-          PLAYERSSS
-        </GridItem>
-      </Grid>
-    </GridItem>
+      <Modal isCentered onClose={chatModal.onClose} isOpen={chatModal.isOpen}>
+        <ModalOverlay />
+        <ModalContent bg={"none"} mx={"2rem"}>
+          <ModalCloseButton color={"white"} />
+          <Box
+            p={"1rem"}
+            height={"100%"}
+            borderRadius={12}
+            bgColor={"base.base"}
+          >
+            <FlexContainer
+              fixedStart={
+                <Text
+                  textAlign="center"
+                  fontSize={"sm"}
+                  textTransform={"uppercase"}
+                  fontWeight={"semibold"}
+                  color="white"
+                >
+                  {t("chat")}
+                </Text>
+              }
+              scrollableContent={<ChatMessages messages={chat} />}
+              fixedEnd={
+                socket !== null && (
+                  <ChatInput
+                    playerName={String(player?.name)}
+                    roomCode={String(roomCode)}
+                    socket={socket}
+                  />
+                )
+              }
+            />
+          </Box>
+        </ModalContent>
+      </Modal>
+    </>
     // <GridItem colSpan={[4]} colStart={[1]} textColor={"white"}>
     //   <Text textAlign={"center"} fontSize={"md"} fontWeight={700}>
     //     {t("round", { number: match.round })}

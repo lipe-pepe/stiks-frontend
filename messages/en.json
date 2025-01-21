@@ -37,6 +37,7 @@
   "MatchPage": {
     "round": "Round {number}",
     "show_chat": "Show chat",
+    "chat": "Chat",
     "choosing": "choosing...",
     "current_player_tag": "you",
     "guessing": "guessing...",
