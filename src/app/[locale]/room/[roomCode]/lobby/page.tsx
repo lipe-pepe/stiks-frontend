@@ -149,8 +149,9 @@ export default function LobbyPage() {
       </Tabs>
       <Box display={["none", "none", "block"]}>
         <MainBox height="70vh">
-          <HStack height={"100%"} gap={"2rem"}>
+          <HStack h={"100%"} w={"100%"} gap={"2rem"}>
             <Box
+              flex="1"
               p={"1rem"}
               height={"100%"}
               borderRadius={12}
