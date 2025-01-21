@@ -46,7 +46,11 @@ const ChoosingConsole = ({
         justifyContent={"center"}
         alignItems={"center"}
       >
-        <Text fontSize={["sm"]} textColor={"blue.base"}>
+        <Text
+          fontSize={["sm", "sm", "lg"]}
+          fontWeight={"medium"}
+          textColor={"blue.base"}
+        >
           {translations("choose_instruction")}
         </Text>
         <HStack>

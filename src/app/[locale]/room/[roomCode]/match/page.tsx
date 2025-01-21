@@ -109,14 +109,12 @@ export default function MatchPage() {
           >
             {socket != null && player != null && (
               <Console
-                socket={socket}
-                roomCode={String(roomCode)}
-                matchStatus={match.status}
-                players={players}
-                playerGameData={player}
-                turnPlayer={match.turn}
-                winner={winnerId}
-                total={totalRevealed}
+                timerSeconds={30}
+                onTimerEnd={() => {}}
+                text="Teste do textp"
+                hasForm={true}
+                onFormSubmit={(x) => console.log(x)}
+                formOptions={[0, 1, 2, 3]}
               />
             )}
           </GridItem>

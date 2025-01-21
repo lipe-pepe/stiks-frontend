@@ -34,7 +34,7 @@ const Timer: React.FC<TimerProps> = ({
   }, [onEnd]);
 
   return (
-    <Flex alignItems={"center"} gap={["0.5rem"]}>
+    <Flex width={"100%"} alignItems={"center"} gap={["0.5rem"]}>
       <MdAlarm size={"1.2rem"} color="black" />
       <Box
         position={"relative"}
