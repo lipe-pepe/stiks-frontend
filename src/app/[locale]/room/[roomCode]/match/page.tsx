@@ -97,13 +97,28 @@ export default function MatchPage() {
         >
           {/* CONSOLE */}
           <GridItem
-            display={["none", "none", "flex"]}
-            bg={"red"}
+            position={["fixed", "fixed", "initial"]}
+            bottom={0}
+            left={0}
+            right={0}
+            mx={[4, 20, 0]}
+            mb={[16, 16, 0]}
             colSpan={5}
             rowSpan={1}
             rowStart={1}
           >
-            CONSOLE
+            {socket != null && player != null && (
+              <Console
+                socket={socket}
+                roomCode={String(roomCode)}
+                matchStatus={match.status}
+                players={players}
+                playerGameData={player}
+                turnPlayer={match.turn}
+                winner={winnerId}
+                total={totalRevealed}
+              />
+            )}
           </GridItem>
           {/* CHAT */}
           <GridItem
