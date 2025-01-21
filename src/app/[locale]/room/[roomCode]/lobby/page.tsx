@@ -112,8 +112,8 @@ export default function LobbyPage() {
             {t("chat")}
           </Tab>
         </TabList>
-        <TabPanels>
-          <TabPanel p={0}>
+        <TabPanels h={"60vh"}>
+          <TabPanel h={"100%"} p={0}>
             <MainBox borderTopRadius={[0]}>
               <FlexContainer
                 scrollableContent={
@@ -128,9 +128,10 @@ export default function LobbyPage() {
               />
             </MainBox>
           </TabPanel>
-          <TabPanel p={0}>
-            <MainBox borderTopRadius={[0]}>
+          <TabPanel h={"100%"} p={0}>
+            <MainBox height="100%" borderTopRadius={[0]}>
               <FlexContainer
+                fixedStart={<Box />}
                 scrollableContent={<ChatMessages messages={chat} />}
                 fixedEnd={
                   socket !== null && (

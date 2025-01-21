@@ -1,7 +1,7 @@
 "use client";
 
 import { ChatMessage } from "@/types/chat";
-import { Flex, Text } from "@chakra-ui/react";
+import { Text, VStack } from "@chakra-ui/react";
 import React from "react";
 
 interface ChatMessagesProps {
@@ -12,13 +12,18 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({
   messages,
 }: ChatMessagesProps) => {
   return (
-    <Flex flexDir={"column"} overflow={"scroll"}>
+    <VStack
+      height={"100%"}
+      justifyContent={"end"}
+      alignItems={"start"}
+      textAlign={"start"}
+    >
       {messages.map((message, index) => (
         <Text key={index} color={"white"} fontSize={"sm"}>
           <b>{message.player}</b>: {message.message}
         </Text>
       ))}
-    </Flex>
+    </VStack>
   );
 };
 

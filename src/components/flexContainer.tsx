@@ -20,7 +20,13 @@ const FlexContainer: React.FC<FlexContainerProps> = ({
       overflow="hidden" // Impede que qualquer conteúdo saia
     >
       {fixedStart}
-      <Flex overflowY={"scroll"}>{scrollableContent}</Flex>
+      <Flex
+        flex="1" // Permite que este Flex cresça para ocupar o espaço disponível
+        minHeight={0} // Garante que o flex container pode encolher corretamente
+        overflowY="auto" // Define o comportamento de scroll para o eixo Y
+      >
+        {scrollableContent}
+      </Flex>
       {fixedEnd}
     </Flex>
   );
