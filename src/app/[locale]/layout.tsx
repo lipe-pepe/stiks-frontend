@@ -9,6 +9,7 @@ import { fonts } from "../fonts";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Box, Flex, Grid } from "@chakra-ui/react";
+import { gridGap, gridTemplateColumns } from "@/themes/gridConfig";
 
 export default async function LocaleLayout({
   children,
@@ -30,12 +31,6 @@ export default async function LocaleLayout({
   // side is the easiest way to get started
   const messages = await getMessages();
 
-  const gridTemplateColumns = [
-    "repeat(4, 1fr)",
-    "repeat(6, 1fr)",
-    "repeat(12, 1fr)",
-  ];
-  const gridGap = ["16px", "16px", "16px", "20px", "24px"];
   const pagePadding = ["16px", "80px", "120px", "160px", "240px"];
 
   return (
