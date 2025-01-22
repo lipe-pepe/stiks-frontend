@@ -3,7 +3,7 @@
 import ChatInput from "@/components/chatInput";
 import ChatMessages from "@/components/chatMessages";
 import FlexContainer from "@/components/flexContainer";
-import Console from "@/components/game/console";
+import Console, { ConsoleProps } from "@/components/game/console";
 import PlayerGameDisplay from "@/components/playerGameDisplay";
 import { useMatchContext } from "@/context/matchContext";
 import { gridGap, gridTemplateColumns } from "@/themes/gridConfig";
@@ -40,6 +40,8 @@ export default function MatchPage() {
   const [winnerId, setWinnerId] = useState<string>();
   const [totalRevealed, setTotalRevealed] = useState<number>();
 
+  const playerId = getSavedPlayerId();
+
   const chatModal = useDisclosure();
 
   // Atualiza os jogadores sempre que a sala muda
@@ -61,6 +63,67 @@ export default function MatchPage() {
       });
     }
   }, [roomCode, socket]);
+
+  const handlePlayerChose = (value: number) => {
+    if (socket) {
+      socket.emit("player-chose", {
+        roomCode: roomCode,
+        playerId: playerId,
+        value: value,
+      });
+    }
+  };
+
+  const handlePlayerGuess = (value: number) => {
+    if (socket) {
+      socket.emit("player-guessed", {
+        roomCode: roomCode,
+        playerId: playerId,
+        value: value,
+      });
+    }
+  };
+
+  // const handlePlayerReveal = () => {
+  //   if (socket && playerGameData.id === turnPlayer) {
+  //     socket.emit("player-revealed", {
+  //       roomCode: roomCode,
+  //       playerId: playerId,
+  //     });
+  //   }
+  // };
+
+  // const handleNextRound = () => {
+  //   if (socket) {
+  //     socket.emit("next-round", {
+  //       roomCode: roomCode,
+  //       winnerId: winner,
+  //     });
+  //   }
+  // };
+
+  const getConsoleProps = () => {
+    const props: ConsoleProps = {
+      text: "",
+    };
+
+    if (match.status === MatchStatus.choosing && player?.chosen == null) {
+      props.text = t("choose_instruction");
+      props.formOptions = [0, 1, 2, 3];
+      props.hasForm = true;
+      props.onFormSubmit = handlePlayerChose;
+      props.timerSeconds = 30;
+      props.onTimerEnd = undefined;
+    }
+
+    if (match.status === MatchStatus.choosing && player?.chosen != null) {
+      props.text = t("wait_instruction");
+      props.formOptions = [0, 1, 2, 3];
+      props.hasForm = false;
+    }
+
+    return props;
+  };
 
   return (
     <>
@@ -109,12 +172,12 @@ export default function MatchPage() {
           >
             {socket != null && player != null && (
               <Console
-                timerSeconds={30}
-                onTimerEnd={() => {}}
-                text="Teste do textp"
-                hasForm={true}
-                onFormSubmit={(x) => console.log(x)}
-                formOptions={[0, 1, 2, 3]}
+                timerSeconds={getConsoleProps().timerSeconds}
+                onTimerEnd={getConsoleProps().onTimerEnd}
+                text={getConsoleProps().text}
+                hasForm={getConsoleProps().hasForm}
+                onFormSubmit={getConsoleProps().onFormSubmit}
+                formOptions={getConsoleProps().formOptions}
               />
             )}
           </GridItem>

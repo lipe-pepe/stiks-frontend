@@ -43,20 +43,21 @@
     "guessing": "guessing...",
     "next_guess": "next to guess",
     "guess": "Guess: {number}",
-    "winners": "Winners"
-  },
-  "Console": {
+    "winners": "Winners",
     "choose_instruction": "Choose the number of sticks to play",
-    "wait_instruction": "Waiting for the other players",
     "guess_instruction": "Make your guess",
-    "confirm_button": "Confirm",
     "player_guessing": "{name} is making their guess...",
     "player_revealing": "{name} is revealing...",
     "player_won": "guessed correctly!",
     "you": "You",
     "no_one": "No one",
     "lose_stick": "Loses a stick",
-    "total": "Total",
+    "wait_instruction": "Waiting for the other players",
     "next_round": "Next round"
+  },
+  "Console": {
+    "confirm_button": "Confirm",
+
+    "total": "Total"
   }
 }

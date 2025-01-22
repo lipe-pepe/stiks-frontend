@@ -43,20 +43,20 @@
     "guessing": "palpitando...",
     "next_guess": "próximo a palpitar",
     "guess": "Palpite: {number}",
-    "winners": "Vencedores"
-  },
-  "Console": {
+    "winners": "Vencedores",
     "choose_instruction": "Escolha o número de palitinhos para jogar",
     "guess_instruction": "Faça seu palpite",
     "wait_instruction": "Aguardando os outros jogadores",
-    "confirm_button": "Confirmar",
     "player_guessing": "{name} está fazendo seu palpite...",
     "player_revealing": "{name} está revelando...",
-    "player_won": "acertou!",
     "you": "Você",
     "no_one": "Ninguém",
     "lose_stick": "Perde um palitinho",
-    "total": "Total",
-    "next_round": "Próxima rodada"
+    "next_round": "Próxima rodada",
+    "player_won": "acertou!"
+  },
+  "Console": {
+    "confirm_button": "Confirmar",
+    "total": "Total"
   }
 }

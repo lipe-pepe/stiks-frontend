@@ -3,7 +3,6 @@
 import { Button, Flex, Text, VStack } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { Socket } from "socket.io-client";
 import getGameTotalSticks from "@/utils/game/getGameTotalSticks";
 import getGameGuesses from "@/utils/game/getGameGuesses";
 import ChoosingConsole from "./choosingConsole";
@@ -64,44 +63,6 @@ const Console: React.FC<ConsoleProps> = ({
 }: ConsoleProps) => {
   const t = useTranslations("Console");
 
-  const handlePlayerChose = (value: number) => {
-    if (socket) {
-      socket.emit("player-chose", {
-        roomCode: roomCode,
-        playerId: playerGameData?.id,
-        value: value,
-      });
-    }
-  };
-
-  const handlePlayerGuess = (value: number) => {
-    if (socket) {
-      socket.emit("player-guessed", {
-        roomCode: roomCode,
-        playerId: playerGameData?.id,
-        value: value,
-      });
-    }
-  };
-
-  const handlePlayerReveal = () => {
-    if (socket && playerGameData.id === turnPlayer) {
-      socket.emit("player-revealed", {
-        roomCode: roomCode,
-        playerId: playerGameData.id,
-      });
-    }
-  };
-
-  const handleNextRound = () => {
-    if (socket) {
-      socket.emit("next-round", {
-        roomCode: roomCode,
-        winnerId: winner,
-      });
-    }
-  };
-
   const { handleSubmit, setValue, watch } = useForm<{ value: number }>();
   const value = watch("value");
 
@@ -117,6 +78,7 @@ const Console: React.FC<ConsoleProps> = ({
       p={[6]}
       fontSize={["sm"]}
       color={"black"}
+      textAlign={"center"}
     >
       {timerSeconds != null && onTimerEnd != null && (
         <Timer
@@ -126,7 +88,12 @@ const Console: React.FC<ConsoleProps> = ({
           endColor="red.base"
         />
       )}
-      <Text fontSize={["sm", "sm", "lg"]}>{text}</Text>
+      <Text
+        fontSize={["sm", "sm", "lg"]}
+        color={hasForm ? "blue.base" : "black"}
+      >
+        {text}
+      </Text>
       {hasForm && (
         <form onSubmit={onSubmit}>
           <VStack gap={["1rem", "1rem", "2rem"]}>
@@ -267,4 +234,5 @@ const Console: React.FC<ConsoleProps> = ({
   );
 };
 
+export type { ConsoleProps };
 export default Console;
