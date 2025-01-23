@@ -37,17 +37,16 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
   };
   return (
     <SimpleGrid
-      boxSize={"100%"}
       spacing={["1rem"]}
-      columns={[3]}
+      columns={[3, null, 1]}
       alignItems={"center"}
+      bg={"teal"}
     >
       <Box
         position={"relative"}
         // bg={"teal"} //DEBUG
       >
         <Image
-          maxH={["8rem"]}
           src={`/images/avatars/${player.avatar}`}
           alt={`Player ${player.name} avatar`}
         />
@@ -83,22 +82,21 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
       </VStack>
       <Center
         position={"relative"}
-        // bg={"teal"} //debug
         h={["50%"]}
+        // bg={"teal"} //debug
       >
-        {player.chosen != null && (
-          <Image
-            boxSize={["100%"]}
-            objectFit={"contain"}
-            transform={["rotate(90deg)"]}
-            src={
-              player.revealed
-                ? `/images/hands/open_${tone}`
-                : `/images/hands/closed_${tone}`
-            }
-            alt={player.revealed ? "Open hand " : "Closed hand"}
-          />
-        )}
+        {/* {player.chosen != null && ( */}
+        <Image
+          boxSize={"100%"}
+          transform={["rotate(90deg)"]}
+          src={
+            player.revealed
+              ? `/images/hands/open_${tone}`
+              : `/images/hands/closed_${tone}`
+          }
+          alt={player.revealed ? "Open hand " : "Closed hand"}
+        />
+        {/* )} */}
       </Center>
     </SimpleGrid>
   );
