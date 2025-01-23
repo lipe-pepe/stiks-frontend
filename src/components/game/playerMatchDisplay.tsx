@@ -42,11 +42,9 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
       alignItems={"center"}
       bg={"teal"}
     >
-      <Box
-        position={"relative"}
-        // bg={"teal"} //DEBUG
-      >
+      <Center position={"relative"}>
         <Image
+          maxH={["none", null, "7rem"]}
           src={`/images/avatars/${player.avatar}`}
           alt={`Player ${player.name} avatar`}
         />
@@ -61,8 +59,11 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
             borderWidth={2}
           />
         </Box>
-      </Box>
-      <VStack alignItems={["start"]}>
+      </Center>
+      <VStack
+        alignItems={["start", null, "center"]}
+        textAlign={["start", null, "center"]}
+      >
         <HStack flexWrap={"wrap"}>
           <Text
             fontStyle={"italic"}
@@ -92,7 +93,8 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
         {/* {player.chosen != null && ( */}
         <Image
           boxSize={"100%"}
-          transform={["rotate(90deg)"]}
+          maxH={["none", null, "8rem"]}
+          transform={["rotate(90deg)", null, "rotate(180deg)"]}
           src={
             player.revealed
               ? `/images/hands/open_${tone}`
