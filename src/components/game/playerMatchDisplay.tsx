@@ -36,19 +36,14 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
     return null;
   };
   return (
-    <SimpleGrid
-      spacing={["1rem"]}
-      columns={[3, null, 1]}
-      alignItems={"center"}
-      bg={"teal"}
-    >
+    <SimpleGrid spacing={["1rem"]} columns={[3, null, 1]} alignItems={"center"}>
       <Center position={"relative"}>
         <Image
           maxH={["none", null, "7rem"]}
           src={`/images/avatars/${player.avatar}`}
           alt={`Player ${player.name} avatar`}
         />
-        <Box pos={"absolute"} bottom={0}>
+        <Box pos={"absolute"} bottom={0} left={0}>
           <NumberCircle
             number={player.total}
             size={["2rem"]}

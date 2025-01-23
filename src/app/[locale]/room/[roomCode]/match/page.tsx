@@ -218,7 +218,6 @@ export default function MatchPage() {
           </VStack>
         </GridItem>
         <Grid
-          bg={"green"}
           templateColumns={gridTemplateColumns}
           gap={gridGap}
           templateRows="repeat(2, 1fr)"
@@ -257,6 +256,7 @@ export default function MatchPage() {
             <Box
               p={"1rem"}
               height={"100%"}
+              width={"100%"}
               borderRadius={12}
               bgColor={"base.transparent"}
             >
@@ -286,7 +286,7 @@ export default function MatchPage() {
             </Box>
           </GridItem>
           {/* PLAYERS */}
-          <GridItem bg={"blue"} rowSpan={2} colSpan={[4, 6, 7]}>
+          <GridItem rowSpan={2} colSpan={[4, 6, 7]}>
             <PlayerGrid players={players} />
           </GridItem>
         </Grid>

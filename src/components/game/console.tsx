@@ -72,12 +72,15 @@ const Console: React.FC<ConsoleProps> = ({
 
   return (
     <VStack
+      h={"100%"}
+      w={"100%"}
       bgColor={"white"}
       gap={["1rem", "1rem", "2rem"]}
       borderRadius={[12]}
       p={[6]}
       fontSize={["sm"]}
       color={"black"}
+      justifyContent={"center"}
       textAlign={"center"}
     >
       {timerSeconds != null && onTimerEnd != null && (
