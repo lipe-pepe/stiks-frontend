@@ -83,9 +83,9 @@ const Console: React.FC<ConsoleProps> = ({
     >
       {timerSeconds != null && onTimerEnd != null && (
         <Timer
+          key={`Timer for ${text}`}
           duration={timerSeconds}
-          onEnd={() => {}}
-          // onEnd={onTimerEnd}
+          onEnd={onTimerEnd}
           color="green.base"
           endColor="red.base"
         />
@@ -114,6 +114,7 @@ const Console: React.FC<ConsoleProps> = ({
                     color={value === opt ? "white" : "black"}
                     bgColor={value === opt ? "blue.base" : "gray.1"}
                     onClick={() => setValue("value", opt)}
+                    cursor="pointer"
                   />
                 ))}
               </Flex>
