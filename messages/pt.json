@@ -38,9 +38,6 @@
     "round": "Rodada {number}",
     "show_chat": "Exibir chat",
     "chat": "Chat",
-    "choosing": "escolhendo...",
-    "current_player_tag": "você",
-    "guessing": "palpitando...",
     "next_guess": "próximo a palpitar",
     "guess": "Palpite: {number}",
     "winners": "Vencedores",
@@ -58,5 +55,10 @@
   "Console": {
     "confirm_button": "Confirmar",
     "total": "Total"
+  },
+  "PlayerDisplay": {
+    "choosing": "escolhendo...",
+    "guessing": "palpitando...",
+    "you_tag": "você"
   }
 }

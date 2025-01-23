@@ -34,12 +34,75 @@ export default function MatchPage() {
   const t = useTranslations("MatchPage");
   const { roomCode } = useParams();
   const { match, socket, chat } = useMatchContext();
-  const [players, setPlayers] = useState<PlayerGameData[]>(
-    match.playersGameData
-  );
+  // const [players, setPlayers] = useState<PlayerGameData[]>(
+  //   match.playersGameData
+  // );
   const [player, setPlayer] = useState<PlayerGameData>();
   const [winnerId, setWinnerId] = useState<string>();
   const [totalRevealed, setTotalRevealed] = useState<number>();
+
+  const players = [
+    {
+      avatar: "joe_1.svg",
+      chosen: undefined,
+      guess: undefined,
+      id: "67925d502c11035ea756fd96",
+      name: "joey do crepe",
+      revealed: false,
+      role: "host",
+      total: 3,
+    },
+    {
+      avatar: "mein_2.svg",
+      chosen: undefined,
+      guess: undefined,
+      id: "67925d5a2c11035ea756fd9f",
+      name: "mein chang",
+      revealed: false,
+      role: "player",
+      total: 3,
+    },
+    {
+      avatar: "mein_2.svg",
+      chosen: undefined,
+      guess: undefined,
+      id: "67925d5a2c11035ea756fd9f",
+      name: "rompulstinken",
+      revealed: false,
+      role: "player",
+      total: 3,
+    },
+    {
+      avatar: "arnaldo_5.svg",
+      chosen: undefined,
+      guess: undefined,
+      id: "67925d502c11035ea756fd96",
+      name: "Jorgin Mimpresta12",
+      revealed: false,
+      role: "player",
+      total: 3,
+    },
+    {
+      avatar: "pepe_1.svg",
+      chosen: undefined,
+      guess: undefined,
+      id: "67925d502c11035ea756fd96",
+      name: "PH",
+      revealed: false,
+      role: "player",
+      total: 3,
+    },
+    {
+      avatar: "mein_2.svg",
+      chosen: undefined,
+      guess: undefined,
+      id: "67925d5a2c11035ea756fd9f",
+      name: "rompulstinken",
+      revealed: false,
+      role: "player",
+      total: 3,
+    },
+  ];
 
   const playerId = getSavedPlayerId();
 
@@ -47,7 +110,7 @@ export default function MatchPage() {
 
   // Atualiza os jogadores sempre que a sala muda
   useEffect(() => {
-    setPlayers(match.playersGameData);
+    // setPlayers(match.playersGameData);
     setPlayer(match.playersGameData.find((p) => p.id === getSavedPlayerId()));
 
     if (match.status === MatchStatus.results) {
@@ -162,6 +225,7 @@ export default function MatchPage() {
           {/* CONSOLE */}
           <GridItem
             position={["fixed", "fixed", "initial"]}
+            zIndex={[99, 99, "auto"]}
             bottom={0}
             left={0}
             right={0}

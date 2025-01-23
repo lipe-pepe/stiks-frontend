@@ -47,7 +47,7 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
         // bg={"teal"} //DEBUG
       >
         <Image
-          boxSize={"100%"}
+          maxH={["8rem"]}
           src={`/images/avatars/${player.avatar}`}
           alt={`Player ${player.name} avatar`}
         />
@@ -86,74 +86,21 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
         // bg={"teal"} //debug
         h={["50%"]}
       >
-        <Image
-          boxSize={["100%"]}
-          objectFit={"contain"}
-          transform={["rotate(90deg)"]}
-          src={
-            player.revealed
-              ? `/images/hands/open_${tone}`
-              : `/images/hands/closed_${tone}`
-          }
-          alt={player.revealed ? "Open hand " : "Closed hand"}
-        />
+        {player.chosen != null && (
+          <Image
+            boxSize={["100%"]}
+            objectFit={"contain"}
+            transform={["rotate(90deg)"]}
+            src={
+              player.revealed
+                ? `/images/hands/open_${tone}`
+                : `/images/hands/closed_${tone}`
+            }
+            alt={player.revealed ? "Open hand " : "Closed hand"}
+          />
+        )}
       </Center>
     </SimpleGrid>
-    // <Flex
-    //   h={"100%"}
-    //   w={"100%"}
-    //   flexDir={["row"]}
-    //   gap={["1rem"]}
-    //   alignItems={["center"]}
-    // >
-    //   <Box boxSize={["6rem"]} position={"relative"}>
-    //     <Image
-    //       boxSize={"100%"}
-    //       src={`/images/avatars/${player.avatar}`}
-    //       alt={`Player ${player.name} avatar`}
-    //     />
-    //     <Box pos={"absolute"} bottom={0}>
-    //       <NumberCircle
-    //         number={player.total}
-    //         size={["2rem"]}
-    //         color={"white"}
-    //         bgColor={"base.dark"}
-    //         onClick={() => {}}
-    //         borderColor="black"
-    //         borderWidth={2}
-    //       />
-    //     </Box>
-    //   </Box>
-    //   <VStack alignItems={["start"]}>
-    //     <HStack>
-    //       <Text fontStyle={"italic"} fontWeight={700} fontSize={["md"]}>
-    //         {player.name}
-    //       </Text>
-    //       {player.id === id && (
-    //         <Text
-    //           rounded={"full"}
-    //           px={[1]}
-    //           bgColor={"blue.base"}
-    //           fontSize={["xs"]}
-    //         >
-    //           {t("you_tag")}
-    //         </Text>
-    //       )}
-    //     </HStack>
-    //     <Text fontSize={["md"]}>{getStatusText()}</Text>
-    //   </VStack>
-    //   <Image
-    //     transform={["rotate(90deg)"]}
-    //     height={"3rem"}
-    //     width={"3rem"}
-    //     src={
-    //       player.revealed
-    //         ? `/images/hands/open_${tone}`
-    //         : `/images/hands/closed_${tone}`
-    //     }
-    //     alt={player.revealed ? "Open hand " : "Closed hand"}
-    //   />
-    // </Flex>
   );
 };
 
