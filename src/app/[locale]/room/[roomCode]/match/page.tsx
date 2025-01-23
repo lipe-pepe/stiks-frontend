@@ -5,7 +5,6 @@ import ChatMessages from "@/components/chatMessages";
 import FlexContainer from "@/components/flexContainer";
 import Console, { ConsoleProps } from "@/components/game/console";
 import PlayerGrid from "@/components/game/playerGrid";
-import PlayerGameDisplay from "@/components/playerGameDisplay";
 import { useMatchContext } from "@/context/matchContext";
 import { gridGap, gridTemplateColumns } from "@/themes/gridConfig";
 import { MatchStatus, PlayerGameData } from "@/types/match";
@@ -16,7 +15,6 @@ import getSticksRevealed from "@/utils/game/getSticksRevealed";
 import getSavedPlayerId from "@/utils/getSavedPlayerId";
 import {
   Box,
-  Flex,
   Grid,
   GridItem,
   Modal,
@@ -150,14 +148,14 @@ export default function MatchPage() {
     }
   };
 
-  // const handlePlayerReveal = () => {
-  //   if (socket && playerGameData.id === turnPlayer) {
-  //     socket.emit("player-revealed", {
-  //       roomCode: roomCode,
-  //       playerId: playerId,
-  //     });
-  //   }
-  // };
+  const handlePlayerReveal = () => {
+    if (socket && player?.id === match.turn) {
+      socket.emit("player-revealed", {
+        roomCode: roomCode,
+        playerId: playerId,
+      });
+    }
+  };
 
   // const handleNextRound = () => {
   //   if (socket) {
@@ -179,7 +177,10 @@ export default function MatchPage() {
       props.hasForm = true;
       props.onFormSubmit = handlePlayerChose;
       props.timerSeconds = 30;
-      props.onTimerEnd = undefined;
+      props.onTimerEnd = () =>
+        handlePlayerChose(
+          Math.floor(Math.random() * (Number(player?.total) + 1))
+        ); // Pega um valor aleatório
     }
 
     if (match.status === MatchStatus.choosing && player?.chosen != null) {
@@ -209,6 +210,20 @@ export default function MatchPage() {
       props.onFormSubmit = undefined;
       props.timerSeconds = undefined;
       props.onTimerEnd = undefined;
+    }
+
+    if (match.status === MatchStatus.revealing) {
+      props.text = t("player_revealing", {
+        name:
+          match.turn === player?.id
+            ? t("you")
+            : getPlayerName(players, match.turn),
+      });
+      props.formOptions = undefined;
+      props.hasForm = false;
+      props.onFormSubmit = undefined;
+      props.timerSeconds = undefined;
+      props.onTimerEnd = handlePlayerReveal;
     }
 
     return props;
