@@ -62,7 +62,12 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
           src={`/images/avatars/${player.avatar}`}
           alt={`Player ${player.name} avatar`}
         />
-        <Box pos={"absolute"} bottom={0} left={0}>
+        <Box
+          pos={"absolute"}
+          bottom={0}
+          left={[0, null, "50%"]}
+          transform={[null, null, "translate(-200%, 0)"]}
+        >
           <NumberCircle
             number={player.total}
             size={["2rem"]}
@@ -70,7 +75,7 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
             bgColor={"base.dark"}
             onClick={() => {}}
             borderColor="black"
-            borderWidth={2}
+            borderWidth={[2, 2, 2, 3]}
           />
         </Box>
         {player.guess != null && (
