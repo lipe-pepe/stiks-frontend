@@ -44,7 +44,7 @@ export default function MatchPage() {
   const players = [
     {
       avatar: "joe_1.svg",
-      chosen: undefined,
+      chosen: 3,
       guess: undefined,
       id: "67925d502c11035ea756fd96",
       name: "joey do crepe",
@@ -74,7 +74,7 @@ export default function MatchPage() {
     },
     {
       avatar: "arnaldo_5.svg",
-      chosen: undefined,
+      chosen: 3,
       guess: undefined,
       id: "67925d502c11035ea756fd96",
       name: "Jorgin Mimpresta12",
@@ -94,7 +94,7 @@ export default function MatchPage() {
     },
     {
       avatar: "mein_2.svg",
-      chosen: undefined,
+      chosen: 3,
       guess: undefined,
       id: "67925d5a2c11035ea756fd9f",
       name: "rompulstinken",

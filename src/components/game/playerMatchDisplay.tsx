@@ -7,6 +7,7 @@ import {
   Image,
   SimpleGrid,
   Text,
+  useBreakpointValue,
   VStack,
 } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
@@ -31,10 +32,21 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
     }
     return null;
   };
+
+  // Retorna true apenas para breakpoints maiores que "md"
+  const isGreaterThanSm = useBreakpointValue({
+    base: false,
+    sm: false,
+    md: true,
+    lg: true,
+    xl: true,
+    "2xl": true,
+  });
+
   return (
     <SimpleGrid spacing={["1rem"]} columns={[3, null, 1]} alignItems={"center"}>
-      {handPos === "top" && (
-        <Center position={"relative"} h={["50%"]}>
+      {handPos === "top" && isGreaterThanSm && (
+        <Center display={["none", null, "flex"]} h={["50%"]}>
           <Hand
             transform={["rotate(90deg)", "rotate(90deg)", "none"]}
             chosen={player.chosen}
@@ -85,10 +97,12 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
             </Text>
           )}
         </HStack>
-        <Text fontSize={["md"]}>{getStatusText()}</Text>
+        <Text fontSize={["md"]} minHeight="1.5em">
+          {getStatusText()}
+        </Text>
       </VStack>
-      {handPos === "bottom" && (
-        <Center position={"relative"} h={["50%"]}>
+      {(handPos === "bottom" || !isGreaterThanSm) && (
+        <Center h={["50%"]}>
           <Hand
             transform={["rotate(90deg)", "rotate(90deg)", "rotate(180deg)"]}
             chosen={player.chosen}
