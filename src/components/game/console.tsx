@@ -78,45 +78,52 @@ const Console: React.FC<ConsoleProps> = ({
       p={[6]}
       fontSize={["sm"]}
       color={"black"}
-      justifyContent={"center"}
+      justifyContent="space-between"
       textAlign={"center"}
     >
       {timerSeconds != null && onTimerEnd != null && (
         <Timer
           duration={timerSeconds}
-          onEnd={onTimerEnd}
+          onEnd={() => {}}
+          // onEnd={onTimerEnd}
           color="green.base"
           endColor="red.base"
         />
       )}
-      <Text
-        fontWeight={["normal", null, "semibold"]}
-        fontSize={["sm", "sm", "lg"]}
-        color={hasForm ? "blue.base" : "black"}
+      <VStack
+        justifyContent={"center"}
+        flex={"1"}
+        gap={["1rem", "1rem", "2rem"]}
       >
-        {text}
-      </Text>
-      {hasForm && (
-        <form onSubmit={onSubmit}>
-          <VStack gap={["1rem", "1rem", "2rem"]}>
-            <Flex gap={["1rem"]} flexWrap={"wrap"} justifyContent={"center"}>
-              {formOptions?.map((opt, index) => (
-                <NumberCircle
-                  key={index}
-                  size={["2rem", "2rem", "2.5rem"]}
-                  number={opt}
-                  color={value === opt ? "white" : "black"}
-                  bgColor={value === opt ? "blue.base" : "gray.1"}
-                  onClick={() => setValue("value", opt)}
-                />
-              ))}
-            </Flex>
-            <Button type="submit" size={["sm", "sm", "md"]} variant={"game"}>
-              {t("confirm_button")}
-            </Button>
-          </VStack>
-        </form>
-      )}
+        <Text
+          fontWeight={["normal", null, "semibold"]}
+          fontSize={["sm", "sm", "lg"]}
+          color={hasForm ? "blue.base" : "black"}
+        >
+          {text}
+        </Text>
+        {hasForm && (
+          <form onSubmit={onSubmit}>
+            <VStack gap={["1rem", "1rem", "2rem"]}>
+              <Flex gap={["1rem"]} flexWrap={"wrap"} justifyContent={"center"}>
+                {formOptions?.map((opt, index) => (
+                  <NumberCircle
+                    key={index}
+                    size={["2rem", "2rem", "2.5rem"]}
+                    number={opt}
+                    color={value === opt ? "white" : "black"}
+                    bgColor={value === opt ? "blue.base" : "gray.1"}
+                    onClick={() => setValue("value", opt)}
+                  />
+                ))}
+              </Flex>
+              <Button type="submit" size={["sm", "sm", "md"]} variant={"game"}>
+                {t("confirm_button")}
+              </Button>
+            </VStack>
+          </form>
+        )}
+      </VStack>
     </VStack>
     // <Flex
     //   width={"100%"}
