@@ -4,6 +4,7 @@ import ChatInput from "@/components/chatInput";
 import ChatMessages from "@/components/chatMessages";
 import FlexContainer from "@/components/flexContainer";
 import Console, { ConsoleProps } from "@/components/game/console";
+import PlayerGrid from "@/components/game/playerGrid";
 import PlayerGameDisplay from "@/components/playerGameDisplay";
 import { useMatchContext } from "@/context/matchContext";
 import { gridGap, gridTemplateColumns } from "@/themes/gridConfig";
@@ -220,8 +221,8 @@ export default function MatchPage() {
             </Box>
           </GridItem>
           {/* PLAYERS */}
-          <GridItem bg={"fuchsia"} rowSpan={2} colSpan={[4, 6, 7]}>
-            PLAYERSSS
+          <GridItem rowSpan={2} colSpan={[4, 6, 7]}>
+            <PlayerGrid players={players} />
           </GridItem>
         </Grid>
       </GridItem>

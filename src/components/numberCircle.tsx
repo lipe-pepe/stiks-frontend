@@ -6,6 +6,8 @@ interface NumberCircleProps {
   color: string;
   bgColor: string;
   onClick: () => void;
+  borderWidth?: number;
+  borderColor?: string;
 }
 
 const NumberCircle: React.FC<NumberCircleProps> = ({
@@ -14,13 +16,16 @@ const NumberCircle: React.FC<NumberCircleProps> = ({
   color,
   bgColor,
   onClick,
+  borderWidth = 0,
+  borderColor = "none",
 }: NumberCircleProps) => {
   return (
     <Center
-      w={size}
-      h={size}
+      boxSize={size}
       color={color}
       bg={bgColor}
+      borderWidth={borderWidth}
+      borderColor={borderColor}
       rounded={"full"}
       fontSize={"lg"}
       onClick={onClick}
