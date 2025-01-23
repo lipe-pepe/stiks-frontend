@@ -17,7 +17,7 @@ const PlayerGrid: React.FC<PlayerGridProps> = ({
       columns={[1, null, Math.ceil(players.length / 2)]}
     >
       {players.map((p, index) => (
-        <PlayerMatchDisplay key={index} player={p} />
+        <PlayerMatchDisplay key={index} player={p} handPos="top" />
       ))}
     </SimpleGrid>
   );

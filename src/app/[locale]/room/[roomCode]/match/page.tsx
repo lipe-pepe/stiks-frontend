@@ -64,7 +64,7 @@ export default function MatchPage() {
     },
     {
       avatar: "mein_2.svg",
-      chosen: undefined,
+      chosen: 3,
       guess: undefined,
       id: "67925d5a2c11035ea756fd9f",
       name: "rompulstinken",

@@ -11,23 +11,19 @@ import {
 } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
 import NumberCircle from "../numberCircle";
-import { useEffect, useState } from "react";
+import Hand from "./hand";
 
 interface PlayerMatchDisplayProps {
   player: PlayerGameData;
+  handPos?: "top" | "bottom";
 }
 
 const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
   player,
+  handPos = "bottom",
 }: PlayerMatchDisplayProps) => {
   const id = getSavedPlayerId();
   const t = useTranslations("PlayerDisplay");
-  const [tone, setTone] = useState<string>();
-
-  useEffect(() => {
-    const skinTone = player.avatar.split("_")[1];
-    setTone(skinTone);
-  }, [player]);
 
   const getStatusText = () => {
     if (player.chosen == null) {
@@ -37,6 +33,17 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
   };
   return (
     <SimpleGrid spacing={["1rem"]} columns={[3, null, 1]} alignItems={"center"}>
+      {handPos === "top" && (
+        <Center position={"relative"} h={["50%"]}>
+          <Hand
+            transform={["rotate(90deg)", "rotate(90deg)", "none"]}
+            chosen={player.chosen}
+            playerId={player.id}
+            revealed={player.revealed}
+            model={player.avatar.split("_")[1]}
+          />
+        </Center>
+      )}
       <Center position={"relative"}>
         <Image
           maxH={["none", null, "7rem"]}
@@ -80,25 +87,17 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
         </HStack>
         <Text fontSize={["md"]}>{getStatusText()}</Text>
       </VStack>
-      <Center
-        position={"relative"}
-        h={["50%"]}
-        // bg={"teal"} //debug
-      >
-        {/* {player.chosen != null && ( */}
-        <Image
-          boxSize={"100%"}
-          maxH={["none", null, "8rem"]}
-          transform={["rotate(90deg)", null, "rotate(180deg)"]}
-          src={
-            player.revealed
-              ? `/images/hands/open_${tone}`
-              : `/images/hands/closed_${tone}`
-          }
-          alt={player.revealed ? "Open hand " : "Closed hand"}
-        />
-        {/* )} */}
-      </Center>
+      {handPos === "bottom" && (
+        <Center position={"relative"} h={["50%"]}>
+          <Hand
+            transform={["rotate(90deg)", "rotate(90deg)", "rotate(180deg)"]}
+            chosen={player.chosen}
+            playerId={player.id}
+            revealed={player.revealed}
+            model={player.avatar.split("_")[1]}
+          />
+        </Center>
+      )}
     </SimpleGrid>
   );
 };
