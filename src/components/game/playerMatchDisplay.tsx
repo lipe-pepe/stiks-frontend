@@ -73,6 +73,32 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
             borderWidth={2}
           />
         </Box>
+        {player.guess != null && (
+          <Box
+            pos={"absolute"}
+            boxSize={"50%"}
+            top={"-20%"}
+            right={["-20%", null, "50%"]}
+            transform={[null, null, "translate(70%, 0)", "translate(65%, 0)"]}
+          >
+            <Image
+              boxSize={"100%"}
+              src={`/images/match/balloon.svg`}
+              alt={`Player ${player.name} speech balloon`}
+            />
+            <Text
+              position={"absolute"}
+              top="50%"
+              left="50%"
+              transform="translate(-45%, -55%)"
+              fontSize={"lg"}
+              color={"black"}
+              fontWeight={"semibold"}
+            >
+              {player.guess}
+            </Text>
+          </Box>
+        )}
       </Center>
       <VStack
         alignItems={["start", null, "center"]}
