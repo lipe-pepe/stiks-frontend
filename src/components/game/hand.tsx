@@ -20,19 +20,37 @@ const Hand: React.FC<HandProps> = ({
 
   return (
     <Box position={"relative"} boxSize={"100%"}>
-      <Image
-        opacity={chosen != null ? 1 : 0} // Só deve aparecer quando o player tiver escolhido
-        boxSize={"100%"}
-        maxH={["none", null, "8rem"]}
-        transform={transform}
-        src={
-          revealed
-            ? `/images/hands/open_${model}`
-            : `/images/hands/closed_${model}`
-        }
-        alt={revealed ? "Open hand " : "Closed hand"}
-      />
-      {playerId === savedId && (
+      <Box boxSize={"100%"} transform={transform}>
+        <Image
+          opacity={chosen != null ? 1 : 0} // Só deve aparecer quando o player tiver escolhido
+          boxSize={"100%"}
+          maxH={["none", null, "8rem"]}
+          src={
+            revealed
+              ? `/images/hands/open_${model}`
+              : `/images/hands/closed_${model}`
+          }
+          alt={revealed ? "Open hand " : "Closed hand"}
+        />
+        {revealed && chosen != 0 && (
+          <Image
+            position={"absolute"}
+            top={0}
+            right={0}
+            transform={[
+              "translate(40%, 0)",
+              null,
+              "translate(0%, -10%)",
+              "translate(-5%, -10%)",
+              "translate(-10%, -10%)",
+            ]}
+            boxSize={"75%"}
+            src={`/images/sticks/sticks_${chosen}.svg`}
+            alt={`${chosen} sticks hidden`}
+          />
+        )}
+      </Box>
+      {playerId === savedId && !revealed && (
         <Text
           position={"absolute"}
           left="50%"

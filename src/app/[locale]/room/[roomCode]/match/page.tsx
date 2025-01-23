@@ -222,7 +222,7 @@ export default function MatchPage() {
       props.formOptions = undefined;
       props.hasForm = false;
       props.onFormSubmit = undefined;
-      props.timerSeconds = undefined;
+      props.timerSeconds = 5;
       props.onTimerEnd = handlePlayerReveal;
     }
 

@@ -13,7 +13,7 @@ const PlayerGrid: React.FC<PlayerGridProps> = ({
   return (
     <SimpleGrid
       h={"100%"}
-      spacing={["1rem"]}
+      spacing={["2rem", null, "1rem"]}
       columns={[1, null, Math.ceil(players.length / 2)]}
     >
       {players.map((p, index) => (
