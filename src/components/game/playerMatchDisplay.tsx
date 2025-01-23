@@ -64,7 +64,11 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
       </Box>
       <VStack alignItems={["start"]}>
         <HStack flexWrap={"wrap"}>
-          <Text fontStyle={"italic"} fontWeight={700} fontSize={["md"]}>
+          <Text
+            fontStyle={"italic"}
+            fontWeight={700}
+            fontSize={["md", null, "lg"]}
+          >
             {player.name}
           </Text>
           {player.id === id && (
