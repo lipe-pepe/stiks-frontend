@@ -1,48 +1,41 @@
 "use client";
 
 import { Button, Flex, Text, VStack } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useTranslations } from "next-intl";
-import getGameTotalSticks from "@/utils/game/getGameTotalSticks";
-import getGameGuesses from "@/utils/game/getGameGuesses";
-import ChoosingConsole from "./choosingConsole";
-import GuessingConsole from "./guessingConsole";
 import Timer from "../timer";
-import { MatchStatus, PlayerGameData } from "@/types/match";
-import getPlayerName from "@/utils/game/getPlayerName";
-import { PlayerRole } from "@/types/player";
 import { useForm } from "react-hook-form";
 import NumberCircle from "../numberCircle";
 
-interface TotalDisplayProps {
-  totalText: string;
-  total: number;
-}
+// interface TotalDisplayProps {
+//   totalText: string;
+//   total: number;
+// }
 
-const TotalDisplay: React.FC<TotalDisplayProps> = ({
-  totalText,
-  total,
-}: TotalDisplayProps) => {
-  return (
-    <Flex flexDir={"column"} alignItems={"center"} gap={[2]}>
-      <Text fontSize={"xs"} textTransform={"uppercase"}>
-        {totalText}
-      </Text>
-      <Flex
-        w={["2rem"]}
-        h={["2rem"]}
-        bg={"gray.1"}
-        justifyContent={"center"}
-        alignItems={"center"}
-        fontSize={"xl"}
-        rounded={"full"}
-        fontWeight={"bold"}
-      >
-        {total}
-      </Flex>
-    </Flex>
-  );
-};
+// const TotalDisplay: React.FC<TotalDisplayProps> = ({
+//   totalText,
+//   total,
+// }: TotalDisplayProps) => {
+//   return (
+//     <Flex flexDir={"column"} alignItems={"center"} gap={[2]}>
+//       <Text fontSize={"xs"} textTransform={"uppercase"}>
+//         {totalText}
+//       </Text>
+//       <Flex
+//         w={["2rem"]}
+//         h={["2rem"]}
+//         bg={"gray.1"}
+//         justifyContent={"center"}
+//         alignItems={"center"}
+//         fontSize={"xl"}
+//         rounded={"full"}
+//         fontWeight={"bold"}
+//       >
+//         {total}
+//       </Flex>
+//     </Flex>
+//   );
+// };
 
 interface ConsoleProps {
   text: string;
@@ -63,11 +56,16 @@ const Console: React.FC<ConsoleProps> = ({
 }: ConsoleProps) => {
   const t = useTranslations("Console");
 
-  const { handleSubmit, setValue, watch } = useForm<{ value: number }>();
+  const { handleSubmit, setValue, watch, resetField } = useForm<{
+    value: number;
+  }>();
   const value = watch("value");
 
   const onSubmit = handleSubmit(async (data) => {
-    if (onFormSubmit != null) onFormSubmit(data.value);
+    if (onFormSubmit != null) {
+      resetField("value");
+      onFormSubmit(data.value);
+    }
   });
 
   return (
@@ -92,6 +90,7 @@ const Console: React.FC<ConsoleProps> = ({
         />
       )}
       <Text
+        fontWeight={["normal", null, "semibold"]}
         fontSize={["sm", "sm", "lg"]}
         color={hasForm ? "blue.base" : "black"}
       >
@@ -106,7 +105,7 @@ const Console: React.FC<ConsoleProps> = ({
                   key={index}
                   size={["2rem", "2rem", "2.5rem"]}
                   number={opt}
-                  color={value === index ? "white" : "black"}
+                  color={value === opt ? "white" : "black"}
                   bgColor={value === opt ? "blue.base" : "gray.1"}
                   onClick={() => setValue("value", opt)}
                 />

@@ -9,6 +9,8 @@ import PlayerGameDisplay from "@/components/playerGameDisplay";
 import { useMatchContext } from "@/context/matchContext";
 import { gridGap, gridTemplateColumns } from "@/themes/gridConfig";
 import { MatchStatus, PlayerGameData } from "@/types/match";
+import getAvailableGuesses from "@/utils/game/getAvailableGuesses";
+import getPlayerName from "@/utils/game/getPlayerName";
 import getRoundWinner from "@/utils/game/getRoundWinner";
 import getSticksRevealed from "@/utils/game/getSticksRevealed";
 import getSavedPlayerId from "@/utils/getSavedPlayerId";
@@ -34,75 +36,75 @@ export default function MatchPage() {
   const t = useTranslations("MatchPage");
   const { roomCode } = useParams();
   const { match, socket, chat } = useMatchContext();
-  // const [players, setPlayers] = useState<PlayerGameData[]>(
-  //   match.playersGameData
-  // );
+  const [players, setPlayers] = useState<PlayerGameData[]>(
+    match.playersGameData
+  );
   const [player, setPlayer] = useState<PlayerGameData>();
   const [winnerId, setWinnerId] = useState<string>();
   const [totalRevealed, setTotalRevealed] = useState<number>();
 
-  const players = [
-    {
-      avatar: "joe_1.svg",
-      chosen: 3,
-      guess: undefined,
-      id: "67925d502c11035ea756fd96",
-      name: "joey do crepe",
-      revealed: false,
-      role: "host",
-      total: 3,
-    },
-    {
-      avatar: "mein_2.svg",
-      chosen: undefined,
-      guess: undefined,
-      id: "67925d5a2c11035ea756fd9f",
-      name: "mein chang",
-      revealed: false,
-      role: "player",
-      total: 3,
-    },
-    {
-      avatar: "mein_2.svg",
-      chosen: 3,
-      guess: undefined,
-      id: "67925d5a2c11035ea756fd9f",
-      name: "rompulstinken",
-      revealed: false,
-      role: "player",
-      total: 3,
-    },
-    {
-      avatar: "arnaldo_5.svg",
-      chosen: 3,
-      guess: undefined,
-      id: "67925d502c11035ea756fd96",
-      name: "Jorgin Mimpresta12",
-      revealed: false,
-      role: "player",
-      total: 3,
-    },
-    {
-      avatar: "pepe_1.svg",
-      chosen: undefined,
-      guess: undefined,
-      id: "67925d502c11035ea756fd96",
-      name: "PH",
-      revealed: false,
-      role: "player",
-      total: 3,
-    },
-    {
-      avatar: "mein_2.svg",
-      chosen: 3,
-      guess: undefined,
-      id: "67925d5a2c11035ea756fd9f",
-      name: "rompulstinken",
-      revealed: false,
-      role: "player",
-      total: 3,
-    },
-  ];
+  // const players = [
+  //   {
+  //     avatar: "joe_1.svg",
+  //     chosen: 3,
+  //     guess: undefined,
+  //     id: "67925d502c11035ea756fd96",
+  //     name: "joey do crepe",
+  //     revealed: false,
+  //     role: "host",
+  //     total: 3,
+  //   },
+  //   {
+  //     avatar: "mein_2.svg",
+  //     chosen: undefined,
+  //     guess: undefined,
+  //     id: "67925d5a2c11035ea756fd9f",
+  //     name: "mein chang",
+  //     revealed: false,
+  //     role: "player",
+  //     total: 3,
+  //   },
+  //   {
+  //     avatar: "mein_2.svg",
+  //     chosen: 3,
+  //     guess: undefined,
+  //     id: "67925d5a2c11035ea756fd9f",
+  //     name: "rompulstinken",
+  //     revealed: false,
+  //     role: "player",
+  //     total: 3,
+  //   },
+  // {
+  //   avatar: "arnaldo_5.svg",
+  //   chosen: 3,
+  //   guess: undefined,
+  //   id: "67925d502c11035ea756fd96",
+  //   name: "Jorgin Mimpresta12",
+  //   revealed: false,
+  //   role: "player",
+  //   total: 3,
+  // },
+  // {
+  //   avatar: "pepe_1.svg",
+  //   chosen: undefined,
+  //   guess: undefined,
+  //   id: "67925d502c11035ea756fd96",
+  //   name: "PH",
+  //   revealed: false,
+  //   role: "player",
+  //   total: 3,
+  // },
+  // {
+  //   avatar: "mein_2.svg",
+  //   chosen: 3,
+  //   guess: undefined,
+  //   id: "67925d5a2c11035ea756fd9f",
+  //   name: "rompulstinken",
+  //   revealed: false,
+  //   role: "player",
+  //   total: 3,
+  // },
+  // ];
 
   const playerId = getSavedPlayerId();
 
@@ -110,7 +112,7 @@ export default function MatchPage() {
 
   // Atualiza os jogadores sempre que a sala muda
   useEffect(() => {
-    // setPlayers(match.playersGameData);
+    setPlayers(match.playersGameData);
     setPlayer(match.playersGameData.find((p) => p.id === getSavedPlayerId()));
 
     if (match.status === MatchStatus.results) {
@@ -182,8 +184,31 @@ export default function MatchPage() {
 
     if (match.status === MatchStatus.choosing && player?.chosen != null) {
       props.text = t("wait_instruction");
-      props.formOptions = [0, 1, 2, 3];
+      props.formOptions = undefined;
       props.hasForm = false;
+      props.onFormSubmit = undefined;
+      props.timerSeconds = undefined;
+      props.onTimerEnd = undefined;
+    }
+
+    if (match.status === MatchStatus.guessing && match.turn === player?.id) {
+      props.text = t("guess_instruction");
+      props.formOptions = getAvailableGuesses(players);
+      props.hasForm = true;
+      props.onFormSubmit = handlePlayerGuess;
+      props.timerSeconds = undefined;
+      props.onTimerEnd = undefined;
+    }
+
+    if (match.status === MatchStatus.guessing && match.turn != player?.id) {
+      props.text = t("player_guessing", {
+        name: getPlayerName(players, match.turn),
+      });
+      props.formOptions = undefined;
+      props.hasForm = false;
+      props.onFormSubmit = undefined;
+      props.timerSeconds = undefined;
+      props.onTimerEnd = undefined;
     }
 
     return props;
