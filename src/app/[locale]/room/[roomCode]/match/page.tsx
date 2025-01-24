@@ -12,7 +12,6 @@ import { PlayerRole } from "@/types/player";
 import getAvailableGuesses from "@/utils/game/getAvailableGuesses";
 import getPlayerName from "@/utils/game/getPlayerName";
 import getRoundWinner from "@/utils/game/getRoundWinner";
-import getSticksRevealed from "@/utils/game/getSticksRevealed";
 import getSavedPlayerId from "@/utils/getSavedPlayerId";
 import {
   Box,
@@ -40,7 +39,6 @@ export default function MatchPage() {
   );
   const [player, setPlayer] = useState<PlayerGameData>();
   const [winnerId, setWinnerId] = useState<string>();
-  const [totalRevealed, setTotalRevealed] = useState<number>();
 
   const savedId = getSavedPlayerId();
 
@@ -53,7 +51,6 @@ export default function MatchPage() {
 
     if (match.status === MatchStatus.results) {
       setWinnerId(getRoundWinner(match));
-      setTotalRevealed(getSticksRevealed(match));
     }
   }, [match]);
 
@@ -119,10 +116,13 @@ export default function MatchPage() {
 
     if (m.status === MatchStatus.choosing && p?.chosen == null) {
       props.text = t("choose_instruction");
-      props.formOptions = [0, 1, 2, 3];
+      props.formOptions = Array.from(
+        { length: p.total + 1 },
+        (_, index) => index
+      );
       props.hasForm = true;
       props.onFormSubmit = handlePlayerChose;
-      props.timerSeconds = 30;
+      props.timerSeconds = 20;
       props.onTimerEnd = () =>
         handlePlayerChose(Math.floor(Math.random() * (Number(p?.total) + 1))); // Pega um valor aleatório
     }
@@ -137,6 +137,9 @@ export default function MatchPage() {
       props.formOptions = getAvailableGuesses(m.playersGameData);
       props.hasForm = true;
       props.onFormSubmit = handlePlayerGuess;
+      props.timerSeconds = 20;
+      props.onTimerEnd = () =>
+        handlePlayerGuess(getAvailableGuesses(m.playersGameData)[0]); // Pega o primeiro valor disponível
     }
 
     if (m.status === MatchStatus.guessing && m.turn != p?.id) {

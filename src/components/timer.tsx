@@ -1,5 +1,5 @@
 import { Box, Flex } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MdAlarm } from "react-icons/md";
 
 interface TimerProps {
@@ -16,22 +16,27 @@ const Timer: React.FC<TimerProps> = ({
   endColor,
 }: TimerProps) => {
   const [timeLeft, setTimeLeft] = useState(duration);
+  const startTime = useRef(Date.now());
+  const timerId = useRef<number | null>(null);
 
   useEffect(() => {
-    // Define o intervalo que diminui o tempo a cada segundo
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer); // Para o timer ao chegar a zero
-          onEnd();
-          return 0;
-        }
-        return prev - 1; // Decrementa o tempo
-      });
-    }, 1000); // Cleanup: limpa o intervalo ao desmontar o componente
+    const updateTimer = () => {
+      const elapsed = (Date.now() - startTime.current) / 1000; // Tempo decorrido em segundos
+      const remaining = Math.max(duration - elapsed, 0); // Evita valores negativos
+      setTimeLeft(remaining);
 
-    return () => clearInterval(timer);
-  }, [onEnd]);
+      if (remaining === 0) {
+        cancelAnimationFrame(timerId.current!);
+        onEnd();
+      } else {
+        timerId.current = requestAnimationFrame(updateTimer); // Continua atualizando
+      }
+    };
+
+    timerId.current = requestAnimationFrame(updateTimer);
+
+    return () => cancelAnimationFrame(timerId.current!); // Limpa o timer ao desmontar o componente
+  }, [duration, onEnd]);
 
   return (
     <Flex width={"100%"} alignItems={"center"} gap={["0.5rem"]}>
