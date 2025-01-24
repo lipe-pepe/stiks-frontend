@@ -1,7 +1,7 @@
 "use client";
 
-import ChatInput from "@/components/chatInput";
-import ChatMessages from "@/components/chatMessages";
+import ChatInput from "@/components/chat/chatInput";
+import ChatMessages from "@/components/chat/chatMessages";
 import FlexContainer from "@/components/flexContainer";
 import InviteButton from "@/components/lobby/inviteButton";
 import PlayerList from "@/components/lobby/playerList";

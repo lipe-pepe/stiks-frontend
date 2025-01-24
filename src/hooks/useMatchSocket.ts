@@ -105,11 +105,8 @@ const useMatchSocket = (
             total: p.id === data.winnerId ? p.total - 3 : p.total, // AJEITAR DEPOIS DE TESTES
           };
         });
-        console.log(updatedPlayers);
         const winners = updatedPlayers.filter((p) => p.total == 0);
-        console.log("winners:", winners);
         const remainingPlayers = updatedPlayers.filter((p) => p.total != 0);
-        console.log("remaining:", remainingPlayers);
 
         // Pula 2 jogadores para a próxima vez
         const newTurnPlayer =
@@ -125,7 +122,10 @@ const useMatchSocket = (
           turn: newTurnPlayer,
           round: prev.round + 1,
           playersGameData: remainingPlayers,
-          status: MatchStatus.choosing,
+          status:
+            remainingPlayers.length > 1
+              ? MatchStatus.choosing
+              : MatchStatus.end,
           winners: winners,
         };
       });
@@ -152,6 +152,8 @@ const useMatchSocket = (
   const checkAllPlayersRevealed = (players: PlayerGameData[]) => {
     return players.every((p) => p.revealed == true);
   };
+
+  // ---------------------------------------------------------------------------------------
 
   const updateStatus = () => {
     setMatchData((prev) => {

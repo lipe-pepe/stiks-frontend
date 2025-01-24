@@ -1,13 +1,13 @@
 "use client";
 
-import ChatInput from "@/components/chatInput";
-import ChatMessages from "@/components/chatMessages";
+import ChatInput from "@/components/chat/chatInput";
+import ChatMessages from "@/components/chat/chatMessages";
 import FlexContainer from "@/components/flexContainer";
 import Console, { ConsoleProps } from "@/components/game/console";
 import PlayerGrid from "@/components/game/playerGrid";
 import { useMatchContext } from "@/context/matchContext";
 import { gridGap, gridTemplateColumns } from "@/themes/gridConfig";
-import { Match, MatchStatus, PlayerGameData } from "@/types/match";
+import { MatchStatus, PlayerGameData } from "@/types/match";
 import { PlayerRole } from "@/types/player";
 import getAvailableGuesses from "@/utils/game/getAvailableGuesses";
 import getPlayerName from "@/utils/game/getPlayerName";
@@ -27,7 +27,7 @@ import {
 } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { MdChatBubbleOutline } from "react-icons/md";
 
 export default function MatchPage() {
@@ -44,16 +44,6 @@ export default function MatchPage() {
 
   const chatModal = useDisclosure();
 
-  // Atualiza os jogadores sempre que a sala muda
-  useEffect(() => {
-    setPlayers(match.playersGameData);
-    setPlayer(match.playersGameData.find((p) => p.id === getSavedPlayerId()));
-
-    if (match.status === MatchStatus.results) {
-      setWinnerId(getRoundWinner(match));
-    }
-  }, [match]);
-
   useEffect(() => {
     // Reinsere o socket na sala ao recarregar a página
     if (socket) {
@@ -62,13 +52,6 @@ export default function MatchPage() {
       });
     }
   }, [roomCode, socket]);
-
-  // Atualiza o console
-  useEffect(() => {
-    if (match != null && player != null) {
-      setConsole(getConsoleProps(match, player));
-    }
-  }, [match, player]);
 
   const handlePlayerChose = (value: number) => {
     if (socket) {
@@ -108,80 +91,96 @@ export default function MatchPage() {
     }
   };
 
-  const getConsoleProps = (m: Match, p: PlayerGameData) => {
+  const getConsoleProps = useCallback(() => {
     const props: ConsoleProps = {
       text: "",
-      isHost: p?.role === PlayerRole.host,
+      isHost: player?.role === PlayerRole.host,
     };
 
-    if (m.status === MatchStatus.choosing && p?.chosen == null) {
+    if (match.status === MatchStatus.choosing && player?.chosen == null) {
       props.text = t("choose_instruction");
       props.formOptions = Array.from(
-        { length: p.total + 1 },
+        { length: Number(player?.total) + 1 },
         (_, index) => index
       );
       props.hasForm = true;
       props.onFormSubmit = handlePlayerChose;
       props.timerSeconds = 20;
       props.onTimerEnd = () =>
-        handlePlayerChose(Math.floor(Math.random() * (Number(p?.total) + 1))); // Pega um valor aleatório
+        handlePlayerChose(
+          Math.floor(Math.random() * (Number(player?.total) + 1))
+        ); // Valor aleatório
     }
 
-    if (m.status === MatchStatus.choosing && p?.chosen != null) {
+    if (match.status === MatchStatus.choosing && player?.chosen != null) {
       props.text = t("wait_instruction");
       props.hasForm = false;
     }
 
-    if (m.status === MatchStatus.guessing && m.turn === p?.id) {
+    if (match.status === MatchStatus.guessing && match.turn === player?.id) {
       props.text = t("guess_instruction");
-      props.formOptions = getAvailableGuesses(m.playersGameData);
+      props.formOptions = getAvailableGuesses(match.playersGameData);
       props.hasForm = true;
       props.onFormSubmit = handlePlayerGuess;
       props.timerSeconds = 20;
       props.onTimerEnd = () =>
-        handlePlayerGuess(getAvailableGuesses(m.playersGameData)[0]); // Pega o primeiro valor disponível
+        handlePlayerGuess(getAvailableGuesses(match.playersGameData)[0]); // Primeiro valor disponível
     }
 
-    if (m.status === MatchStatus.guessing && m.turn != p?.id) {
+    if (match.status === MatchStatus.guessing && match.turn != player?.id) {
       props.text = t("player_guessing", {
-        name: getPlayerName(m.playersGameData, m.turn),
+        name: getPlayerName(match.playersGameData, match.turn),
       });
       props.hasForm = false;
     }
 
-    if (m.status === MatchStatus.revealing) {
+    if (match.status === MatchStatus.revealing) {
       props.text = t("player_revealing", {
         name:
-          m.turn === p?.id
+          match.turn === player?.id
             ? t("you")
-            : getPlayerName(m.playersGameData, m.turn),
+            : getPlayerName(match.playersGameData, match.turn),
       });
       props.hasForm = false;
       props.timerSeconds = 5;
       props.onTimerEnd = handlePlayerReveal;
     }
 
-    if (m.status === MatchStatus.results) {
+    if (match.status === MatchStatus.results) {
       props.text = t("player_won", {
         name:
           winnerId == null
             ? t("no_one")
             : winnerId === savedId
             ? t("you")
-            : getPlayerName(m.playersGameData, winnerId),
+            : getPlayerName(match.playersGameData, winnerId),
       });
       props.hasForm = false;
       props.hostButtonText = t("next_round");
       props.hasHostButton = true;
       props.onHostButtonClick = handleNextRound;
       props.subtext =
-        p?.role === PlayerRole.host ? undefined : t("waiting_host");
+        player?.role === PlayerRole.host ? undefined : t("waiting_host");
     }
 
     return props;
-  };
+  }, [match, player, t, winnerId]); // Dependências necessárias
 
-  const [console, setConsole] = useState<ConsoleProps>();
+  const [gameConsole, setConsole] = useState<ConsoleProps>();
+
+  // Atualiza os estados sempre que a sala muda
+  useEffect(() => {
+    setPlayers(match.playersGameData);
+    setPlayer(match.playersGameData.find((p) => p.id === getSavedPlayerId()));
+
+    if (match.status === MatchStatus.results) {
+      setWinnerId(getRoundWinner(match));
+    }
+
+    if (match && player) {
+      setConsole(getConsoleProps());
+    }
+  }, [match, player, getConsoleProps]);
 
   return (
     <>
@@ -229,19 +228,19 @@ export default function MatchPage() {
             rowSpan={1}
             rowStart={1}
           >
-            {console != null && (
+            {gameConsole != null && (
               <Console
-                timerSeconds={console.timerSeconds}
-                onTimerEnd={console.onTimerEnd}
-                text={console.text}
-                subtext={console.subtext}
-                hasForm={console.hasForm}
-                onFormSubmit={console.onFormSubmit}
-                formOptions={console.formOptions}
-                isHost={console.isHost}
-                onHostButtonClick={console.onHostButtonClick}
-                hostButtonText={console.hostButtonText}
-                hasHostButton={console.hasHostButton}
+                timerSeconds={gameConsole.timerSeconds}
+                onTimerEnd={gameConsole.onTimerEnd}
+                text={gameConsole.text}
+                subtext={gameConsole.subtext}
+                hasForm={gameConsole.hasForm}
+                onFormSubmit={gameConsole.onFormSubmit}
+                formOptions={gameConsole.formOptions}
+                isHost={gameConsole.isHost}
+                onHostButtonClick={gameConsole.onHostButtonClick}
+                hostButtonText={gameConsole.hostButtonText}
+                hasHostButton={gameConsole.hasHostButton}
               />
             )}
           </GridItem>

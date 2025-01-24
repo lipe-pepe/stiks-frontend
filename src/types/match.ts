@@ -19,6 +19,7 @@ enum MatchStatus {
   guessing = "guessing",
   revealing = "revealing",
   results = "results",
+  end = "end",
 }
 
 export interface Match {

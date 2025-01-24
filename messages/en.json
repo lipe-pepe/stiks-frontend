@@ -51,7 +51,8 @@
     "lose_stick": "Loses a stick",
     "wait_instruction": "Waiting for the other players",
     "next_round": "Next round",
-    "waiting_host": "Wait for the host to continue"
+    "waiting_host": "Wait for the host to continue",
+    "winner": "🏆 {name} won!"
   },
   "Console": {
     "confirm_button": "Confirm",

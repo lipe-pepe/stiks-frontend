@@ -51,6 +51,7 @@
     "lose_stick": "Perde um palitinho",
     "next_round": "Próxima rodada",
     "player_won": "{name} acertou!",
+    "winner": "🏆 {name} ganhou!",
     "waiting_host": "Aguarde o host continuar a partida"
   },
   "Console": {
