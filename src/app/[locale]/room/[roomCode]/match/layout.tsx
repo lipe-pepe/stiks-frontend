@@ -6,7 +6,7 @@ import useMatchSocket from "@/hooks/useMatchSocket";
 import { ChatMessage } from "@/types/chat";
 import { Match, MatchStatus } from "@/types/match";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function MatchLayout({
   children,
@@ -29,6 +29,7 @@ export default function MatchLayout({
         };
       }) || [],
     totalSticks: 0,
+    winners: [],
   };
   const { roomCode } = useParams(); // Pega o código da sala da URL
   const [matchData, setMatchData] = useState<Match>(matchLoad);
@@ -36,6 +37,10 @@ export default function MatchLayout({
 
   // Hook personalizado do socket
   const { socket } = useMatchSocket(String(roomCode), setChat, setMatchData);
+
+  useEffect(() => {
+    console.log(matchData);
+  }, [matchData]);
 
   return (
     <MatchContext.Provider value={{ match: matchData, socket, chat }}>

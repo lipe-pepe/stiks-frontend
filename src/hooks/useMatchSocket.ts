@@ -102,21 +102,31 @@ const useMatchSocket = (
             chosen: undefined,
             guess: undefined,
             revealed: false,
-            total: p.id === data.winnerId ? p.total - 1 : p.total,
+            total: p.id === data.winnerId ? p.total - 3 : p.total, // AJEITAR DEPOIS DE TESTES
           };
         });
+        console.log(updatedPlayers);
+        const winners = updatedPlayers.filter((p) => p.total == 0);
+        console.log("winners:", winners);
+        const remainingPlayers = updatedPlayers.filter((p) => p.total != 0);
+        console.log("remaining:", remainingPlayers);
 
         // Pula 2 jogadores para a próxima vez
-        const newTurnPlayer = getNextTurnPlayer(
-          getNextTurnPlayer(prev.turn, prev.playersGameData),
-          prev.playersGameData
-        );
+        const newTurnPlayer =
+          prev.playersGameData.length > 2
+            ? getNextTurnPlayer(
+                getNextTurnPlayer(prev.turn, prev.playersGameData),
+                prev.playersGameData
+              )
+            : getNextTurnPlayer(prev.turn, prev.playersGameData);
+
         return {
           ...prev,
           turn: newTurnPlayer,
           round: prev.round + 1,
-          playersGameData: updatedPlayers,
+          playersGameData: remainingPlayers,
           status: MatchStatus.choosing,
+          winners: winners,
         };
       });
     });

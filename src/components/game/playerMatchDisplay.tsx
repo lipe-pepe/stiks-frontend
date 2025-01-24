@@ -48,7 +48,7 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
       {handPos === "top" && isGreaterThanSm && (
         <Center display={["none", null, "flex"]} h={["50%"]}>
           <Hand
-            transform={["rotate(90deg)", "rotate(90deg)", "none"]}
+            transform={["none"]}
             chosen={player.chosen}
             playerId={player.id}
             revealed={player.revealed}

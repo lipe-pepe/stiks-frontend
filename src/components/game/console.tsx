@@ -65,7 +65,8 @@ const Console: React.FC<ConsoleProps> = ({
         <Timer
           key={`Timer for ${text}`}
           duration={timerSeconds}
-          onEnd={onTimerEnd}
+          // onEnd={onTimerEnd}
+          onEnd={() => {}}
           color={hasForm ? "green.base" : "blue.base"}
           endColor={hasForm ? "red.base" : "blue.base"}
         />

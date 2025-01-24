@@ -8,7 +8,7 @@ import PlayerGrid from "@/components/game/playerGrid";
 import { useMatchContext } from "@/context/matchContext";
 import { gridGap, gridTemplateColumns } from "@/themes/gridConfig";
 import { Match, MatchStatus, PlayerGameData } from "@/types/match";
-import { PlayerRole } from "@/types/player";
+import { Player, PlayerRole } from "@/types/player";
 import getAvailableGuesses from "@/utils/game/getAvailableGuesses";
 import getPlayerName from "@/utils/game/getPlayerName";
 import getRoundWinner from "@/utils/game/getRoundWinner";
@@ -183,6 +183,64 @@ export default function MatchPage() {
 
   const [console, setConsole] = useState<ConsoleProps>();
 
+  const players2 = [
+    {
+      id: "67939a6a65bbb0bf76471ab2",
+      name: "MeinChNAG",
+      avatar: "mein_2.svg",
+      role: "host",
+      total: 3,
+      revealed: false,
+      chosen: undefined,
+      guess: undefined,
+    },
+    {
+      id: "67939a8065bbb0bf76471abb",
+      name: "joey",
+      avatar: "joe_1.svg",
+      role: "player",
+      total: 3,
+      revealed: false,
+      chosen: undefined,
+      guess: undefined,
+    },
+    {
+      id: "67939a6a65bbb0bf76471ab2",
+      name: "JorginDA12",
+      avatar: "arnaldo_5.svg",
+      role: "player",
+      total: 3,
+      revealed: false,
+      chosen: undefined,
+      guess: undefined,
+    },
+    {
+      id: "67939a8065bbb0bf76471abb",
+      name: "joey",
+      avatar: "joe_1.svg",
+      role: "player",
+      total: 3,
+      revealed: false,
+      chosen: undefined,
+      guess: undefined,
+    },
+  ];
+
+  const winners2: Player[] = [
+    {
+      id: "67939a8065bbb0bf76471abb",
+      name: "Sheldon",
+      avatar: "pepe_1.svg",
+      role: PlayerRole.player,
+    },
+    {
+      id: "67939a8065bbb0bf76471abb",
+      name: "Sehdlonmister",
+      avatar: "tiffany_1.svg",
+      role: PlayerRole.player,
+    },
+  ];
+
   return (
     <>
       <GridItem color={"white"} colSpan={[4, 6, 12]}>
@@ -286,7 +344,7 @@ export default function MatchPage() {
           </GridItem>
           {/* PLAYERS */}
           <GridItem rowSpan={2} colSpan={[4, 6, 7]}>
-            <PlayerGrid players={players} />
+            <PlayerGrid players={players2} winners={winners2} />
           </GridItem>
         </Grid>
       </GridItem>

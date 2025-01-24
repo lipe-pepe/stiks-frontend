@@ -1,7 +1,7 @@
 // Os dados da partida estão somente no frontend e são usados para o estado da página do jogo.
 // Eles são atualizados ao se receber um evento no socket com o hook useSocket.
 
-import { PlayerRole } from "./player";
+import { Player, PlayerRole } from "./player";
 
 interface PlayerGameData {
   id: string; // Id do jogador
@@ -27,6 +27,7 @@ export interface Match {
   playersGameData: PlayerGameData[]; // Dados do jogo de cada jogador
   turn: string; // Id do jogador da vez atual
   totalSticks: number; // Quantidade de palitinhos revelados
+  winners: Player[];
 }
 
 export { MatchStatus };

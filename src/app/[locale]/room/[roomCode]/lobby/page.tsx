@@ -210,16 +210,18 @@ export default function LobbyPage() {
                   }
                 />
               </Box>
-              <Center h={"30%"}>
-                <Button
-                  size={"lg"}
-                  leftIcon={<MdVideogameAsset />}
-                  variant={"primary"}
-                  onClick={() => handleStartGame()}
-                >
-                  {t("start_button")}
-                </Button>
-              </Center>
+              {isHost && (
+                <Center h={"30%"}>
+                  <Button
+                    size={"lg"}
+                    leftIcon={<MdVideogameAsset />}
+                    variant={"primary"}
+                    onClick={() => handleStartGame()}
+                  >
+                    {t("start_button")}
+                  </Button>
+                </Center>
+              )}
             </VStack>
           </HStack>
         </MainBox>

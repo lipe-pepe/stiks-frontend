@@ -1,14 +1,18 @@
 import { PlayerGameData } from "@/types/match";
-import { SimpleGrid } from "@chakra-ui/react";
+import { SimpleGrid, Text } from "@chakra-ui/react";
 import React from "react";
 import PlayerMatchDisplay from "./playerMatchDisplay";
+import { Player } from "@/types/player";
+import WinnerDisplay from "./winnerDisplay";
 
 interface PlayerGridProps {
   players: PlayerGameData[];
+  winners?: Player[];
 }
 
 const PlayerGrid: React.FC<PlayerGridProps> = ({
   players,
+  winners,
 }: PlayerGridProps) => {
   return (
     <SimpleGrid
@@ -18,10 +22,13 @@ const PlayerGrid: React.FC<PlayerGridProps> = ({
     >
       {players.map((p, index) => (
         <PlayerMatchDisplay
-          key={index}
+          key={`Player ${index}`}
           player={p}
           handPos={index < players.length / 2 ? "bottom" : "top"}
         />
+      ))}
+      {winners?.map((p, index) => (
+        <WinnerDisplay key={`Winner ${index}`} player={p} position={index} />
       ))}
     </SimpleGrid>
   );
