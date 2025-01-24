@@ -1,7 +1,6 @@
 import { Player } from "@/types/player";
 import getSavedPlayerId from "@/utils/getSavedPlayerId";
 import {
-  Box,
   Center,
   HStack,
   Image,
@@ -16,11 +15,13 @@ import Hand from "./hand";
 interface WinnerDisplayProps {
   player: Player;
   position: number;
+  handPos?: "top" | "bottom";
 }
 
 const WinnerDisplay: React.FC<WinnerDisplayProps> = ({
   player,
   position,
+  handPos = "bottom",
 }: WinnerDisplayProps) => {
   const id = getSavedPlayerId();
   const t = useTranslations("PlayerDisplay");
@@ -38,7 +39,7 @@ const WinnerDisplay: React.FC<WinnerDisplayProps> = ({
   });
   return (
     <SimpleGrid spacing={["1rem"]} columns={[3, null, 1]} alignItems={"center"}>
-      {isGreaterThanSm && (
+      {handPos === "top" && isGreaterThanSm && (
         <Center opacity={0} display={["none", null, "flex"]} h={["50%"]}>
           <Hand
             transform={["none"]}
@@ -84,6 +85,17 @@ const WinnerDisplay: React.FC<WinnerDisplayProps> = ({
         </HStack>
         <Text fontSize={["md"]} minHeight="1.5em"></Text>
       </VStack>
+      {handPos === "bottom" && isGreaterThanSm && (
+        <Center h={["50%"]} opacity={0}>
+          <Hand
+            transform={["rotate(90deg)", "rotate(90deg)", "rotate(180deg)"]}
+            chosen={0}
+            playerId={player.id}
+            revealed={false}
+            model={player.avatar.split("_")[1]}
+          />
+        </Center>
+      )}
     </SimpleGrid>
   );
 };

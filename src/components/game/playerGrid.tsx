@@ -1,5 +1,5 @@
 import { PlayerGameData } from "@/types/match";
-import { SimpleGrid, Text } from "@chakra-ui/react";
+import { SimpleGrid } from "@chakra-ui/react";
 import React from "react";
 import PlayerMatchDisplay from "./playerMatchDisplay";
 import { Player } from "@/types/player";
@@ -14,21 +14,27 @@ const PlayerGrid: React.FC<PlayerGridProps> = ({
   players,
   winners,
 }: PlayerGridProps) => {
+  const totalPlayers = players.length + Number(winners?.length);
   return (
     <SimpleGrid
       h={"100%"}
       spacing={["2rem", null, "1rem"]}
-      columns={[1, null, Math.ceil(players.length / 2)]}
+      columns={[1, null, Math.ceil(totalPlayers / 2)]}
     >
       {players.map((p, index) => (
         <PlayerMatchDisplay
           key={`Player ${index}`}
           player={p}
-          handPos={index < players.length / 2 ? "bottom" : "top"}
+          handPos={index < totalPlayers / 2 ? "bottom" : "top"}
         />
       ))}
       {winners?.map((p, index) => (
-        <WinnerDisplay key={`Winner ${index}`} player={p} position={index} />
+        <WinnerDisplay
+          key={`Winner ${index}`}
+          player={p}
+          position={index}
+          handPos={players.length + index < totalPlayers / 2 ? "bottom" : "top"}
+        />
       ))}
     </SimpleGrid>
   );
