@@ -50,7 +50,8 @@
     "no_one": "Ninguém",
     "lose_stick": "Perde um palitinho",
     "next_round": "Próxima rodada",
-    "player_won": "acertou!"
+    "player_won": "{name} acertou!",
+    "waiting_host": "Aguarde o host continuar a partida"
   },
   "Console": {
     "confirm_button": "Confirmar",

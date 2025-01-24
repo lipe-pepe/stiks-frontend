@@ -8,6 +8,7 @@ import PlayerGrid from "@/components/game/playerGrid";
 import { useMatchContext } from "@/context/matchContext";
 import { gridGap, gridTemplateColumns } from "@/themes/gridConfig";
 import { MatchStatus, PlayerGameData } from "@/types/match";
+import { PlayerRole } from "@/types/player";
 import getAvailableGuesses from "@/utils/game/getAvailableGuesses";
 import getPlayerName from "@/utils/game/getPlayerName";
 import getRoundWinner from "@/utils/game/getRoundWinner";
@@ -104,7 +105,7 @@ export default function MatchPage() {
   // },
   // ];
 
-  const playerId = getSavedPlayerId();
+  const savedId = getSavedPlayerId();
 
   const chatModal = useDisclosure();
 
@@ -132,7 +133,7 @@ export default function MatchPage() {
     if (socket) {
       socket.emit("player-chose", {
         roomCode: roomCode,
-        playerId: playerId,
+        playerId: savedId,
         value: value,
       });
     }
@@ -142,7 +143,7 @@ export default function MatchPage() {
     if (socket) {
       socket.emit("player-guessed", {
         roomCode: roomCode,
-        playerId: playerId,
+        playerId: savedId,
         value: value,
       });
     }
@@ -152,7 +153,7 @@ export default function MatchPage() {
     if (socket && player?.id === match.turn) {
       socket.emit("player-revealed", {
         roomCode: roomCode,
-        playerId: playerId,
+        playerId: savedId,
       });
     }
   };
@@ -169,6 +170,7 @@ export default function MatchPage() {
   const getConsoleProps = () => {
     const props: ConsoleProps = {
       text: "",
+      isHost: player?.role === PlayerRole.host,
     };
 
     if (match.status === MatchStatus.choosing && player?.chosen == null) {
@@ -226,6 +228,26 @@ export default function MatchPage() {
       props.onTimerEnd = handlePlayerReveal;
     }
 
+    if (match.status === MatchStatus.results) {
+      props.text = t("player_won", {
+        name:
+          winnerId == null
+            ? t("no_one")
+            : winnerId === savedId
+            ? t("you")
+            : getPlayerName(players, winnerId),
+      });
+      props.formOptions = undefined;
+      props.hasForm = false;
+      props.onFormSubmit = undefined;
+      props.timerSeconds = undefined;
+      props.onTimerEnd = undefined;
+      props.hostButtonText = t("next_round");
+      props.hasHostButton = true;
+      props.subtext =
+        player?.role === PlayerRole.host ? undefined : t("waiting_host");
+    }
+
     return props;
   };
 
@@ -280,9 +302,13 @@ export default function MatchPage() {
                 timerSeconds={getConsoleProps().timerSeconds}
                 onTimerEnd={getConsoleProps().onTimerEnd}
                 text={getConsoleProps().text}
+                subtext={getConsoleProps().subtext}
                 hasForm={getConsoleProps().hasForm}
                 onFormSubmit={getConsoleProps().onFormSubmit}
                 formOptions={getConsoleProps().formOptions}
+                isHost={getConsoleProps().isHost}
+                hostButtonText={getConsoleProps().hostButtonText}
+                hasHostButton={getConsoleProps().hasHostButton}
               />
             )}
           </GridItem>

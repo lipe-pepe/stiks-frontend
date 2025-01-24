@@ -50,7 +50,8 @@
     "no_one": "No one",
     "lose_stick": "Loses a stick",
     "wait_instruction": "Waiting for the other players",
-    "next_round": "Next round"
+    "next_round": "Next round",
+    "waiting_host": "Wait for the host to continue"
   },
   "Console": {
     "confirm_button": "Confirm",
