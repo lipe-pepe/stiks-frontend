@@ -102,7 +102,7 @@ const useMatchSocket = (
             chosen: undefined,
             guess: undefined,
             revealed: false,
-            total: p.id === data.winnerId ? p.total - 3 : p.total, // AJEITAR DEPOIS DE TESTES
+            total: p.id === data.winnerId ? p.total - 1 : p.total,
           };
         });
         const winners = updatedPlayers.filter((p) => p.total == 0);

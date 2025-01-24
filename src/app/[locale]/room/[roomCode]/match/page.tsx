@@ -6,6 +6,7 @@ import FlexContainer from "@/components/flexContainer";
 import Console, { ConsoleProps } from "@/components/game/console";
 import PlayerGrid from "@/components/game/playerGrid";
 import { useMatchContext } from "@/context/matchContext";
+import { useRouter } from "@/i18n/routing";
 import { gridGap, gridTemplateColumns } from "@/themes/gridConfig";
 import { MatchStatus, PlayerGameData } from "@/types/match";
 import { PlayerRole } from "@/types/player";
@@ -43,6 +44,8 @@ export default function MatchPage() {
   const savedId = getSavedPlayerId();
 
   const chatModal = useDisclosure();
+
+  const router = useRouter();
 
   useEffect(() => {
     // Reinsere o socket na sala ao recarregar a página
@@ -91,6 +94,11 @@ export default function MatchPage() {
     }
   };
 
+  const handleBackToLobby = () => {
+    router.push(`/room/${roomCode}/lobby`);
+  };
+
+  // useCallback memoriza a função getConsoleProps e só a recria se as dependências listadas no array (segundo argumento) mudarem.
   const getConsoleProps = useCallback(() => {
     const props: ConsoleProps = {
       text: "",
@@ -157,10 +165,15 @@ export default function MatchPage() {
       });
       props.hasForm = false;
       props.hostButtonText = t("next_round");
-      props.hasHostButton = true;
       props.onHostButtonClick = handleNextRound;
       props.subtext =
         player?.role === PlayerRole.host ? undefined : t("waiting_host");
+    }
+
+    if (match.status === MatchStatus.end) {
+      props.text = t("winner", { name: match.winners[0].name });
+      props.buttonText = t("lobby_button");
+      props.onButtonClick = handleBackToLobby;
     }
 
     return props;
@@ -240,7 +253,8 @@ export default function MatchPage() {
                 isHost={gameConsole.isHost}
                 onHostButtonClick={gameConsole.onHostButtonClick}
                 hostButtonText={gameConsole.hostButtonText}
-                hasHostButton={gameConsole.hasHostButton}
+                buttonText={gameConsole.buttonText}
+                onButtonClick={gameConsole.onButtonClick}
               />
             )}
           </GridItem>
@@ -285,7 +299,11 @@ export default function MatchPage() {
           </GridItem>
           {/* PLAYERS */}
           <GridItem rowSpan={2} colSpan={[4, 6, 7]}>
-            <PlayerGrid players={players} winners={match.winners} />
+            <PlayerGrid
+              players={players}
+              winners={match.winners}
+              matchStatus={match.status}
+            />
           </GridItem>
         </Grid>
       </GridItem>

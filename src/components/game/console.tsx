@@ -16,9 +16,10 @@ interface ConsoleProps {
   onFormSubmit?: (data: number) => void;
   formOptions?: number[];
   isHost: boolean;
-  hasHostButton?: boolean;
   hostButtonText?: string;
   onHostButtonClick?: () => void;
+  buttonText?: string;
+  onButtonClick?: () => void;
 }
 
 const Console: React.FC<ConsoleProps> = ({
@@ -30,9 +31,10 @@ const Console: React.FC<ConsoleProps> = ({
   onFormSubmit,
   formOptions,
   isHost,
-  hasHostButton = false,
   hostButtonText,
   onHostButtonClick,
+  buttonText,
+  onButtonClick,
 }: ConsoleProps) => {
   const t = useTranslations("Console");
 
@@ -104,12 +106,16 @@ const Console: React.FC<ConsoleProps> = ({
             </VStack>
           </form>
         )}
-        {isHost && hasHostButton && (
-          <Button onClick={onHostButtonClick}>{hostButtonText}</Button>
-        )}
+
         <Text color={"black"} fontSize={["sm", null, "md"]}>
           {subtext}
         </Text>
+        {isHost && hostButtonText != null && onHostButtonClick != null && (
+          <Button onClick={onHostButtonClick}>{hostButtonText}</Button>
+        )}
+        {buttonText != null && onButtonClick != null && (
+          <Button onClick={onButtonClick}>{buttonText}</Button>
+        )}
       </VStack>
     </VStack>
   );

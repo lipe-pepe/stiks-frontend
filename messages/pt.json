@@ -52,7 +52,8 @@
     "next_round": "Próxima rodada",
     "player_won": "{name} acertou!",
     "winner": "🏆 {name} ganhou!",
-    "waiting_host": "Aguarde o host continuar a partida"
+    "waiting_host": "Aguarde o host continuar a partida",
+    "lobby_button": "Voltar para o lobby"
   },
   "Console": {
     "confirm_button": "Confirmar",

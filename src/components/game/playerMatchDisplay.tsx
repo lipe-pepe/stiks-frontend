@@ -1,4 +1,4 @@
-import { PlayerGameData } from "@/types/match";
+import { MatchStatus, PlayerGameData } from "@/types/match";
 import getSavedPlayerId from "@/utils/getSavedPlayerId";
 import {
   Box,
@@ -17,11 +17,13 @@ import Hand from "./hand";
 interface PlayerMatchDisplayProps {
   player: PlayerGameData;
   handPos?: "top" | "bottom";
+  matchStatus: MatchStatus;
 }
 
 const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
   player,
   handPos = "bottom",
+  matchStatus,
 }: PlayerMatchDisplayProps) => {
   const id = getSavedPlayerId();
   const t = useTranslations("PlayerDisplay");
@@ -128,9 +130,11 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
             </Text>
           )}
         </HStack>
-        <Text fontSize={["md"]} minHeight="1.5em">
-          {getStatusText()}
-        </Text>
+        {matchStatus != MatchStatus.end && (
+          <Text fontSize={["md"]} minHeight="1.5em">
+            {getStatusText()}
+          </Text>
+        )}
       </VStack>
       {(handPos === "bottom" || !isGreaterThanSm) && (
         <Center h={["50%"]}>
