@@ -7,7 +7,7 @@ import Console, { ConsoleProps } from "@/components/game/console";
 import PlayerGrid from "@/components/game/playerGrid";
 import { useMatchContext } from "@/context/matchContext";
 import { gridGap, gridTemplateColumns } from "@/themes/gridConfig";
-import { MatchStatus, PlayerGameData } from "@/types/match";
+import { Match, MatchStatus, PlayerGameData } from "@/types/match";
 import { PlayerRole } from "@/types/player";
 import getAvailableGuesses from "@/utils/game/getAvailableGuesses";
 import getPlayerName from "@/utils/game/getPlayerName";
@@ -42,69 +42,6 @@ export default function MatchPage() {
   const [winnerId, setWinnerId] = useState<string>();
   const [totalRevealed, setTotalRevealed] = useState<number>();
 
-  // const players = [
-  //   {
-  //     avatar: "joe_1.svg",
-  //     chosen: 3,
-  //     guess: undefined,
-  //     id: "67925d502c11035ea756fd96",
-  //     name: "joey do crepe",
-  //     revealed: false,
-  //     role: "host",
-  //     total: 3,
-  //   },
-  //   {
-  //     avatar: "mein_2.svg",
-  //     chosen: undefined,
-  //     guess: undefined,
-  //     id: "67925d5a2c11035ea756fd9f",
-  //     name: "mein chang",
-  //     revealed: false,
-  //     role: "player",
-  //     total: 3,
-  //   },
-  //   {
-  //     avatar: "mein_2.svg",
-  //     chosen: 3,
-  //     guess: undefined,
-  //     id: "67925d5a2c11035ea756fd9f",
-  //     name: "rompulstinken",
-  //     revealed: false,
-  //     role: "player",
-  //     total: 3,
-  //   },
-  // {
-  //   avatar: "arnaldo_5.svg",
-  //   chosen: 3,
-  //   guess: undefined,
-  //   id: "67925d502c11035ea756fd96",
-  //   name: "Jorgin Mimpresta12",
-  //   revealed: false,
-  //   role: "player",
-  //   total: 3,
-  // },
-  // {
-  //   avatar: "pepe_1.svg",
-  //   chosen: undefined,
-  //   guess: undefined,
-  //   id: "67925d502c11035ea756fd96",
-  //   name: "PH",
-  //   revealed: false,
-  //   role: "player",
-  //   total: 3,
-  // },
-  // {
-  //   avatar: "mein_2.svg",
-  //   chosen: 3,
-  //   guess: undefined,
-  //   id: "67925d5a2c11035ea756fd9f",
-  //   name: "rompulstinken",
-  //   revealed: false,
-  //   role: "player",
-  //   total: 3,
-  // },
-  // ];
-
   const savedId = getSavedPlayerId();
 
   const chatModal = useDisclosure();
@@ -128,6 +65,13 @@ export default function MatchPage() {
       });
     }
   }, [roomCode, socket]);
+
+  // Atualiza o console
+  useEffect(() => {
+    if (match != null && player != null) {
+      setConsole(getConsoleProps(match, player));
+    }
+  }, [match, player]);
 
   const handlePlayerChose = (value: number) => {
     if (socket) {
@@ -158,98 +102,83 @@ export default function MatchPage() {
     }
   };
 
-  // const handleNextRound = () => {
-  //   if (socket) {
-  //     socket.emit("next-round", {
-  //       roomCode: roomCode,
-  //       winnerId: winner,
-  //     });
-  //   }
-  // };
+  const handleNextRound = () => {
+    if (socket) {
+      socket.emit("next-round", {
+        roomCode: roomCode,
+        winnerId: winnerId,
+      });
+    }
+  };
 
-  const getConsoleProps = () => {
+  const getConsoleProps = (m: Match, p: PlayerGameData) => {
     const props: ConsoleProps = {
       text: "",
-      isHost: player?.role === PlayerRole.host,
+      isHost: p?.role === PlayerRole.host,
     };
 
-    if (match.status === MatchStatus.choosing && player?.chosen == null) {
+    if (m.status === MatchStatus.choosing && p?.chosen == null) {
       props.text = t("choose_instruction");
       props.formOptions = [0, 1, 2, 3];
       props.hasForm = true;
       props.onFormSubmit = handlePlayerChose;
       props.timerSeconds = 30;
       props.onTimerEnd = () =>
-        handlePlayerChose(
-          Math.floor(Math.random() * (Number(player?.total) + 1))
-        ); // Pega um valor aleatório
+        handlePlayerChose(Math.floor(Math.random() * (Number(p?.total) + 1))); // Pega um valor aleatório
     }
 
-    if (match.status === MatchStatus.choosing && player?.chosen != null) {
+    if (m.status === MatchStatus.choosing && p?.chosen != null) {
       props.text = t("wait_instruction");
-      props.formOptions = undefined;
       props.hasForm = false;
-      props.onFormSubmit = undefined;
-      props.timerSeconds = undefined;
-      props.onTimerEnd = undefined;
     }
 
-    if (match.status === MatchStatus.guessing && match.turn === player?.id) {
+    if (m.status === MatchStatus.guessing && m.turn === p?.id) {
       props.text = t("guess_instruction");
-      props.formOptions = getAvailableGuesses(players);
+      props.formOptions = getAvailableGuesses(m.playersGameData);
       props.hasForm = true;
       props.onFormSubmit = handlePlayerGuess;
-      props.timerSeconds = undefined;
-      props.onTimerEnd = undefined;
     }
 
-    if (match.status === MatchStatus.guessing && match.turn != player?.id) {
+    if (m.status === MatchStatus.guessing && m.turn != p?.id) {
       props.text = t("player_guessing", {
-        name: getPlayerName(players, match.turn),
+        name: getPlayerName(m.playersGameData, m.turn),
       });
-      props.formOptions = undefined;
       props.hasForm = false;
-      props.onFormSubmit = undefined;
-      props.timerSeconds = undefined;
-      props.onTimerEnd = undefined;
     }
 
-    if (match.status === MatchStatus.revealing) {
+    if (m.status === MatchStatus.revealing) {
       props.text = t("player_revealing", {
         name:
-          match.turn === player?.id
+          m.turn === p?.id
             ? t("you")
-            : getPlayerName(players, match.turn),
+            : getPlayerName(m.playersGameData, m.turn),
       });
-      props.formOptions = undefined;
       props.hasForm = false;
-      props.onFormSubmit = undefined;
       props.timerSeconds = 5;
       props.onTimerEnd = handlePlayerReveal;
     }
 
-    if (match.status === MatchStatus.results) {
+    if (m.status === MatchStatus.results) {
       props.text = t("player_won", {
         name:
           winnerId == null
             ? t("no_one")
             : winnerId === savedId
             ? t("you")
-            : getPlayerName(players, winnerId),
+            : getPlayerName(m.playersGameData, winnerId),
       });
-      props.formOptions = undefined;
       props.hasForm = false;
-      props.onFormSubmit = undefined;
-      props.timerSeconds = undefined;
-      props.onTimerEnd = undefined;
       props.hostButtonText = t("next_round");
       props.hasHostButton = true;
+      props.onHostButtonClick = handleNextRound;
       props.subtext =
-        player?.role === PlayerRole.host ? undefined : t("waiting_host");
+        p?.role === PlayerRole.host ? undefined : t("waiting_host");
     }
 
     return props;
   };
+
+  const [console, setConsole] = useState<ConsoleProps>();
 
   return (
     <>
@@ -297,18 +226,19 @@ export default function MatchPage() {
             rowSpan={1}
             rowStart={1}
           >
-            {socket != null && player != null && (
+            {console != null && (
               <Console
-                timerSeconds={getConsoleProps().timerSeconds}
-                onTimerEnd={getConsoleProps().onTimerEnd}
-                text={getConsoleProps().text}
-                subtext={getConsoleProps().subtext}
-                hasForm={getConsoleProps().hasForm}
-                onFormSubmit={getConsoleProps().onFormSubmit}
-                formOptions={getConsoleProps().formOptions}
-                isHost={getConsoleProps().isHost}
-                hostButtonText={getConsoleProps().hostButtonText}
-                hasHostButton={getConsoleProps().hasHostButton}
+                timerSeconds={console.timerSeconds}
+                onTimerEnd={console.onTimerEnd}
+                text={console.text}
+                subtext={console.subtext}
+                hasForm={console.hasForm}
+                onFormSubmit={console.onFormSubmit}
+                formOptions={console.formOptions}
+                isHost={console.isHost}
+                onHostButtonClick={console.onHostButtonClick}
+                hostButtonText={console.hostButtonText}
+                hasHostButton={console.hasHostButton}
               />
             )}
           </GridItem>
