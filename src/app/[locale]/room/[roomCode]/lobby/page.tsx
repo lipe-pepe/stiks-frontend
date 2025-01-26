@@ -67,15 +67,16 @@ export default function LobbyPage() {
   const handleStartGame = async () => {
     try {
       const res = await createMatch(String(roomCode));
-      console.log(res);
+      if (res.status === 201 && socket) {
+        socket.emit("host-started-game", {
+          roomCode: room?.code,
+        });
+      } else {
+        // TODO: EXIBIR O ERRO SE DER ERRADO
+      }
     } catch (error) {
       console.log(error);
     }
-    // if (socket) {
-    //   socket.emit("host-started-game", {
-    //     roomCode: room?.code,
-    //   });
-    // }
   };
 
   const onKickPlayer = () => {
