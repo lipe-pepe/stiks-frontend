@@ -36,11 +36,7 @@ export default function HomePage() {
       >
         <Image src="/images/logo/mainLogo.svg" alt="Stiks Logo" fit="cover" />
       </GridItem>
-      <GridItem
-        colSpan={[4, 6, 8, 8, 8]}
-        colStart={[null, null, 3, 3, 3]}
-        bgColor={["teal", "pink", "teal", "pink", "teal"]} //DEBUG
-      >
+      <GridItem colSpan={[4, 6, 8, 8, 8]} colStart={[null, null, 3, 3, 3]}>
         <MainBox pt={["2rem"]} pb={["2rem"]}>
           <HomeCarousel />
           <Button

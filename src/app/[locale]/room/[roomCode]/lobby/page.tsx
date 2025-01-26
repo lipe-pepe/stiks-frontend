@@ -7,6 +7,7 @@ import InviteButton from "@/components/lobby/inviteButton";
 import PlayerList from "@/components/lobby/playerList";
 import MainBox from "@/components/mainBox";
 import { useRoomContext } from "@/context/roomContext";
+import createMatch from "@/services/matches/createMatch";
 import { Player } from "@/types/player";
 import getSavedPlayerId from "@/utils/getSavedPlayerId";
 import {
@@ -24,6 +25,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { MdVideogameAsset } from "react-icons/md";
 
@@ -32,6 +34,7 @@ const MAX_PLAYERS = 6;
 export default function LobbyPage() {
   const t = useTranslations("LobbyPage");
   const { room, socket, chat } = useRoomContext();
+  const { roomCode } = useParams(); // Pega o código da sala da URL
 
   const [players, setPlayers] = useState<Player[]>(room?.players || []);
   const [playerName, setPlayerName] = useState<string>("");
@@ -62,11 +65,17 @@ export default function LobbyPage() {
   }, []);
 
   const handleStartGame = async () => {
-    if (socket) {
-      socket.emit("host-started-game", {
-        roomCode: room?.code,
-      });
+    try {
+      const res = await createMatch(String(roomCode));
+      console.log(res);
+    } catch (error) {
+      console.log(error);
     }
+    // if (socket) {
+    //   socket.emit("host-started-game", {
+    //     roomCode: room?.code,
+    //   });
+    // }
   };
 
   const onKickPlayer = () => {
