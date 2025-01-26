@@ -20,6 +20,8 @@ import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/routing";
 import { MdArrowBack } from "react-icons/md";
 import HeaderMenu from "./headerMenu";
+import getSavedPlayerId from "@/utils/getSavedPlayerId";
+import deletePlayer from "@/services/players/deletePlayer";
 
 const Header = () => {
   const t = useTranslations("Header");
@@ -27,6 +29,24 @@ const Header = () => {
   const router = useRouter();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const handleLeaveRoom = async () => {
+    const id = getSavedPlayerId();
+
+    // Se tiver um id salvo, o player tem que ser excluído
+    if (id) {
+      try {
+        const res = await deletePlayer(id);
+        if (res.status === 200) {
+          router.push("/");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      router.push("/");
+    }
+  };
 
   return (
     <Box py={4}>
@@ -83,7 +103,7 @@ const Header = () => {
             <Button
               bgColor={"red.base"}
               onClick={() => {
-                router.push("/");
+                handleLeaveRoom();
                 onClose();
               }}
             >
