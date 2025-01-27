@@ -17,13 +17,7 @@ interface Option {
   value: string;
 }
 
-interface LanguageMenuProps {
-  variant: "header" | "menu";
-}
-
-const LanguageMenu: React.FC<LanguageMenuProps> = ({
-  variant,
-}: LanguageMenuProps) => {
+const LanguageMenu: React.FC = () => {
   const router = useRouter();
   const { locale } = useParams();
   const pathname = usePathname();
@@ -46,21 +40,25 @@ const LanguageMenu: React.FC<LanguageMenuProps> = ({
 
   return (
     <Menu>
-      <MenuButton>
+      <MenuButton
+        borderRadius={12}
+        _hover={{
+          bgColor: "rgba(0, 0, 0, 0.2)",
+          transform: "scale(1.05)", // Cresce 5% no hover
+          transition: "transform 0.2s ease-in-out, bgColor 0.2s ease-in-out", // Adiciona suavidade à animação
+        }}
+      >
         <Button
-          size={["xs", "xs", "sm"]}
           leftIcon={
-            <Box pb={["2px", "0px"]}>
+            <Box>
               <TfiWorld />
             </Box>
           }
-          bgColor={variant === "header" ? "rgba(0, 0, 0, 0.2)" : "blue.base"}
-          textTransform="uppercase"
-          borderColor="white"
-          borderRadius={[4, 4, 8]}
-          borderWidth={[1, 1, 2]}
-          textColor="white"
-          fontWeight={500}
+          textTransform={"uppercase"}
+          size={["sm"]}
+          bgColor={["blue.base", null, "base.transparent"]}
+          borderWidth={[0, null, 2]}
+          borderColor={"white"}
         >
           {locale}
         </Button>
@@ -80,7 +78,7 @@ const LanguageMenu: React.FC<LanguageMenuProps> = ({
             textColor={opt.value === locale ? "blue.base" : "black"}
             fontWeight={opt.value === locale ? "bold" : "regular"}
           >
-            {opt.text}
+            {`${opt.text} (${opt.value.toUpperCase()})`}
           </MenuItem>
         ))}
       </MenuList>

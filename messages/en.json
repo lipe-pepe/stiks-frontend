@@ -1,10 +1,13 @@
 {
   "Header": {
-    "how_to_play": "How to play ",
-    "leave_modal_title": "Leaving room!",
-    "leave_modal_body": "Are you sure you want to leave the game room?",
-    "leave_modal_button_cancel": "Cancel",
-    "leave_modal_button_leave": "Leave"
+    "how_to_play": "How to play",
+    "back": "Back"
+  },
+  "LeaveModal": {
+    "title": "Leaving room!",
+    "body": "Are you sure you want to leave the game room?",
+    "button_cancel": "Cancel",
+    "button_leave": "Leave"
   },
   "HomePage": {
     "create_room_button": "Create room"
