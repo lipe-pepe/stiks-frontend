@@ -3,6 +3,11 @@
     "how_to_play": "Como jogar",
     "back": "Voltar"
   },
+  "Footer": {
+    "terms": "Termos de serviço",
+    "contact": "Contato",
+    "credits": "Criado por Felipe Pêpe"
+  },
   "LeaveModal": {
     "title": "Saindo da sala!",
     "body": "Você tem certeza que quer sair da sala?",

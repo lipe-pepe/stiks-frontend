@@ -1,7 +1,8 @@
 import { Flex, GridItem, Text } from "@chakra-ui/react";
-import { BsYoutube } from "react-icons/bs";
+import { useTranslations } from "next-intl";
 
 const Footer = () => {
+  const t = useTranslations("Footer");
   return (
     <GridItem
       colSpan={2}
@@ -14,32 +15,17 @@ const Footer = () => {
     >
       <Flex alignItems={"center"} flexDir={"column"} gap={[6, 12]} w={"full"}>
         <Flex
+          textTransform={"uppercase"}
           w={"full"}
           alignItems={"center"}
-          justifyContent={"space-between"}
+          justifyContent={"space-evenly"}
           flexDir={["column", "row"]}
           gap={[2]}
         >
-          <Flex
-            w={["1.5rem", "1.5rem", "2rem"]}
-            h={["1.5rem", "1.5rem", "2rem"]}
-            justifyContent={"center"}
-            alignItems={"center"}
-          >
-            <BsYoutube style={{ width: "100%", height: "100%" }} />
-          </Flex>
-          <Flex
-            w={["100%", "50%", "40%", "30%"]}
-            alignItems={"center"}
-            justifyContent={["center", "space-between"]}
-            flexDir={["column", "row"]}
-            gap={[2]}
-          >
-            <Text>TERMOS DE SERVIÇO</Text>
-            <Text>CONTATO</Text>
-          </Flex>
+          <Text cursor={"pointer"}>{t("terms")}</Text>
+          <Text cursor={"pointer"}>{t("contact")}</Text>
         </Flex>
-        <Text>Criado por Felipe Pêpe</Text>
+        <Text>{t("credits")}</Text>
       </Flex>
     </GridItem>
   );

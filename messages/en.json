@@ -3,6 +3,11 @@
     "how_to_play": "How to play",
     "back": "Back"
   },
+  "Footer": {
+    "terms": "Terms of Service",
+    "contact": "Contact",
+    "credits": "Created by Felipe Pêpe"
+  },
   "LeaveModal": {
     "title": "Leaving room!",
     "body": "Are you sure you want to leave the game room?",
