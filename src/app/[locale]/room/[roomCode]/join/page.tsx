@@ -9,7 +9,7 @@ import { PlayerCreation, PlayerRole } from "@/types/player";
 import { Button, Center, Flex, GridItem, Input, Text } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { MdMeetingRoom } from "react-icons/md";
@@ -18,6 +18,7 @@ export default function JoinPage() {
   const t = useTranslations("JoinPage");
   const router = useRouter();
   const { room } = useRoomContext();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const role = useSearchParams().get("role");
   const validatedRole = Object.keys(PlayerRole).includes(role ?? "")
@@ -40,10 +41,12 @@ export default function JoinPage() {
   }
 
   const onSubmit = handleSubmit(async (data) => {
+    setIsLoading(true);
     try {
       const response = await createPlayer(room.code, data);
       if (response.status === 201) {
         localStorage.setItem("playerId", response.data.player._id);
+        setIsLoading(false);
         router.push(`/room/${room.code}/lobby`);
       } else {
         throw new Error(
@@ -52,6 +55,7 @@ export default function JoinPage() {
         );
       }
     } catch (error) {
+      setIsLoading(false);
       console.log("Error joining room: ", error);
     }
   });
@@ -131,6 +135,8 @@ export default function JoinPage() {
                     leftIcon={<MdMeetingRoom />}
                     variant={"primary"}
                     type="submit"
+                    isLoading={isLoading}
+                    loadingText={t("joining")}
                   >
                     {t("join_button")}
                   </Button>

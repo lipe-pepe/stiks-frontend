@@ -26,9 +26,29 @@ const lg = defineStyle({
 
 // Variants
 
-const primary = defineStyle({ bgColor: "blue.base", textColor: "white" });
+const primary = defineStyle({
+  bgColor: "blue.base",
+  textColor: "white",
+  _hover: {
+    bgColor: "blue.light",
+    transform: "scale(1.05)", // Cresce 5% no hover
+    transition: "transform 0.2s ease-in-out, background-color 0.2s ease-in-out", // Adiciona suavidade à animação
+  },
+  _active: {
+    bgColor: "blue.dark",
+    transition: "background-color 0.2s ease-in-out", // Adiciona suavidade à animação
+  },
+});
 
-const secondary = defineStyle({ bgColor: "white", textColor: "blue.base" });
+const secondary = defineStyle({
+  bgColor: "white",
+  textColor: "blue.base",
+  _hover: {
+    bgColor: "blue.base",
+    textColor: "white",
+    transition: "background-color 0.2s ease-in-out", // Adiciona suavidade à animação
+  },
+});
 
 const number = defineStyle({
   bgColor: "gray.1",
@@ -41,7 +61,6 @@ const game = defineStyle({
   color: "black",
   borderColor: "black",
   borderWidth: 2,
-  textTransform: "uppercase",
 });
 
 export const buttonTheme = defineStyleConfig({

@@ -134,7 +134,12 @@ export default function LobbyPage() {
                     isHost={isHost}
                   />
                 }
-                fixedEnd={<InviteButton text={t("invite_button")} />}
+                fixedEnd={
+                  <InviteButton
+                    text={t("invite_button")}
+                    copiedText={t("copied")}
+                  />
+                }
               />
             </MainBox>
           </TabPanel>
@@ -186,7 +191,12 @@ export default function LobbyPage() {
                     isHost={isHost}
                   />
                 }
-                fixedEnd={<InviteButton text={t("invite_button")} />}
+                fixedEnd={
+                  <InviteButton
+                    text={t("invite_button")}
+                    copiedText={t("copied")}
+                  />
+                }
               />
             </Box>
             <VStack height={"100%"}>

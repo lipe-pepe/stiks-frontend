@@ -14,6 +14,7 @@
     "input_label": "Nickname",
     "input_placeholder": "A cool nickname",
     "join_button": "Join",
+    "joining": "Joining",
     "selector_title": "Select your avatar",
     "selector_button": "Confirm",
     "error_required_name": "Enter a nickname to join the room",
@@ -24,6 +25,7 @@
     "players": "Players",
     "chat": "Chat",
     "invite_button": "Invite players!",
+    "copied": "Link copied!",
     "start_button": "Start game"
   },
   "PlayerList": {

@@ -14,6 +14,7 @@
     "input_label": "Apelido",
     "input_placeholder": "Um apelido maneiro",
     "join_button": "Entrar",
+    "joining": "Entrando",
     "selector_title": "Selecione seu avatar",
     "selector_button": "Confirmar",
     "error_required_name": "Digite um apelido para entrar na sala",
@@ -24,6 +25,7 @@
     "players": "Jogadores",
     "chat": "Chat",
     "invite_button": "Convidar jogadores!",
+    "copied": "Link copiado!",
     "start_button": "Começar jogo"
   },
   "PlayerList": {
