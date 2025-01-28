@@ -1,8 +1,7 @@
 import { Player } from "@/types/player";
-import { VStack } from "@chakra-ui/react";
+import { SimpleGrid } from "@chakra-ui/react";
 import React from "react";
 import PlayerLobbyDisplay from "./playerLobbyDisplay";
-import getSavedPlayerId from "@/utils/getSavedPlayerId";
 import { useTranslations } from "next-intl";
 
 interface PlayerListProps {
@@ -20,14 +19,13 @@ const PlayerList: React.FC<PlayerListProps> = ({
 }: PlayerListProps) => {
   const t = useTranslations("PlayerList");
   return (
-    <VStack alignItems={"start"} gap={["2rem"]}>
+    <SimpleGrid w={"100%"} columns={[1, null, null, 2]}>
       {players.map((player, index) => (
         <PlayerLobbyDisplay
           key={index}
           player={player}
           isHost={isHost}
           translations={t}
-          isCurrentPlayer={player.id === getSavedPlayerId()}
           onKick={onKickPlayer}
         />
       ))}
@@ -37,11 +35,10 @@ const PlayerList: React.FC<PlayerListProps> = ({
           key={index}
           player={null}
           translations={t}
-          isCurrentPlayer={false}
           onKick={onKickPlayer}
         />
       ))}
-    </VStack>
+    </SimpleGrid>
   );
 };
 

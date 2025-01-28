@@ -1,13 +1,12 @@
 import deletePlayer from "@/services/players/deletePlayer";
 import { Player } from "@/types/player";
-import { Button, Flex, Image, Text } from "@chakra-ui/react";
+import getSavedPlayerId from "@/utils/getSavedPlayerId";
+import { Box, Button, HStack, Image, Text, VStack } from "@chakra-ui/react";
 import { useState } from "react";
 import { MdOutlinePerson } from "react-icons/md";
-import { SlOptions } from "react-icons/sl";
 
 interface PlayerLobbyDisplayProps {
   player: Player | null;
-  isCurrentPlayer: boolean;
   isHost: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   translations: any;
@@ -15,12 +14,12 @@ interface PlayerLobbyDisplayProps {
 }
 const PlayerLobbyDisplay: React.FC<PlayerLobbyDisplayProps> = ({
   player,
-  isCurrentPlayer,
   isHost,
   translations,
   onKick,
 }: PlayerLobbyDisplayProps) => {
   const [showOptions, setShowOptions] = useState<boolean>(false);
+  const savedId = getSavedPlayerId();
 
   const handleKick = async () => {
     try {
@@ -34,66 +33,76 @@ const PlayerLobbyDisplay: React.FC<PlayerLobbyDisplayProps> = ({
   };
 
   return (
-    <Flex
-      alignItems={"center"}
-      justifyContent={player != null ? "space-between" : "normal"}
+    <HStack
+      px={[4, null, 6]}
+      py={2}
+      onClick={() => {
+        if (isHost && player?.id !== savedId && player)
+          setShowOptions(!showOptions);
+      }}
+      bg={showOptions ? "base.transparent" : "none"}
       color={player != null ? "white" : "base.darkest"}
-      width={"100%"}
+      cursor={isHost && player && player?.id != savedId ? "pointer" : "default"}
+      borderRadius={16}
+      _hover={
+        isHost && player && player?.id != savedId
+          ? {
+              bgColor: "base.transparent",
+              transition: "bgColor 0.2s ease-in-out", // Adiciona suavidade à animação
+            }
+          : {}
+      }
     >
-      <Flex alignItems={"center"} gap={["1rem"]}>
-        {player != null ? (
-          <Image
-            height={"5rem"}
-            src={`/images/avatars/${player.avatar}`}
-            alt={`Player ${player.name} avatar`}
-          />
-        ) : (
-          <MdOutlinePerson size={"4.75rem"} />
-        )}
-        <Flex flexDir={"column"} gap={[2]}>
-          <Flex gap={[3]}>
-            <Text
-              fontSize={["sm"]}
-              fontStyle={player != null ? "italic" : "normal"}
-              fontWeight={player != null ? "semibold" : "normal"}
-              textTransform={player != null ? "none" : "uppercase"}
-            >
-              {player?.name || translations("empty_player")}
-            </Text>
-            {isCurrentPlayer && (
-              <Text
-                bgColor={"blue.base"}
-                textColor={"white"}
-                fontSize={["xs"]}
-                textAlign={"center"}
-                px={[2]}
-                borderRadius={[8]}
-              >
-                {translations("current_player_tag")}
-              </Text>
-            )}
-          </Flex>
-          {player?.role === "host" && <Text fontSize={["xs"]}>HOST</Text>}
-          {showOptions && (
-            <Button
-              onClick={() => {
-                handleKick();
-              }}
-              size={["xs"]}
-              bgColor={"red.base"}
-            >
-              {translations("kick_button")}
-            </Button>
-          )}
-        </Flex>
-      </Flex>
-      {player != null && isHost && !isCurrentPlayer && (
-        <SlOptions
-          onClick={() => setShowOptions(!showOptions)}
-          size={"1.5rem"}
+      {player != null ? (
+        <Image
+          boxSize={["5rem", null, "6rem", "7rem", "8rem"]}
+          src={`/images/avatars/${player.avatar}`}
+          alt={`Player ${player.name} avatar`}
         />
+      ) : (
+        <Box boxSize={["5rem"]}>
+          <MdOutlinePerson size={"100%"} />
+        </Box>
       )}
-    </Flex>
+      <VStack alignItems={"start"}>
+        <HStack>
+          <Text
+            fontSize={["sm", null, "md"]}
+            fontStyle={player != null ? "italic" : "normal"}
+            fontWeight={player != null ? "semibold" : "normal"}
+            textTransform={player != null ? "none" : "uppercase"}
+          >
+            {player?.name || translations("empty_player")}
+          </Text>
+          {player?.id === savedId && (
+            <Text
+              bgColor={"blue.base"}
+              textColor={"white"}
+              fontSize={["xs", null, "sm"]}
+              textAlign={"center"}
+              px={[2]}
+              borderRadius={[8]}
+            >
+              {translations("current_player_tag")}
+            </Text>
+          )}
+        </HStack>
+        {player?.role === "host" && (
+          <Text fontSize={["xs", null, "sm"]}>HOST</Text>
+        )}
+        {showOptions && (
+          <Button
+            onClick={() => {
+              handleKick();
+            }}
+            size={["xs", null, "sm"]}
+            bgColor={"red.base"}
+          >
+            {translations("kick_button")}
+          </Button>
+        )}
+      </VStack>
+    </HStack>
   );
 };
 

@@ -89,7 +89,10 @@ export default function LobbyPage() {
   };
 
   return (
-    <GridItem colSpan={[4, 6, 12]}>
+    <GridItem
+      colSpan={[4, 6, 12, null, 10]}
+      colStart={[null, null, null, null, 2]}
+    >
       <Text
         fontSize={["md", "md", "lg"]}
         fontWeight={"bold"}
