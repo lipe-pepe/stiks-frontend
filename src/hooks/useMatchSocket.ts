@@ -5,9 +5,8 @@ import React, { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
 const useMatchSocket = (
-  roomCode: string,
   setChat: React.Dispatch<React.SetStateAction<ChatMessage[]>>,
-  setMatchData: React.Dispatch<React.SetStateAction<Match>>
+  setMatchData: React.Dispatch<React.SetStateAction<Match | null>>
 ) => {
   const [socket, setSocket] = useState<Socket | null>(null);
 
@@ -29,7 +28,8 @@ const useMatchSocket = (
 
     socketInstance.on("player-chose", (data) => {
       setMatchData((prev) => {
-        const updatedPlayers = prev.playersGameData.map((p) => {
+        if (!prev) return prev;
+        const updatedPlayers = prev?.playersGameData.map((p) => {
           if (p.id === data.playerId) {
             return {
               ...p,
@@ -49,6 +49,7 @@ const useMatchSocket = (
 
     socketInstance.on("player-guessed", (data) => {
       setMatchData((prev) => {
+        if (!prev) return prev;
         const updatedPlayers = prev.playersGameData.map((p) => {
           if (p.id === data.playerId) {
             return {
@@ -71,6 +72,7 @@ const useMatchSocket = (
 
     socketInstance.on("player-revealed", (data) => {
       setMatchData((prev) => {
+        if (!prev) return prev;
         let sticksToSum = 0;
         const updatedPlayers = prev.playersGameData.map((p) => {
           if (p.id === data.playerId) {
@@ -96,6 +98,7 @@ const useMatchSocket = (
 
     socketInstance.on("next-round", (data) => {
       setMatchData((prev) => {
+        if (!prev) return prev;
         const updatedPlayers = prev.playersGameData.map((p) => {
           return {
             ...p,
@@ -157,6 +160,7 @@ const useMatchSocket = (
 
   const updateStatus = () => {
     setMatchData((prev) => {
+      if (!prev) return prev;
       if (prev.status === MatchStatus.choosing) {
         return {
           ...prev,
@@ -182,28 +186,6 @@ const useMatchSocket = (
       return prev;
     });
   };
-
-  // const nextTurn = () => {
-  //   setRoomData((prev: Room | null) => {
-  //     // Verifica se 'prev' é válido
-  //     if (!prev) return prev;
-
-  //     // Pega o próximo jogador
-  //     const nextPlayer =
-  //       prev.gameData?.turn != null
-  //         ? getNextTurnPlayer(prev.gameData.turn, prev.players)
-  //         : prev.firstTurn;
-
-  //     // Retorna o novo estado atualizado
-  //     return {
-  //       ...prev,
-  //       gameData: {
-  //         ...prev.gameData,
-  //         turn: nextPlayer,
-  //       },
-  //     };
-  //   });
-  // };
 
   return { socket };
 };

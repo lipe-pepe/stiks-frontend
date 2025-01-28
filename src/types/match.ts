@@ -23,6 +23,7 @@ enum MatchStatus {
 }
 
 export interface Match {
+  id: string;
   round: number; // Número da rodada
   status: MatchStatus; // Status da partida
   playersGameData: PlayerGameData[]; // Dados do jogo de cada jogador
