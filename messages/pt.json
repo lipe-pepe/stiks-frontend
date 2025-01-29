@@ -14,6 +14,20 @@
     "button_cancel": "Cancelar",
     "button_leave": "Sair"
   },
+  "HowToPlayModal": {
+    "title": "Bem-vindo ao Stiks!",
+    "how_to_play": "📃 Como jogar",
+    "how_to_2_1": "Cada jogador começa com 3 palitinhos, quantidade representada pelo número ao lado do avatar de cada jogador.",
+    "how_to_2_2": "Pelo console do jogo, representado na imagem acima, escolha quantos palitinhos esconderá em sua mão. Nenhum jogador saberá quantos palitinhos você escondeu 🤫",
+    "how_to_2_3": "Após escolher, cada jogador colocará a mão com os palitinhos no jogo 🤛",
+    "how_to_2_4": "Após as escolhas, um jogador de cada vez irá fazer um palpite de quantos palitinhos tem escondidos nas mãos dos jogadores ao todo.",
+    "how_to_2_5": "Não é possível palpitar uma quantidade já palpitada por outro jogador. Pense bem no seu palpite! 🤔",
+    "how_to_2_6": "Após todos os palpites, cada jogador vai revelar quantos palitinhos escondeu, abrindo sua mão.",
+    "how_to_2_7": "Vence a rodada aquele que acertar o palpite! Esse jogador perderá um palitinho dos seus 3 iniciais. Se ninguém acertar, não há vencedor. ",
+    "how_to_2_8": "Começa uma nova partida! Jogadores que perderem todos seus palitinhos ganham o jogo e saem da disputa. O último jogador ainda com palitinhos na mão é o perdedor! 💩 Que prenda ele pagará?",
+    "about": "🎲 Sobre o jogo",
+    "about_1": "Stiks! é uma adaptação da porrinha, um jogo de adivinhação brasileiro. A brincadeira é popular em bares e botequins no Brasil e geralmente, o perdedor paga a cerveja dos outros. Agora, você pode jogar online e decidir a prenda do perdedor com seu grupo de amigos!"
+  },
   "HomePage": {
     "create_room_button": "Criar sala"
   },

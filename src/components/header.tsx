@@ -96,6 +96,7 @@ const Header = () => {
       <LeaveModal isOpen={leaveModal.isOpen} onClose={leaveModal.onClose} />
       <HowToPlayModal
         isOpen={howToPlayModal.isOpen}
+        // isOpen={true}
         onClose={howToPlayModal.onClose}
       />
     </Box>

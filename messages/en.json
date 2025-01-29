@@ -14,6 +14,20 @@
     "button_cancel": "Cancel",
     "button_leave": "Leave"
   },
+  "HowToPlayModal": {
+    "title": "Welcome to Stiks!",
+    "how_to_play": "📃 How to Play",
+    "how_to_2_1": "Each player starts with 3 sticks, represented by the number next to each player's avatar.",
+    "how_to_2_2": "Using the game console, shown in the image above, choose how many sticks you will hide in your hand. No player will know how many sticks you have hidden 🤫",
+    "how_to_2_3": "After making their choice, each player will place their hand with the sticks into the game 🤛",
+    "how_to_2_4": "Once all choices are made, each player will take turns guessing the total number of sticks hidden in everyone's hands.",
+    "how_to_2_5": "You cannot guess a number that has already been guessed by another player. Think carefully before making your guess! 🤔",
+    "how_to_2_6": "After all guesses, each player will reveal the number of sticks they hid by opening their hand.",
+    "how_to_2_7": "The round winner is the player who guessed correctly! This player will lose one of their initial 3 sticks. If no one guesses correctly, there is no winner.",
+    "how_to_2_8": "A new round begins! Players who lose all their sticks win the game and leave the match. The last player still holding sticks is the loser! 💩 What penalty will they have to pay?",
+    "about": "🎲 About the Game",
+    "about_1": "Stiks! is an adaptation of Purrinha, a Brazilian guessing game. The game is popular in bars and pubs in Brazil, where the loser usually pays for the other players' drinks. Now, you can play online and decide the loser's penalty with your group of friends!"
+  },
   "HomePage": {
     "create_room_button": "Create room"
   },
