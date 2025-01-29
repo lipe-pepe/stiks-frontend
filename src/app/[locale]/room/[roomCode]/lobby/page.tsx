@@ -2,6 +2,7 @@
 
 import ChatInput from "@/components/chat/chatInput";
 import ChatMessages from "@/components/chat/chatMessages";
+import ErrorMessage from "@/components/errorMessage";
 import FlexContainer from "@/components/flexContainer";
 import InviteButton from "@/components/lobby/inviteButton";
 import PlayerList from "@/components/lobby/playerList";
@@ -39,6 +40,7 @@ export default function LobbyPage() {
   const [players, setPlayers] = useState<Player[]>(room?.players || []);
   const [playerName, setPlayerName] = useState<string>("");
   const [isHost, setIsHost] = useState<boolean>(false);
+  const [error, setError] = useState<string>();
 
   // Atualiza os jogadores sempre que a sala muda
   useEffect(() => {
@@ -72,6 +74,8 @@ export default function LobbyPage() {
           roomCode: room?.code,
         });
       } else {
+        console.log(res);
+        setError(t(`error.${res.data.error}`));
         // TODO: EXIBIR O ERRO SE DER ERRADO
       }
     } catch (error) {
@@ -234,32 +238,38 @@ export default function LobbyPage() {
                 />
               </Box>
               {isHost && (
-                <Center h={"30%"}>
-                  <Button
-                    size={"lg"}
-                    leftIcon={<MdVideogameAsset />}
-                    variant={"primary"}
-                    onClick={() => handleStartGame()}
-                  >
-                    {t("start_button")}
-                  </Button>
-                </Center>
+                <VStack justifyContent={"center"} h={"30%"} gap={"1rem"}>
+                  {error && <ErrorMessage message={error} />}
+                  <Center>
+                    <Button
+                      size={"lg"}
+                      leftIcon={<MdVideogameAsset />}
+                      variant={"primary"}
+                      onClick={() => handleStartGame()}
+                    >
+                      {t("start_button")}
+                    </Button>
+                  </Center>
+                </VStack>
               )}
             </VStack>
           </HStack>
         </MainBox>
       </Box>
       {isHost && (
-        <Center display={["flex", "flex", "none"]} mt={["1rem"]}>
-          <Button
-            size={"md"}
-            leftIcon={<MdVideogameAsset />}
-            variant={"primary"}
-            onClick={() => handleStartGame()}
-          >
-            {t("start_button")}
-          </Button>
-        </Center>
+        <VStack display={["flex", "flex", "none"]} mt={["1rem"]} gap={"1rem"}>
+          {error && <ErrorMessage message={error} />}
+          <Center>
+            <Button
+              size={"md"}
+              leftIcon={<MdVideogameAsset />}
+              variant={"primary"}
+              onClick={() => handleStartGame()}
+            >
+              {t("start_button")}
+            </Button>
+          </Center>
+        </VStack>
       )}
     </GridItem>
   );

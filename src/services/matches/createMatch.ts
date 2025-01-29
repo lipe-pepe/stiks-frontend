@@ -8,10 +8,6 @@ async function createMatch(roomCode: string) {
     body: JSON.stringify({ roomCode }),
   });
 
-  if (!response.ok) {
-    throw new Error(`HTTP error! Status: ${response.status}`);
-  }
-
   return {
     status: response.status,
     data: await response.json(),

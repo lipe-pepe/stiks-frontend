@@ -34,7 +34,10 @@
     "chat": "Chat",
     "invite_button": "Invite players!",
     "copied": "Link copied!",
-    "start_button": "Start game"
+    "start_button": "Start game",
+    "error": {
+      "minimum_players": "At least 2 players are needed to start"
+    }
   },
   "PlayerList": {
     "current_player_tag": "you",

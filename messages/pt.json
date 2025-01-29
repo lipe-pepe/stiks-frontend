@@ -34,7 +34,10 @@
     "chat": "Chat",
     "invite_button": "Convidar jogadores!",
     "copied": "Link copiado!",
-    "start_button": "Começar jogo"
+    "start_button": "Começar jogo",
+    "error": {
+      "minimum_players": "Pelo menos 2 jogadores são necessários para começar"
+    }
   },
   "PlayerList": {
     "empty_player": "Vazio",
