@@ -46,9 +46,10 @@ export default function JoinPage() {
       const response = await createPlayer(room.code, data);
       if (response.status === 201) {
         localStorage.setItem("playerId", response.data.player._id);
-        setIsLoading(false);
         router.push(`/room/${room.code}/lobby`);
       } else {
+        setIsLoading(false);
+
         throw new Error(
           "An error occurred while creating the player: " +
             response.data.message
@@ -136,7 +137,6 @@ export default function JoinPage() {
                     variant={"primary"}
                     type="submit"
                     isLoading={isLoading}
-                    loadingText={t("joining")}
                   >
                     {t("join_button")}
                   </Button>

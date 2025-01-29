@@ -9,18 +9,23 @@ import { useRouter } from "@/i18n/routing";
 
 import HomeCarousel from "@/components/homeCarousel";
 import MainBox from "@/components/mainBox";
+import { useState } from "react";
 
 export default function HomePage() {
   const t = useTranslations("HomePage");
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleCreateRoom = async () => {
+    setIsLoading(true);
     try {
       const res = await createRoom();
       if (res.status === 201) {
         router.push(`/room/${res.data.room.code}/join?role=host`);
       } else {
         // TODO: EXIBIR O ERRO SE DER ERRADO!
+
+        setIsLoading(false);
       }
     } catch (error) {
       console.log(error);
@@ -47,6 +52,7 @@ export default function HomePage() {
             size={["lg"]}
             leftIcon={<MdVideogameAsset />}
             mx={["1.5rem"]}
+            isLoading={isLoading}
           >
             {t("create_room_button")}
           </Button>

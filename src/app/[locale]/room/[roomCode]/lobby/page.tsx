@@ -42,6 +42,8 @@ export default function LobbyPage() {
   const [isHost, setIsHost] = useState<boolean>(false);
   const [error, setError] = useState<string>();
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   // Atualiza os jogadores sempre que a sala muda
   useEffect(() => {
     setPlayers(room?.players || []);
@@ -67,6 +69,8 @@ export default function LobbyPage() {
   }, []);
 
   const handleStartGame = async () => {
+    setIsLoading(true);
+    setError(undefined);
     try {
       const res = await createMatch(String(roomCode));
       if (res.status === 201 && socket) {
@@ -75,6 +79,7 @@ export default function LobbyPage() {
         });
       } else {
         console.log(res);
+        setIsLoading(false);
         setError(t(`error.${res.data.error}`));
         // TODO: EXIBIR O ERRO SE DER ERRADO
       }
@@ -246,6 +251,7 @@ export default function LobbyPage() {
                       leftIcon={<MdVideogameAsset />}
                       variant={"primary"}
                       onClick={() => handleStartGame()}
+                      isLoading={isLoading}
                     >
                       {t("start_button")}
                     </Button>
@@ -265,6 +271,7 @@ export default function LobbyPage() {
               leftIcon={<MdVideogameAsset />}
               variant={"primary"}
               onClick={() => handleStartGame()}
+              isLoading={isLoading}
             >
               {t("start_button")}
             </Button>
