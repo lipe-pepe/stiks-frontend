@@ -7,7 +7,6 @@ import { MdVideogameAsset } from "react-icons/md";
 import createRoom from "@/services/rooms/createRoom";
 import { useRouter } from "@/i18n/routing";
 
-import HomeCarousel from "@/components/homeCarousel";
 import MainBox from "@/components/mainBox";
 import { useState } from "react";
 
@@ -15,16 +14,17 @@ export default function HomePage() {
   const t = useTranslations("HomePage");
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>();
 
   const handleCreateRoom = async () => {
     setIsLoading(true);
+    setError(undefined);
     try {
       const res = await createRoom();
       if (res.status === 201) {
         router.push(`/room/${res.data.room.code}/join?role=host`);
       } else {
-        // TODO: EXIBIR O ERRO SE DER ERRADO!
-
+        setError(t(`error.${res.data.error}`));
         setIsLoading(false);
       }
     } catch (error) {
@@ -43,7 +43,6 @@ export default function HomePage() {
       </GridItem>
       <GridItem colSpan={[4, 6, 8, 8, 8]} colStart={[null, null, 3, 3, 3]}>
         <MainBox pt={["2rem"]} pb={["2rem"]}>
-          <HomeCarousel />
           <Button
             onClick={() => {
               handleCreateRoom();
