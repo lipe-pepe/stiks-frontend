@@ -1,5 +1,7 @@
 interface UpdateInterface {
   chosen?: number;
+  guess?: number;
+  revealed?: boolean;
 }
 
 async function updateMatchPlayerData(

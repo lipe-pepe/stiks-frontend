@@ -1,5 +1,5 @@
 import { ChatMessage } from "@/types/chat";
-import { Match, MatchStatus, PlayerGameData } from "@/types/match";
+import { Match, MatchStatus } from "@/types/match";
 import getNextTurnPlayer from "@/utils/game/getNextTurnPlayer";
 import getMatchJson from "@/utils/match/getMatchJson";
 import React, { useEffect, useState } from "react";
@@ -29,76 +29,6 @@ const useMatchSocket = (
         message: data.message,
       };
       setChat((prevChat: ChatMessage[]) => [...prevChat, newMessage]);
-    });
-
-    socketInstance.on("player-chose", (data) => {
-      setMatchData((prev) => {
-        if (!prev) return prev;
-        const updatedPlayers = prev?.playersGameData.map((p) => {
-          if (p.id === data.playerId) {
-            return {
-              ...p,
-              chosen: data.value,
-            };
-          }
-          return p; // Retorna o jogador original
-        });
-        // Retorna o novo estado atualizado
-        return {
-          ...prev,
-          playersGameData: updatedPlayers,
-        };
-      });
-      updateStatus();
-    });
-
-    socketInstance.on("player-guessed", (data) => {
-      setMatchData((prev) => {
-        if (!prev) return prev;
-        const updatedPlayers = prev.playersGameData.map((p) => {
-          if (p.id === data.playerId) {
-            return {
-              ...p,
-              guess: data.value,
-            };
-          }
-          return p; // Retorna o jogador original
-        });
-
-        // Retorna o novo estado atualizado
-        return {
-          ...prev,
-          playersGameData: updatedPlayers,
-          turn: getNextTurnPlayer(prev.turn, prev.playersGameData),
-        };
-      });
-      updateStatus();
-    });
-
-    socketInstance.on("player-revealed", (data) => {
-      setMatchData((prev) => {
-        if (!prev) return prev;
-        let sticksToSum = 0;
-        const updatedPlayers = prev.playersGameData.map((p) => {
-          if (p.id === data.playerId) {
-            sticksToSum += Number(p.chosen);
-            return {
-              ...p,
-              revealed: true,
-            };
-          }
-          return p; // Retorna o jogador original
-        });
-
-        // Retorna o novo estado atualizado
-        return {
-          ...prev,
-          totalSticks: prev.totalSticks + sticksToSum, // Soma os palitos revelados
-          playersGameData: updatedPlayers,
-          turn: getNextTurnPlayer(prev.turn, prev.playersGameData),
-        };
-      });
-      updateStatus();
     });
 
     socketInstance.on("next-round", (data) => {
@@ -148,49 +78,6 @@ const useMatchSocket = (
   }, []);
 
   // ---------------------------------------------------------------------------------------
-
-  const checkAllPlayersChose = (players: PlayerGameData[]) => {
-    return players.every((p) => p.chosen != null);
-  };
-
-  const checkAllPlayersGuessed = (players: PlayerGameData[]) => {
-    return players.every((p) => p.guess != null);
-  };
-
-  const checkAllPlayersRevealed = (players: PlayerGameData[]) => {
-    return players.every((p) => p.revealed == true);
-  };
-
-  // ---------------------------------------------------------------------------------------
-
-  const updateStatus = () => {
-    setMatchData((prev) => {
-      if (!prev) return prev;
-      if (prev.status === MatchStatus.choosing) {
-        return {
-          ...prev,
-          status: checkAllPlayersChose(prev.playersGameData)
-            ? MatchStatus.guessing
-            : MatchStatus.choosing,
-        };
-      } else if (prev.status === MatchStatus.guessing) {
-        return {
-          ...prev,
-          status: checkAllPlayersGuessed(prev.playersGameData)
-            ? MatchStatus.revealing
-            : MatchStatus.guessing,
-        };
-      } else if (prev.status === MatchStatus.revealing) {
-        return {
-          ...prev,
-          status: checkAllPlayersRevealed(prev.playersGameData)
-            ? MatchStatus.results
-            : MatchStatus.revealing,
-        };
-      }
-      return prev;
-    });
-  };
 
   return { socket };
 };

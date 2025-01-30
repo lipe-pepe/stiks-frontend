@@ -83,12 +83,10 @@ export default function MatchPage() {
     await handleUpdate(data);
   };
 
-  const handlePlayerReveal = () => {
-    if (socket && player?.id === match.turn) {
-      socket.emit("player-revealed", {
-        roomCode: roomCode,
-        playerId: savedId,
-      });
+  const handlePlayerReveal = async () => {
+    const data = { revealed: true };
+    if (player?.id === match.turn) {
+      await handleUpdate(data);
     }
   };
 
