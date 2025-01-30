@@ -1,6 +1,7 @@
 import { ChatMessage } from "@/types/chat";
 import { Match, MatchStatus, PlayerGameData } from "@/types/match";
 import getNextTurnPlayer from "@/utils/game/getNextTurnPlayer";
+import getMatchJson from "@/utils/match/getMatchJson";
 import React, { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
@@ -16,6 +17,10 @@ const useMatchSocket = (
 
     socketInstance.on("disconnect", () => {
       console.log("Socket desconectado com ID: ", socketInstance.id);
+    });
+
+    socketInstance.on("match-update", (data) => {
+      setMatchData(getMatchJson(data)); // Atualiza o estado da sala
     });
 
     socketInstance.on("chat-message-received", (data) => {

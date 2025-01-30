@@ -7,6 +7,7 @@ import Console, { ConsoleProps } from "@/components/game/console";
 import PlayerGrid from "@/components/game/playerGrid";
 import { useMatchContext } from "@/context/matchContext";
 import { useRouter } from "@/i18n/routing";
+import updateMatchPlayerData from "@/services/matches/updateMatchPlayerData";
 import { gridGap, gridTemplateColumns } from "@/themes/gridConfig";
 import { MatchStatus, PlayerGameData } from "@/types/match";
 import { PlayerRole } from "@/types/player";
@@ -56,13 +57,24 @@ export default function MatchPage() {
     }
   }, [roomCode, socket]);
 
-  const handlePlayerChose = (value: number) => {
-    if (socket) {
-      socket.emit("player-chose", {
-        roomCode: roomCode,
-        playerId: savedId,
-        value: value,
-      });
+  const handlePlayerChose = async (value: number) => {
+    const update = { chosen: value };
+    try {
+      const res = await updateMatchPlayerData(
+        match.id,
+        String(savedId),
+        update
+      );
+      if (res.status === 200) {
+        if (socket) {
+          socket.emit("match-update", { roomCode, matchId: match.id });
+        }
+      } else {
+        console.log("ERRO!"); // TODO: Tratar
+      }
+      console.log(res);
+    } catch (error) {
+      console.log(error); // TODO: Tratar esse erro
     }
   };
 
