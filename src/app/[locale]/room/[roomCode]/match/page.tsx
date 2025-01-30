@@ -7,6 +7,7 @@ import Console, { ConsoleProps } from "@/components/game/console";
 import PlayerGrid from "@/components/game/playerGrid";
 import { useMatchContext } from "@/context/matchContext";
 import { useRouter } from "@/i18n/routing";
+import updateMatch from "@/services/matches/updateMatch";
 import updateMatchPlayerData from "@/services/matches/updateMatchPlayerData";
 import { gridGap, gridTemplateColumns } from "@/themes/gridConfig";
 import { MatchStatus, PlayerGameData } from "@/types/match";
@@ -90,12 +91,18 @@ export default function MatchPage() {
     }
   };
 
-  const handleNextRound = () => {
-    if (socket) {
-      socket.emit("next-round", {
-        roomCode: roomCode,
-        winnerId: winnerId,
-      });
+  const handleNextRound = async () => {
+    try {
+      const res = await updateMatch(match.id);
+      if (res.status === 200) {
+        if (socket) {
+          socket.emit("match-update", { roomCode, matchId: match.id });
+        }
+      } else {
+        console.log("ERRO!"); // TODO: Tratar
+      }
+    } catch (error) {
+      console.log(error); // TODO: Tratar esse erro
     }
   };
 
