@@ -57,14 +57,10 @@ export default function MatchPage() {
     }
   }, [roomCode, socket]);
 
-  const handlePlayerChose = async (value: number) => {
-    const update = { chosen: value };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleUpdate = async (data: any) => {
     try {
-      const res = await updateMatchPlayerData(
-        match.id,
-        String(savedId),
-        update
-      );
+      const res = await updateMatchPlayerData(match.id, String(savedId), data);
       if (res.status === 200) {
         if (socket) {
           socket.emit("match-update", { roomCode, matchId: match.id });
@@ -72,20 +68,19 @@ export default function MatchPage() {
       } else {
         console.log("ERRO!"); // TODO: Tratar
       }
-      console.log(res);
     } catch (error) {
       console.log(error); // TODO: Tratar esse erro
     }
   };
 
-  const handlePlayerGuess = (value: number) => {
-    if (socket) {
-      socket.emit("player-guessed", {
-        roomCode: roomCode,
-        playerId: savedId,
-        value: value,
-      });
-    }
+  const handlePlayerChose = async (value: number) => {
+    const data = { chosen: value };
+    await handleUpdate(data);
+  };
+
+  const handlePlayerGuess = async (value: number) => {
+    const data = { guess: value };
+    await handleUpdate(data);
   };
 
   const handlePlayerReveal = () => {
