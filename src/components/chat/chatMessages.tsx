@@ -17,6 +17,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({
       justifyContent={"end"}
       alignItems={"start"}
       textAlign={"start"}
+      fontFamily={"inter"}
     >
       {messages.map((message, index) => (
         <Text key={index} color={"white"} fontSize={"sm"}>

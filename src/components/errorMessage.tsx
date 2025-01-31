@@ -18,7 +18,7 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
       >
         <MdErrorOutline size={"110%"} />
       </Center>
-      <Text fontSize={["sm", null, null, "md"]} mt={1}>
+      <Text fontSize={["sm", null, null, "md"]} mt={1} fontWeight={"medium"}>
         {message}
       </Text>
     </HStack>

@@ -1,6 +1,7 @@
 "use client";
 
 import AvatarSelector from "@/components/avatarSelector";
+import ErrorMessage from "@/components/errorMessage";
 import MainBox from "@/components/mainBox";
 import { useRoomContext } from "@/context/roomContext";
 import { useRouter } from "@/i18n/routing";
@@ -83,7 +84,7 @@ export default function JoinPage() {
               textColor={"white"}
               gap={["2rem", "2rem", "3rem"]}
             >
-              <Text textAlign={"center"} fontWeight={700} fontSize={"lg"}>
+              <Text textAlign={"center"} fontWeight={"bold"} fontSize={"lg"}>
                 {t("form_title")}
               </Text>
               <Flex
@@ -97,7 +98,7 @@ export default function JoinPage() {
                   />
                 </Center>
                 <Flex flexDir={"column"} gap={2}>
-                  <Text>{t("input_label")}</Text>
+                  <Text fontWeight={"semibold"}>{t("input_label")}</Text>
                   <Input
                     {...register("name", {
                       required: t("error_required_name"),
@@ -107,6 +108,7 @@ export default function JoinPage() {
                       },
                     })}
                     py={6}
+                    fontWeight={"medium"}
                     size={["md", "md", "md", "md", "lg"]}
                     bgColor={"white"}
                     borderRadius={"12px"}
@@ -115,28 +117,7 @@ export default function JoinPage() {
                     placeholder={t("input_placeholder")}
                   ></Input>
                   {errors.name && (
-                    <Flex color={"red.base"} alignItems={"center"} gap={2}>
-                      <Flex
-                        rounded="full"
-                        borderColor="red.dark"
-                        borderWidth={1}
-                        bgColor="red.base"
-                        justifyContent="center"
-                        alignItems="center"
-                        textColor="white"
-                        minW={"1.25rem"}
-                        maxH={"1.25rem"}
-                      >
-                        !
-                      </Flex>
-                      <Text
-                        color="white"
-                        fontSize={["sm", "sm", "sm", "md"]}
-                        mt={1}
-                      >
-                        {errors.name.message}
-                      </Text>
-                    </Flex>
+                    <ErrorMessage message={String(errors.name.message)} />
                   )}
                   <Button
                     mt={"1.8rem"}

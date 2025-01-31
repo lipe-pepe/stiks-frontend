@@ -91,6 +91,8 @@ const AvatarSelector: React.FC<AvatarSelectorProps> = ({
           borderRadius={"16px"}
           borderColor={"base.transparent"}
           borderWidth={3}
+          fontFamily={"quicksand"}
+          fontWeight={"bold"}
         >
           <ModalHeader
             fontSize={"xl"}
