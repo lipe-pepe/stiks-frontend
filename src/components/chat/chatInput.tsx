@@ -46,7 +46,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
 
   return (
     <form onSubmit={onSubmit}>
-      <InputGroup>
+      <InputGroup fontFamily={"inter"}>
         <InputLeftElement color={"gray.1"}>
           <MdChatBubbleOutline />
         </InputLeftElement>
@@ -54,6 +54,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
           {...register("message")}
           placeholder={t("input_placeholder")}
           bgColor={"white"}
+          focusBorderColor="transparent"
         ></Input>
         <InputRightElement>
           <IconButton
@@ -62,6 +63,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
             color={"blue.base"}
             aria-label="Send message button"
             icon={<MdSend />}
+            _hover={{ bgColor: "white", color: "blue.darkest" }}
           />
         </InputRightElement>
       </InputGroup>

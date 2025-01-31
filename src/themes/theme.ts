@@ -35,6 +35,7 @@ const colors = {
   },
   gray: {
     1: "#EAEAEA",
+    2: "#D9D9D9",
   },
   green: {
     lightest: "#D1F598",

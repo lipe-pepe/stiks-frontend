@@ -98,7 +98,7 @@ export default function JoinPage() {
                   />
                 </Center>
                 <Flex flexDir={"column"} gap={2}>
-                  <Text fontWeight={"semibold"}>{t("input_label")}</Text>
+                  <Text fontFamily={"inter"}>{t("input_label")}</Text>
                   <Input
                     {...register("name", {
                       required: t("error_required_name"),
@@ -108,10 +108,11 @@ export default function JoinPage() {
                       },
                     })}
                     py={6}
-                    fontWeight={"medium"}
-                    size={["md", "md", "md", "md", "lg"]}
+                    fontFamily={"inter"}
+                    size={"md"}
+                    focusBorderColor="transparent"
                     bgColor={"white"}
-                    borderRadius={"12px"}
+                    borderRadius={8}
                     borderColor={errors.name ? "red.base" : "white"}
                     borderWidth={errors.name ? 3 : 0}
                     placeholder={t("input_placeholder")}

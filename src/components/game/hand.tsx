@@ -56,7 +56,8 @@ const Hand: React.FC<HandProps> = ({
           left="50%"
           transform="translate(-50%, 0)"
           color={"base.darkest"}
-          fontSize={["sm", null, "md"]}
+          fontSize={["xs", null, "sm"]}
+          fontFamily={"inter"}
         >
           {chosen}
         </Text>

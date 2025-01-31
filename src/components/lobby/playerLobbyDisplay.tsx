@@ -36,6 +36,7 @@ const PlayerLobbyDisplay: React.FC<PlayerLobbyDisplayProps> = ({
     <HStack
       px={[4, null, 6]}
       py={2}
+      gap={[2, null, 4]}
       onClick={() => {
         if (isHost && player?.id !== savedId && player)
           setShowOptions(!showOptions);
@@ -81,7 +82,7 @@ const PlayerLobbyDisplay: React.FC<PlayerLobbyDisplayProps> = ({
               fontFamily={"inter"}
               textAlign={"center"}
               px={[2]}
-              borderRadius={[8]}
+              rounded={"full"}
             >
               {translations("current_player_tag")}
             </Text>

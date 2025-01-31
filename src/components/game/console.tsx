@@ -78,7 +78,7 @@ const Console: React.FC<ConsoleProps> = ({
         gap={["1rem", "1rem", "2rem"]}
       >
         <Text
-          fontWeight={["normal", null, "semibold"]}
+          fontWeight={"bold"}
           fontSize={["sm", "sm", "lg"]}
           color={hasForm ? "blue.base" : "black"}
         >
@@ -94,6 +94,7 @@ const Console: React.FC<ConsoleProps> = ({
                     size={["2rem", "2rem", "2.5rem"]}
                     number={opt}
                     color={value === opt ? "white" : "black"}
+                    hoverBgColor={value === opt ? "blue.dark" : "gray.2"}
                     bgColor={value === opt ? "blue.base" : "gray.1"}
                     onClick={() => setValue("value", opt)}
                     cursor="pointer"
@@ -107,7 +108,11 @@ const Console: React.FC<ConsoleProps> = ({
           </form>
         )}
 
-        <Text color={"black"} fontSize={["sm", null, "md"]}>
+        <Text
+          color={"black"}
+          fontFamily={"inter"}
+          fontSize={["sm", null, "md"]}
+        >
           {subtext}
         </Text>
         {isHost && hostButtonText != null && onHostButtonClick != null && (

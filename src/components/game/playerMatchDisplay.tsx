@@ -78,6 +78,7 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
             onClick={() => {}}
             borderColor="black"
             borderWidth={[2, 2, 2, 3]}
+            hoverBgColor="base.dark"
           />
         </Box>
         {player.guess != null && (
@@ -100,7 +101,7 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
               transform="translate(-45%, -55%)"
               fontSize={"lg"}
               color={"black"}
-              fontWeight={"semibold"}
+              fontWeight={"bold"}
             >
               {player.guess}
             </Text>
@@ -125,13 +126,19 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
               px={[1]}
               bgColor={"blue.base"}
               fontSize={["xs"]}
+              fontFamily={"inter"}
             >
               {t("you_tag")}
             </Text>
           )}
         </HStack>
         {matchStatus != MatchStatus.end && (
-          <Text fontSize={["md"]} minHeight="1.5em">
+          <Text
+            fontFamily={"inter"}
+            fontWeight={"normal"}
+            fontSize={["sm"]}
+            minHeight="1.5em"
+          >
             {getStatusText()}
           </Text>
         )}

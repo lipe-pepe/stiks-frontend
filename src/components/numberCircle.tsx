@@ -9,6 +9,7 @@ interface NumberCircleProps {
   borderWidth?: number[];
   borderColor?: string;
   cursor?: string;
+  hoverBgColor: string;
 }
 
 const NumberCircle: React.FC<NumberCircleProps> = ({
@@ -20,6 +21,7 @@ const NumberCircle: React.FC<NumberCircleProps> = ({
   borderWidth = [0],
   borderColor = "none",
   cursor = "auto",
+  hoverBgColor,
 }: NumberCircleProps) => {
   return (
     <Center
@@ -32,6 +34,12 @@ const NumberCircle: React.FC<NumberCircleProps> = ({
       fontSize={"lg"}
       onClick={onClick}
       cursor={cursor}
+      fontFamily={"inter"}
+      _hover={{
+        bg: hoverBgColor,
+        transform: "scale(1.05)", // Cresce 5% no hover
+        transition: "transform 0.2s ease-in-out, ease-in-out", // Adiciona suavidade à animação
+      }}
     >
       {number}
     </Center>
