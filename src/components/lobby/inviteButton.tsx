@@ -45,11 +45,7 @@ const InviteButton: React.FC<InviteButtonProps> = ({
       <PopoverAnchor>
         <Button
           textTransform={"uppercase"}
-          leftIcon={
-            <Box mb={1}>
-              <MdSend />
-            </Box>
-          }
+          leftIcon={<MdSend />}
           size={"lg"}
           variant={"secondary"}
           onClick={handleInviteLink}

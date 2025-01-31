@@ -36,7 +36,7 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${fonts.inter.variable} ${fonts.dongle.variable}`}
+      className={`${fonts.quicksand.variable} ${fonts.inter.variable}`}
     >
       <body>
         <NextIntlClientProvider messages={messages}>
@@ -58,7 +58,7 @@ export default async function LocaleLayout({
                 backgroundRepeat="no-repeat" // Evita a repetição da imagem
                 px={pagePadding}
                 flexDir="column"
-                fontFamily={"dongle"}
+                fontFamily={"quicksand"}
               >
                 <Header />
                 <Flex

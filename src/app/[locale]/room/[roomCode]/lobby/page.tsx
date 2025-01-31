@@ -247,11 +247,7 @@ export default function LobbyPage() {
                   <Center>
                     <Button
                       size={"lg"}
-                      leftIcon={
-                        <Box mb={1}>
-                          <MdVideogameAsset />
-                        </Box>
-                      }
+                      leftIcon={<MdVideogameAsset />}
                       variant={"primary"}
                       onClick={() => handleStartGame()}
                       isLoading={isLoading}
@@ -271,11 +267,7 @@ export default function LobbyPage() {
           <Center>
             <Button
               size={"md"}
-              leftIcon={
-                <Box mb={1}>
-                  <MdVideogameAsset />
-                </Box>
-              }
+              leftIcon={<MdVideogameAsset />}
               variant={"primary"}
               onClick={() => handleStartGame()}
               isLoading={isLoading}

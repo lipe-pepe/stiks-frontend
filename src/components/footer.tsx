@@ -8,7 +8,7 @@ const Footer = () => {
       colSpan={2}
       colStart={2}
       textColor={"white"}
-      fontSize={["inter.xs", null, "inter.sm"]}
+      fontSize={["xs", null, "sm"]}
       mt={[8]}
       mb={[3]}
       textAlign={"center"}

@@ -36,7 +36,8 @@ const lg = defineStyle({
 
 const primary = defineStyle({
   bgColor: "blue.base",
-  fontFamily: "dongle",
+  fontFamily: "quicksand",
+  fontWeight: "bold",
   textColor: "white",
   borderColor: "transparent",
   _hover: {
@@ -53,7 +54,8 @@ const primary = defineStyle({
 const secondary = defineStyle({
   bgColor: "white",
   textColor: "blue.base",
-  fontFamily: "dongle",
+  fontFamily: "quicksand",
+  fontWeight: "bold",
   borderColor: "transparent",
   _hover: {
     bgColor: "blue.base",
@@ -65,7 +67,8 @@ const secondary = defineStyle({
 const danger = defineStyle({
   bgColor: "red.base",
   textColor: "white",
-  fontFamily: "dongle",
+  fontFamily: "quicksand",
+  fontWeight: "bold",
   borderColor: "transparent",
   _hover: {
     bgColor: "red.light",
@@ -82,7 +85,8 @@ const game = defineStyle({
   bgColor: "yellow.base",
   color: "black",
   borderColor: "black",
-  fontFamily: "dongle",
+  fontWeight: "bold",
+  fontFamily: "quicksand",
   _hover: {
     bgColor: "yellow.light",
     transform: "scale(1.05)", // Cresce 5% no hover

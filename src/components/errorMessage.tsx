@@ -1,4 +1,4 @@
-import { Center, Flex, HStack, Text } from "@chakra-ui/react";
+import { Center, HStack, Text } from "@chakra-ui/react";
 import React from "react";
 import { MdErrorOutline } from "react-icons/md";
 

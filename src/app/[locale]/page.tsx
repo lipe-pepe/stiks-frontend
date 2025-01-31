@@ -1,15 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import {
-  Box,
-  Button,
-  Flex,
-  GridItem,
-  Image,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
+import { Button, Flex, GridItem, Image, Text, VStack } from "@chakra-ui/react";
 
 import { MdVideogameAsset } from "react-icons/md";
 import createRoom from "@/services/rooms/createRoom";
@@ -75,11 +67,7 @@ export default function HomePage() {
             w="100%" // Ocupa toda a largura disponível
             maxW="300px" // Define um limite máximo para não ficar muito grande em telas largas
             onClick={handleCreateRoom}
-            leftIcon={
-              <Box mb={1}>
-                <MdVideogameAsset />
-              </Box>
-            }
+            leftIcon={<MdVideogameAsset />}
             isLoading={isLoading}
             size={["md", null, "lg"]}
           >
