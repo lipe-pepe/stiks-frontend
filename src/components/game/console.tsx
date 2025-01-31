@@ -11,6 +11,7 @@ interface ConsoleProps {
   text: string;
   subtext?: string;
   timerSeconds?: number;
+  timerHasSound?: boolean;
   onTimerEnd?: () => void;
   hasForm?: boolean;
   onFormSubmit?: (data: number) => void;
@@ -26,6 +27,7 @@ const Console: React.FC<ConsoleProps> = ({
   text,
   subtext,
   timerSeconds,
+  timerHasSound = false,
   onTimerEnd,
   hasForm,
   onFormSubmit,
@@ -67,9 +69,11 @@ const Console: React.FC<ConsoleProps> = ({
         <Timer
           key={`Timer for ${text}`}
           duration={timerSeconds}
+          endDuration={timerSeconds / 5}
           onEnd={onTimerEnd}
           color={hasForm ? "green.base" : "blue.base"}
           endColor={hasForm ? "red.base" : "blue.base"}
+          hasSound={timerHasSound}
         />
       )}
       <VStack

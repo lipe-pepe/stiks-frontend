@@ -130,6 +130,7 @@ export default function MatchPage() {
         handlePlayerChose(
           Math.floor(Math.random() * (Number(player?.total) + 1))
         ); // Valor aleatório
+      props.timerHasSound = true;
     }
 
     if (match.status === MatchStatus.choosing && player?.chosen != null) {
@@ -143,6 +144,7 @@ export default function MatchPage() {
       props.hasForm = true;
       props.onFormSubmit = handlePlayerGuess;
       props.timerSeconds = 20;
+      props.timerHasSound = true;
       props.onTimerEnd = () =>
         handlePlayerGuess(getAvailableGuesses(match.playersGameData)[0]); // Primeiro valor disponível
     }
@@ -163,6 +165,7 @@ export default function MatchPage() {
       });
       props.hasForm = false;
       props.timerSeconds = 5;
+      props.timerHasSound = false;
       props.onTimerEnd = handlePlayerReveal;
     }
 
@@ -216,7 +219,14 @@ export default function MatchPage() {
           fontWeight={700}
           position={"relative"}
         >
-          {t("round", { number: match.round })}
+          <Text
+            fontSize={["md", "md", "lg"]}
+            fontWeight={"bold"}
+            textAlign={"center"}
+            mb={["1rem"]}
+          >
+            {t("round", { number: match.round })}
+          </Text>
           <VStack
             display={["flex", "flex", "none"]}
             color={"rgba(255,255,255,0.5)"}
@@ -256,6 +266,7 @@ export default function MatchPage() {
             {gameConsole != null && (
               <Console
                 timerSeconds={gameConsole.timerSeconds}
+                timerHasSound={gameConsole.timerHasSound}
                 onTimerEnd={gameConsole.onTimerEnd}
                 text={gameConsole.text}
                 subtext={gameConsole.subtext}
