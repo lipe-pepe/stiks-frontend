@@ -114,7 +114,11 @@ export default function LobbyPage() {
       <Tabs isFitted display={["block", "block", "none"]}>
         <TabList fontSize={"sm"}>
           <Tab
-            _selected={{ bgColor: "base.darkest", textColor: "yellow.base" }}
+            _selected={{
+              bgColor: "base.darkest",
+              textColor: "yellow.base",
+              fontWeight: "semibold",
+            }}
             bgColor="base.transparent"
             borderTopRadius={12}
             textColor={"rgba(255,255,255,0.75)"}
@@ -124,7 +128,11 @@ export default function LobbyPage() {
             {t("players")}
           </Tab>
           <Tab
-            _selected={{ bgColor: "base.darkest", textColor: "yellow.base" }}
+            _selected={{
+              bgColor: "base.darkest",
+              textColor: "yellow.base",
+              fontWeight: "semibold",
+            }}
             bgColor="base.transparent"
             borderTopRadius={12}
             textColor={"rgba(255,255,255,0.75)"}

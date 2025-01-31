@@ -4,18 +4,15 @@ import { defineStyle, defineStyleConfig } from "@chakra-ui/react";
 
 const xs = defineStyle({
   fontSize: "xs",
-  lineHeight: 0,
   borderWidth: 2,
 });
 
 const sm = defineStyle({
-  lineHeight: 0,
   fontSize: "sm",
   borderWidth: 2,
 });
 
 const md = defineStyle({
-  lineHeight: 0,
   fontSize: "md",
   px: "3rem",
   py: "1.5rem",
@@ -24,7 +21,6 @@ const md = defineStyle({
 });
 
 const lg = defineStyle({
-  lineHeight: 0,
   fontSize: "lg",
   px: "4rem",
   py: "2rem",

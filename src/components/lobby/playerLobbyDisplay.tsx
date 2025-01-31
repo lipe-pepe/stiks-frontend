@@ -67,8 +67,7 @@ const PlayerLobbyDisplay: React.FC<PlayerLobbyDisplayProps> = ({
       <VStack alignItems={"start"}>
         <HStack>
           <Text
-            fontSize={["sm", null, "md"]}
-            fontStyle={player != null ? "italic" : "normal"}
+            fontSize={["md", null, null, "lg"]}
             fontWeight={player != null ? "semibold" : "normal"}
             textTransform={player != null ? "none" : "uppercase"}
           >
@@ -79,6 +78,7 @@ const PlayerLobbyDisplay: React.FC<PlayerLobbyDisplayProps> = ({
               bgColor={"blue.base"}
               textColor={"white"}
               fontSize={["xs", null, "sm"]}
+              fontFamily={"inter"}
               textAlign={"center"}
               px={[2]}
               borderRadius={[8]}
@@ -88,7 +88,9 @@ const PlayerLobbyDisplay: React.FC<PlayerLobbyDisplayProps> = ({
           )}
         </HStack>
         {player?.role === "host" && (
-          <Text fontSize={["xs", null, "sm"]}>HOST</Text>
+          <Text fontFamily={"inter"} fontSize={["xs", null, "sm"]}>
+            HOST
+          </Text>
         )}
         {showOptions && (
           <Button

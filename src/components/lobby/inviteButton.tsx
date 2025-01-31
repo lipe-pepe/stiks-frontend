@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Popover,
   PopoverAnchor,
@@ -65,6 +64,7 @@ const InviteButton: React.FC<InviteButtonProps> = ({
             fontWeight={"semibold"}
             textAlign={"center"}
             color={"white"}
+            fontFamily={"inter"}
           >
             {copiedText}
           </Text>
