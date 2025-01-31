@@ -62,7 +62,8 @@
     "kick_button": "Expulsar"
   },
   "Chat": {
-    "input_placeholder": "Converse!"
+    "input_placeholder": "Converse!",
+    "log_player_joined": "{name} entrou na sala!"
   },
   "MatchPage": {
     "round": "Rodada {number}",

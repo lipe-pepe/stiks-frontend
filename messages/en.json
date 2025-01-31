@@ -62,7 +62,8 @@
     "empty_player": "Empty"
   },
   "Chat": {
-    "input_placeholder": "Chat!"
+    "input_placeholder": "Chat!",
+    "log_player_joined": "{name} joined the room!"
   },
   "MatchPage": {
     "round": "Round {number}",

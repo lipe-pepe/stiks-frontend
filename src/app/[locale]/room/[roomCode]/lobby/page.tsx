@@ -64,6 +64,7 @@ export default function LobbyPage() {
     if (socket) {
       socket.emit("player-joined", {
         roomCode: room?.code,
+        playerId: getSavedPlayerId(),
       });
     }
   }, []);

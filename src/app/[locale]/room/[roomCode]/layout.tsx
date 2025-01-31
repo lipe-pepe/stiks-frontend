@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import getRoom from "@/services/rooms/getRoom";
 import { Room } from "@/types/room";
 import { RoomContext } from "@/context/roomContext";
-import { ChatMessage } from "@/types/chat";
+import { ChatLog, ChatMessage } from "@/types/chat";
 import useRoomSocket from "@/hooks/useRoomSocket";
 
 // No App Router, o arquivo layout.js é usado para compartilhar estado ou lógica entre todas as páginas filhas.
@@ -19,7 +19,7 @@ export default function RoomLayout({
   const { roomCode } = useParams(); // Pega o código da sala da URL
   const [loading, setLoading] = useState(true);
   const [roomData, setRoomData] = useState<Room | null>(null);
-  const [chat, setChat] = useState<ChatMessage[]>([]);
+  const [chat, setChat] = useState<(ChatMessage | ChatLog)[]>([]);
 
   // Hook personalizado do socket
   const { socket } = useRoomSocket(String(roomCode), setChat, setRoomData);

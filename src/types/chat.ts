@@ -3,4 +3,10 @@ interface ChatMessage {
   message: string;
 }
 
-export type { ChatMessage };
+interface ChatLog {
+  player: string;
+  type: "game" | "join" | "leave";
+  message: string;
+}
+
+export type { ChatMessage, ChatLog };
