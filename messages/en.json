@@ -9,7 +9,7 @@
     "credits": "Created by Felipe Pêpe"
   },
   "LeaveModal": {
-    "title": "Leaving room!",
+    "title": "😱 Leaving room!",
     "body": "Are you sure you want to leave the game room?",
     "button_cancel": "Cancel",
     "button_leave": "Leave"
@@ -29,7 +29,11 @@
     "about_1": "Stiks! is an adaptation of Purrinha, a Brazilian guessing game. The game is popular in bars and pubs in Brazil, where the loser usually pays for the other players' drinks. Now, you can play online and decide the loser's penalty with your group of friends!"
   },
   "HomePage": {
-    "create_room_button": "Create room"
+    "create_room_button": "Create room",
+    "subtitle": "The Guessing Game",
+    "error": {
+      "generic": "There was an unexpected error."
+    }
   },
   "JoinPage": {
     "form_title": "Choose your AVATAR and NICKNAME!",

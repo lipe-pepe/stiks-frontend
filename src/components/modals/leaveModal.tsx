@@ -3,12 +3,12 @@ import deletePlayer from "@/services/players/deletePlayer";
 import getSavedPlayerId from "@/utils/getSavedPlayerId";
 import {
   Button,
+  HStack,
   Modal,
-  ModalBody,
   ModalContent,
-  ModalFooter,
-  ModalHeader,
   ModalOverlay,
+  Text,
+  VStack,
 } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
 
@@ -42,21 +42,33 @@ const LeaveModal: React.FC<LeaveProps> = ({ isOpen, onClose }: LeaveProps) => {
   return (
     <Modal isCentered isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent mx={"1rem"} borderColor={"red.dark"} borderWidth={[2]}>
-        <ModalHeader>{t("title")}</ModalHeader>
-        <ModalBody>{t("body")}</ModalBody>
-        <ModalFooter gap={"1rem"}>
-          <Button onClick={onClose}>{t("button_cancel")}</Button>
-          <Button
-            bgColor={"red.base"}
-            onClick={() => {
-              handleLeaveRoom();
-              onClose();
-            }}
-          >
-            {t("button_leave")}
-          </Button>
-        </ModalFooter>
+      <ModalContent
+        textAlign={"center"}
+        mx={"1rem"}
+        borderRadius={[8, 10, 12, 14, 16]}
+        p={[8, null, 12]}
+      >
+        <VStack gap={[4]} width={"100%"}>
+          <Text fontWeight={"bold"} fontSize={["lg", null, "xl"]}>
+            {t("title")}
+          </Text>
+          <Text fontSize={["md", null, "lg"]}>{t("body")}</Text>
+          <HStack mt={[4]} gap={[4]}>
+            <Button size={["md", null, "lg"]} onClick={onClose}>
+              {t("button_cancel")}
+            </Button>
+            <Button
+              size={["md", null, "lg"]}
+              variant={"danger"}
+              onClick={() => {
+                handleLeaveRoom();
+                onClose();
+              }}
+            >
+              {t("button_leave")}
+            </Button>
+          </HStack>
+        </VStack>
       </ModalContent>
     </Modal>
   );

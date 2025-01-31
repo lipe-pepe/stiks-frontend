@@ -9,7 +9,7 @@
     "credits": "Criado por Felipe Pêpe"
   },
   "LeaveModal": {
-    "title": "Saindo da sala!",
+    "title": "😱 Saindo da sala!",
     "body": "Você tem certeza que quer sair da sala?",
     "button_cancel": "Cancelar",
     "button_leave": "Sair"
@@ -29,7 +29,11 @@
     "about_1": "Stiks! é uma adaptação da porrinha, um jogo de adivinhação brasileiro. A brincadeira é popular em bares e botequins no Brasil e geralmente, o perdedor paga a cerveja dos outros. Agora, você pode jogar online e decidir a prenda do perdedor com seu grupo de amigos!"
   },
   "HomePage": {
-    "create_room_button": "Criar sala"
+    "create_room_button": "Criar sala",
+    "subtitle": "O Jogo de Adivinhação",
+    "error": {
+      "generic": "Ocorreu um erro inesperado."
+    }
   },
   "JoinPage": {
     "form_title": "Escolha seu AVATAR e APELIDO!",

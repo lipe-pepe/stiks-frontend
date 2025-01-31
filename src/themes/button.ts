@@ -50,10 +50,18 @@ const secondary = defineStyle({
   },
 });
 
-const number = defineStyle({
-  bgColor: "gray.1",
-  textColor: "black",
-  rounded: "full",
+const danger = defineStyle({
+  bgColor: "red.base",
+  textColor: "white",
+  _hover: {
+    bgColor: "red.light",
+    transform: "scale(1.05)", // Cresce 5% no hover
+    transition: "transform 0.2s ease-in-out, background-color 0.2s ease-in-out", // Adiciona suavidade à animação
+  },
+  _active: {
+    bgColor: "red.dark",
+    transition: "background-color 0.2s ease-in-out", // Adiciona suavidade à animação
+  },
 });
 
 const game = defineStyle({
@@ -68,6 +76,6 @@ export const buttonTheme = defineStyleConfig({
     variant: "primary",
     size: "md",
   },
-  variants: { primary, secondary, number, game },
+  variants: { primary, secondary, danger, game },
   sizes: { xs, sm, md, lg },
 });
