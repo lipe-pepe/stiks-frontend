@@ -8,10 +8,11 @@ const Footer = () => {
       colSpan={2}
       colStart={2}
       textColor={"white"}
-      fontSize={["xs", "xs", "sm"]}
+      fontSize={["inter.xs", null, "inter.sm"]}
       mt={[8]}
       mb={[3]}
       textAlign={"center"}
+      fontFamily={"inter"}
     >
       <Flex alignItems={"center"} flexDir={"column"} gap={[6, 12]} w={"full"}>
         <Flex

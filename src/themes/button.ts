@@ -3,20 +3,20 @@ import { defineStyle, defineStyleConfig } from "@chakra-ui/react";
 // Sizes
 
 const xs = defineStyle({
-  fontSize: "dongle.xs",
+  fontSize: "xs",
   lineHeight: 0,
   borderWidth: 2,
 });
 
 const sm = defineStyle({
   lineHeight: 0,
-  fontSize: "dongle.sm",
+  fontSize: "sm",
   borderWidth: 2,
 });
 
 const md = defineStyle({
   lineHeight: 0,
-  fontSize: "dongle.md",
+  fontSize: "md",
   px: "3rem",
   py: "1.5rem",
   borderRadius: 10,
@@ -25,7 +25,7 @@ const md = defineStyle({
 
 const lg = defineStyle({
   lineHeight: 0,
-  fontSize: "dongle.lg",
+  fontSize: "lg",
   px: "4rem",
   py: "2rem",
   borderRadius: 12,

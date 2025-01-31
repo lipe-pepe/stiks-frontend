@@ -58,6 +58,7 @@ export default async function LocaleLayout({
                 backgroundRepeat="no-repeat" // Evita a repetição da imagem
                 px={pagePadding}
                 flexDir="column"
+                fontFamily={"dongle"}
               >
                 <Header />
                 <Flex
