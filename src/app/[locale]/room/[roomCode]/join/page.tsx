@@ -6,7 +6,15 @@ import { useRoomContext } from "@/context/roomContext";
 import { useRouter } from "@/i18n/routing";
 import createPlayer from "@/services/players/createPlayer";
 import { PlayerCreation, PlayerRole } from "@/types/player";
-import { Button, Center, Flex, GridItem, Input, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Center,
+  Flex,
+  GridItem,
+  Input,
+  Text,
+} from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -133,7 +141,11 @@ export default function JoinPage() {
                   <Button
                     mt={"1.8rem"}
                     size={"lg"}
-                    leftIcon={<MdMeetingRoom />}
+                    leftIcon={
+                      <Box mb={1}>
+                        <MdMeetingRoom />
+                      </Box>
+                    }
                     variant={"primary"}
                     type="submit"
                     isLoading={isLoading}

@@ -81,7 +81,6 @@ export default function LobbyPage() {
         console.log(res);
         setIsLoading(false);
         setError(t(`error.${res.data.error}`));
-        // TODO: EXIBIR O ERRO SE DER ERRADO
       }
     } catch (error) {
       console.log(error);
@@ -248,7 +247,11 @@ export default function LobbyPage() {
                   <Center>
                     <Button
                       size={"lg"}
-                      leftIcon={<MdVideogameAsset />}
+                      leftIcon={
+                        <Box mb={1}>
+                          <MdVideogameAsset />
+                        </Box>
+                      }
                       variant={"primary"}
                       onClick={() => handleStartGame()}
                       isLoading={isLoading}
@@ -268,7 +271,11 @@ export default function LobbyPage() {
           <Center>
             <Button
               size={"md"}
-              leftIcon={<MdVideogameAsset />}
+              leftIcon={
+                <Box mb={1}>
+                  <MdVideogameAsset />
+                </Box>
+              }
               variant={"primary"}
               onClick={() => handleStartGame()}
               isLoading={isLoading}

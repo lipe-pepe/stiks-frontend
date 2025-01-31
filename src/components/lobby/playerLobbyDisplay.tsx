@@ -96,7 +96,7 @@ const PlayerLobbyDisplay: React.FC<PlayerLobbyDisplayProps> = ({
               handleKick();
             }}
             size={["xs", null, "sm"]}
-            bgColor={"red.base"}
+            variant={"danger"}
           >
             {translations("kick_button")}
           </Button>

@@ -148,7 +148,15 @@ const AvatarSelector: React.FC<AvatarSelectorProps> = ({
             </SimpleGrid>
           </ModalBody>
           <ModalFooter justifyContent={"center"}>
-            <Button onClick={onClose} leftIcon={<MdCheck />} size={["lg"]}>
+            <Button
+              onClick={onClose}
+              leftIcon={
+                <Box mb={1}>
+                  <MdCheck />
+                </Box>
+              }
+              size={["lg"]}
+            >
               {t("selector_button")}
             </Button>
           </ModalFooter>

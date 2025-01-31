@@ -100,7 +100,7 @@ const Console: React.FC<ConsoleProps> = ({
                   />
                 ))}
               </Flex>
-              <Button type="submit" size={["sm", "sm", "md"]} variant={"game"}>
+              <Button type="submit" size={"md"} variant={"game"}>
                 {t("confirm_button")}
               </Button>
             </VStack>

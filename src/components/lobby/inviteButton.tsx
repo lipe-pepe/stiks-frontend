@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Popover,
   PopoverAnchor,
@@ -44,7 +45,11 @@ const InviteButton: React.FC<InviteButtonProps> = ({
       <PopoverAnchor>
         <Button
           textTransform={"uppercase"}
-          leftIcon={<MdSend />}
+          leftIcon={
+            <Box mb={1}>
+              <MdSend />
+            </Box>
+          }
           size={"lg"}
           variant={"secondary"}
           onClick={handleInviteLink}
