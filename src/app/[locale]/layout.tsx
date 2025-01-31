@@ -34,7 +34,10 @@ export default async function LocaleLayout({
   const pagePadding = ["16px", "80px", "120px", "160px", "240px"];
 
   return (
-    <html lang={locale} className={fonts.inter.variable}>
+    <html
+      lang={locale}
+      className={`${fonts.inter.variable} ${fonts.dongle.variable}`}
+    >
       <body>
         <NextIntlClientProvider messages={messages}>
           <Providers>
