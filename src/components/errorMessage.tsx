@@ -1,5 +1,6 @@
-import { Flex, HStack, Text } from "@chakra-ui/react";
+import { Center, Flex, HStack, Text } from "@chakra-ui/react";
 import React from "react";
+import { MdErrorOutline } from "react-icons/md";
 
 interface ErrorMessageProps {
   message: string;
@@ -9,21 +10,15 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({
   message,
 }: ErrorMessageProps) => {
   return (
-    <HStack color={"red.base"} gap={2} maxW={"100%"}>
-      <Flex
-        rounded="full"
-        borderColor="red.dark"
-        borderWidth={1}
-        bgColor="red.base"
-        justifyContent="center"
-        alignItems="center"
-        textColor="white"
-        minW={"1.25rem"}
-        maxH={"1.25rem"}
+    <HStack color="white" gap={2} maxW={"100%"}>
+      <Center
+        boxSize={[5, null, null, 6]}
+        rounded={"full"}
+        bgColor={"red.base"}
       >
-        !
-      </Flex>
-      <Text color="white" fontSize={["sm", "sm", "sm", "md"]} mt={1}>
+        <MdErrorOutline size={"110%"} />
+      </Center>
+      <Text fontSize={["sm", null, null, "md"]} mt={1}>
         {message}
       </Text>
     </HStack>
