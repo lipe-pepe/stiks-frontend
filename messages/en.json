@@ -83,7 +83,8 @@
     "wait_instruction": "Waiting for the other players",
     "next_round": "Next round",
     "waiting_host": "Wait for the host to continue",
-    "winner": "🏆 {name} won!",
+    "winner": "🏆 {name} won",
+    "loser": "💩 {name} lost!",
     "lobby_button": "Back to lobby"
   },
   "Console": {

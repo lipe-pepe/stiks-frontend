@@ -32,6 +32,7 @@ import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { MdChatBubbleOutline } from "react-icons/md";
+import useSound from "use-sound";
 
 export default function MatchPage() {
   const t = useTranslations("MatchPage");
@@ -48,6 +49,16 @@ export default function MatchPage() {
   const chatModal = useDisclosure();
 
   const router = useRouter();
+
+  const [playSwoosh1] = useSound("/sounds/swoosh_1.mp3");
+  const [playSwoosh2] = useSound("/sounds/swoosh_2.mp3");
+  const [playSwoosh3] = useSound("/sounds/swoosh_3.mp3");
+
+  const playSwoosh = () => {
+    const sounds = [playSwoosh1, playSwoosh2, playSwoosh3];
+    const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
+    randomSound();
+  };
 
   useEffect(() => {
     // Reinsere o socket na sala ao recarregar a página
@@ -89,6 +100,7 @@ export default function MatchPage() {
     if (player?.id === match.turn) {
       await handleUpdate(data);
     }
+    playSwoosh();
   };
 
   const handleNextRound = async () => {
@@ -186,7 +198,8 @@ export default function MatchPage() {
     }
 
     if (match.status === MatchStatus.end) {
-      props.text = t("winner", { name: match.winners[0].name });
+      props.subtext = t("winner", { name: match.winners[0].name });
+      props.text = t("loser", { name: match.playersGameData[0].name });
       props.buttonText = t("lobby_button");
       props.onButtonClick = handleBackToLobby;
     }
@@ -367,34 +380,5 @@ export default function MatchPage() {
         </ModalContent>
       </Modal>
     </>
-    // <GridItem colSpan={[4]} colStart={[1]} textColor={"white"}>
-    //   <Text textAlign={"center"} fontSize={"md"} fontWeight={700}>
-    //     {t("round", { number: match.round })}
-    //   </Text>
-    //   {players.map((p, index) => (
-    //     <PlayerGameDisplay
-    //       key={index}
-    //       playerGameData={p}
-    //       currentPlayerId={String(player?.id)}
-    //       translations={t}
-    //       turn={match.turn}
-    //       matchStatus={match.status}
-    //     />
-    //   ))}
-    //   {player != null && socket != null && (
-    //     <Flex position="fixed" bottom={0} left={0} right={0} mx={[4]} mb={[12]}>
-    //       <Console
-    //         socket={socket}
-    //         roomCode={String(roomCode)}
-    //         matchStatus={match.status}
-    //         players={players}
-    //         playerGameData={player}
-    //         turnPlayer={match.turn}
-    //         winner={winnerId}
-    //         total={totalRevealed}
-    //       />
-    //     </Flex>
-    //   )}
-    // </GridItem>
   );
 }

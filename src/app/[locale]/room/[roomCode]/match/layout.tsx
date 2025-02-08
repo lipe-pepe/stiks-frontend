@@ -38,9 +38,9 @@ export default function MatchLayout({
     fetchMatchData();
   }, [room]);
 
-  // useEffect(() => {
-  //   console.log(matchData);
-  // }, [matchData]);
+  useEffect(() => {
+    console.log(matchData);
+  }, [matchData]);
 
   if (loading) {
     return <div>Loading...</div>; // TO-DO: FAZER UM componente DECENTE PARA ISSO

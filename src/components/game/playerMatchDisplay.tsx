@@ -47,17 +47,19 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
 
   return (
     <SimpleGrid spacing={["1rem"]} columns={[3, null, 1]} alignItems={"center"}>
-      {handPos === "top" && isGreaterThanSm && (
-        <Center display={["none", null, "flex"]} h={["50%"]}>
-          <Hand
-            transform={["none"]}
-            chosen={player.chosen}
-            playerId={player.id}
-            revealed={player.revealed}
-            model={player.avatar.split("_")[1]}
-          />
-        </Center>
-      )}
+      {handPos === "top" &&
+        isGreaterThanSm &&
+        matchStatus != MatchStatus.end && (
+          <Center display={["none", null, "flex"]} h={["50%"]}>
+            <Hand
+              transform={["none"]}
+              chosen={player.chosen}
+              playerId={player.id}
+              revealed={player.revealed}
+              model={player.avatar.split("_")[1]}
+            />
+          </Center>
+        )}
       <Center position={"relative"}>
         <Image
           maxH={["none", null, "7rem"]}
@@ -81,7 +83,7 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
             hoverBgColor="base.dark"
           />
         </Box>
-        {player.guess != null && (
+        {player.guess != null && matchStatus != MatchStatus.end && (
           <Box
             pos={"absolute"}
             boxSize={"50%"}
@@ -143,17 +145,18 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
           </Text>
         )}
       </VStack>
-      {(handPos === "bottom" || !isGreaterThanSm) && (
-        <Center h={["50%"]}>
-          <Hand
-            transform={["rotate(90deg)", "rotate(90deg)", "rotate(180deg)"]}
-            chosen={player.chosen}
-            playerId={player.id}
-            revealed={player.revealed}
-            model={player.avatar.split("_")[1]}
-          />
-        </Center>
-      )}
+      {(handPos === "bottom" || !isGreaterThanSm) &&
+        matchStatus != MatchStatus.end && (
+          <Center h={["50%"]}>
+            <Hand
+              transform={["rotate(90deg)", "rotate(90deg)", "rotate(180deg)"]}
+              chosen={player.chosen}
+              playerId={player.id}
+              revealed={player.revealed}
+              model={player.avatar.split("_")[1]}
+            />
+          </Center>
+        )}
     </SimpleGrid>
   );
 };
