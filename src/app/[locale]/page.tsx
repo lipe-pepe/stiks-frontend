@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Button, Flex, GridItem, Image, Text, VStack } from "@chakra-ui/react";
+import { Flex, GridItem, Image, Text, VStack } from "@chakra-ui/react";
 
 import { MdVideogameAsset } from "react-icons/md";
 import createRoom from "@/services/rooms/createRoom";
@@ -9,6 +9,7 @@ import { useRouter } from "@/i18n/routing";
 
 import { useState } from "react";
 import ErrorMessage from "@/components/errorMessage";
+import SpecialButton from "@/components/specialButton";
 
 export default function HomePage() {
   const t = useTranslations("HomePage");
@@ -61,18 +62,16 @@ export default function HomePage() {
         </Text>
 
         {/* Botão centralizado e ocupando toda a largura */}
-        <Flex w="100%" justify="center">
-          <Button
-            mt={[8]}
-            w="100%" // Ocupa toda a largura disponível
-            maxW="300px" // Define um limite máximo para não ficar muito grande em telas largas
-            onClick={handleCreateRoom}
+        <Flex w="100%" justify="center" mt={[8]}>
+          <SpecialButton
+            width="100%" // Ocupa toda a largura disponível
+            maxWidth="300px" // Define um limite máximo para não ficar muito grande em telas largas
+            text={t("create_room_button")}
             leftIcon={<MdVideogameAsset />}
-            isLoading={isLoading}
+            onClick={handleCreateRoom}
             size={["md", null, "lg"]}
-          >
-            {t("create_room_button")}
-          </Button>
+            isLoading={isLoading}
+          />
         </Flex>
         {error && <ErrorMessage message={error} />}
       </VStack>
