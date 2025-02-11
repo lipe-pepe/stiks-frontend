@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { useParams } from "next/navigation";
 import { MdSend } from "react-icons/md";
+import useSound from "use-sound";
 
 interface InviteButtonProps {
   text: string;
@@ -22,11 +23,14 @@ const InviteButton: React.FC<InviteButtonProps> = ({
   const { locale, roomCode } = useParams();
   const { onOpen, onClose, isOpen } = useDisclosure();
 
+  const [playSound] = useSound("/sounds/invite.mp3");
+
   const handleInviteLink = async () => {
     try {
       await navigator.clipboard.writeText(
         `${window.location.host}/${locale}/room/${roomCode}/join/`
       );
+      playSound();
       onOpen();
       setTimeout(() => onClose(), 2000);
     } catch (error) {
