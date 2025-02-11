@@ -7,13 +7,13 @@ import FlexContainer from "@/components/flexContainer";
 import InviteButton from "@/components/lobby/inviteButton";
 import PlayerList from "@/components/lobby/playerList";
 import MainBox from "@/components/mainBox";
+import SpecialButton from "@/components/specialButton";
 import { useRoomContext } from "@/context/roomContext";
 import createMatch from "@/services/matches/createMatch";
 import { Player } from "@/types/player";
 import getSavedPlayerId from "@/utils/getSavedPlayerId";
 import {
   Box,
-  Button,
   Center,
   GridItem,
   HStack,
@@ -258,15 +258,14 @@ export default function LobbyPage() {
                 <VStack justifyContent={"center"} h={"30%"} gap={"1rem"}>
                   {error && <ErrorMessage message={error} />}
                   <Center>
-                    <Button
+                    <SpecialButton
+                      text={t("start_button")}
                       size={"lg"}
                       leftIcon={<MdVideogameAsset />}
                       variant={"primary"}
                       onClick={() => handleStartGame()}
                       isLoading={isLoading}
-                    >
-                      {t("start_button")}
-                    </Button>
+                    />
                   </Center>
                 </VStack>
               )}
@@ -278,15 +277,14 @@ export default function LobbyPage() {
         <VStack display={["flex", "flex", "none"]} mt={["1rem"]} gap={"1rem"}>
           {error && <ErrorMessage message={error} />}
           <Center>
-            <Button
+            <SpecialButton
+              text={t("start_button")}
               size={"md"}
               leftIcon={<MdVideogameAsset />}
               variant={"primary"}
               onClick={() => handleStartGame()}
               isLoading={isLoading}
-            >
-              {t("start_button")}
-            </Button>
+            />
           </Center>
         </VStack>
       )}

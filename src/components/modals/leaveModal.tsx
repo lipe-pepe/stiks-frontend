@@ -2,7 +2,6 @@ import { useRouter } from "@/i18n/routing";
 import deletePlayer from "@/services/players/deletePlayer";
 import getSavedPlayerId from "@/utils/getSavedPlayerId";
 import {
-  Button,
   HStack,
   Modal,
   ModalContent,
@@ -11,6 +10,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
+import SpecialButton from "../specialButton";
 
 interface LeaveProps {
   isOpen: boolean;
@@ -54,19 +54,20 @@ const LeaveModal: React.FC<LeaveProps> = ({ isOpen, onClose }: LeaveProps) => {
           </Text>
           <Text fontSize={["md", null, "lg"]}>{t("body")}</Text>
           <HStack mt={[4]} gap={[4]}>
-            <Button size={["md", null, "lg"]} onClick={onClose}>
-              {t("button_cancel")}
-            </Button>
-            <Button
+            <SpecialButton
+              text={t("button_cancel")}
+              size={["md", null, "lg"]}
+              onClick={onClose}
+            />
+            <SpecialButton
+              text={t("button_leave")}
               size={["md", null, "lg"]}
               variant={"danger"}
               onClick={() => {
                 handleLeaveRoom();
                 onClose();
               }}
-            >
-              {t("button_leave")}
-            </Button>
+            />
           </HStack>
         </VStack>
       </ModalContent>

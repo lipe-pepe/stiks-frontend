@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 
 import {
   Box,
-  Button,
   Flex,
   Image,
   Modal,
@@ -19,6 +18,8 @@ import {
 import { HiPencil } from "react-icons/hi";
 import { useTranslations } from "next-intl";
 import { MdCheck } from "react-icons/md";
+import SpecialButton from "./specialButton";
+import useSound from "use-sound";
 
 interface AvatarSelectorProps {
   onSelect: (value: string) => void;
@@ -32,6 +33,8 @@ const AvatarSelector: React.FC<AvatarSelectorProps> = ({
   const [selected, setSelected] = useState<string>("");
   const [avatars, setAvatars] = useState<string[] | null>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [playClick1] = useSound("/sounds/click_1.mp3");
 
   const handleSelect = (avatar: string) => {
     setSelected(avatar);
@@ -111,6 +114,7 @@ const AvatarSelector: React.FC<AvatarSelectorProps> = ({
                   p={[2]}
                   onClick={() => {
                     handleSelect(avatar);
+                    playClick1();
                   }}
                   borderRadius={"12px"}
                   borderWidth={avatar === selected ? 4 : 2}
@@ -150,9 +154,12 @@ const AvatarSelector: React.FC<AvatarSelectorProps> = ({
             </SimpleGrid>
           </ModalBody>
           <ModalFooter justifyContent={"center"}>
-            <Button onClick={onClose} leftIcon={<MdCheck />} size={["lg"]}>
-              {t("selector_button")}
-            </Button>
+            <SpecialButton
+              onClick={onClose}
+              leftIcon={<MdCheck />}
+              size={["lg"]}
+              text={t("selector_button")}
+            />
           </ModalFooter>
         </ModalContent>
       </Modal>

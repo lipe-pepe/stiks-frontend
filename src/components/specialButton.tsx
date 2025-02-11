@@ -4,11 +4,11 @@ import useSound from "use-sound";
 
 interface SpecialButtonProps {
   text: string;
-  size: (string | null)[] | string;
-  leftIcon: ReactElement;
   onClick: () => void;
 
   // Opcionais
+  size?: (string | null)[] | string;
+  leftIcon?: ReactElement;
   width?: string[] | string;
   maxWidth?: string[] | string;
   variant?: string;
@@ -20,7 +20,7 @@ const SpecialButton: React.FC<SpecialButtonProps> = ({
   width,
   maxWidth,
   text,
-  size,
+  size = "md",
   leftIcon,
   isLoading = false,
   type = "button",
@@ -29,9 +29,10 @@ const SpecialButton: React.FC<SpecialButtonProps> = ({
 }: SpecialButtonProps) => {
   const [playClick1] = useSound("/sounds/click_1.mp3");
   const [playClick2] = useSound("/sounds/click_2.mp3");
+  const [playClick3] = useSound("/sounds/click_3.mp3");
 
   const playClick = () => {
-    const sounds = [playClick1, playClick2];
+    const sounds = [playClick1, playClick2, playClick3];
     const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
     randomSound();
   };

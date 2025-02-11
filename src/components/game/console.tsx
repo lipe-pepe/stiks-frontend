@@ -1,11 +1,13 @@
 "use client";
 
-import { Button, Flex, Text, VStack } from "@chakra-ui/react";
+import { Flex, Text, VStack } from "@chakra-ui/react";
 import React from "react";
 import { useTranslations } from "next-intl";
 import Timer from "../timer";
 import { useForm } from "react-hook-form";
 import NumberCircle from "../numberCircle";
+import SpecialButton from "../specialButton";
+import useSound from "use-sound";
 
 interface ConsoleProps {
   text: string;
@@ -39,6 +41,8 @@ const Console: React.FC<ConsoleProps> = ({
   onButtonClick,
 }: ConsoleProps) => {
   const t = useTranslations("Console");
+
+  const [playClick1] = useSound("/sounds/click_1.mp3");
 
   const { handleSubmit, setValue, watch, resetField } = useForm<{
     value: number;
@@ -100,14 +104,21 @@ const Console: React.FC<ConsoleProps> = ({
                     color={value === opt ? "white" : "black"}
                     hoverBgColor={value === opt ? "blue.dark" : "gray.2"}
                     bgColor={value === opt ? "blue.base" : "gray.1"}
-                    onClick={() => setValue("value", opt)}
+                    onClick={() => {
+                      setValue("value", opt);
+                      playClick1();
+                    }}
                     cursor="pointer"
                   />
                 ))}
               </Flex>
-              <Button type="submit" size={"md"} variant={"game"}>
-                {t("confirm_button")}
-              </Button>
+              <SpecialButton
+                text={t("confirm_button")}
+                type="submit"
+                size={"md"}
+                variant={"game"}
+                onClick={() => {}}
+              />
             </VStack>
           </form>
         )}
@@ -120,10 +131,10 @@ const Console: React.FC<ConsoleProps> = ({
           {subtext}
         </Text>
         {isHost && hostButtonText != null && onHostButtonClick != null && (
-          <Button onClick={onHostButtonClick}>{hostButtonText}</Button>
+          <SpecialButton onClick={onHostButtonClick} text={hostButtonText} />
         )}
         {buttonText != null && onButtonClick != null && (
-          <Button onClick={onButtonClick}>{buttonText}</Button>
+          <SpecialButton onClick={onButtonClick} text={buttonText} />
         )}
       </VStack>
     </VStack>

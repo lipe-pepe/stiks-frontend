@@ -1,9 +1,9 @@
 import deletePlayer from "@/services/players/deletePlayer";
 import { Player } from "@/types/player";
 import getSavedPlayerId from "@/utils/getSavedPlayerId";
-import { Box, Button, HStack, Image, Text, VStack } from "@chakra-ui/react";
-import { useState } from "react";
+import { Box, HStack, Image, Text, VStack } from "@chakra-ui/react";
 import { MdOutlinePerson } from "react-icons/md";
+import SpecialButton from "../specialButton";
 
 interface PlayerLobbyDisplayProps {
   player: Player | null;
@@ -18,7 +18,6 @@ const PlayerLobbyDisplay: React.FC<PlayerLobbyDisplayProps> = ({
   translations,
   onKick,
 }: PlayerLobbyDisplayProps) => {
-  const [showOptions, setShowOptions] = useState<boolean>(false);
   const savedId = getSavedPlayerId();
 
   const handleKick = async () => {
@@ -37,22 +36,8 @@ const PlayerLobbyDisplay: React.FC<PlayerLobbyDisplayProps> = ({
       px={[4, null, 6]}
       py={2}
       gap={[2, null, 4]}
-      onClick={() => {
-        if (isHost && player?.id !== savedId && player)
-          setShowOptions(!showOptions);
-      }}
-      bg={showOptions ? "base.transparent" : "none"}
       color={player != null ? "white" : "base.darkest"}
-      cursor={isHost && player && player?.id != savedId ? "pointer" : "default"}
       borderRadius={16}
-      _hover={
-        isHost && player && player?.id != savedId
-          ? {
-              bgColor: "base.transparent",
-              transition: "bgColor 0.2s ease-in-out", // Adiciona suavidade à animação
-            }
-          : {}
-      }
     >
       {player != null ? (
         <Image
@@ -93,16 +78,15 @@ const PlayerLobbyDisplay: React.FC<PlayerLobbyDisplayProps> = ({
             HOST
           </Text>
         )}
-        {showOptions && (
-          <Button
+        {isHost && player?.id !== savedId && player && (
+          <SpecialButton
+            text={translations("kick_button")}
+            variant={"danger"}
+            size={["xs", null, "sm"]}
             onClick={() => {
               handleKick();
             }}
-            size={["xs", null, "sm"]}
-            variant={"danger"}
-          >
-            {translations("kick_button")}
-          </Button>
+          />
         )}
       </VStack>
     </HStack>
