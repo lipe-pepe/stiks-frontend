@@ -2,7 +2,7 @@ import { ChatLog, ChatMessage } from "@/types/chat";
 import { Match, MatchStatus } from "@/types/match";
 import getNextTurnPlayer from "@/utils/game/getNextTurnPlayer";
 import getMatchJson from "@/utils/match/getMatchJson";
-import getMatchPlayerName from "@/utils/match/getMatchPlayerName";
+import getMatchPlayer from "@/utils/match/getMatchPlayer";
 import React, { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
@@ -29,10 +29,11 @@ const useMatchSocket = (
       setMatchData(newMatchData); // Atualiza o estado da sala
 
       // Cria o log no chat
-      const playerName = getMatchPlayerName(
+      const playerName = getMatchPlayer(
         newMatchData.playersGameData,
         playerId
-      );
+      )?.name;
+
       const newLog: ChatLog = {
         player: String(playerName),
         type: "game",
@@ -41,20 +42,32 @@ const useMatchSocket = (
       setChat((prevChat) => [...prevChat, newLog]);
     });
 
-    socketInstance.on("player-guessed", (match, playerId, value) => {
+    socketInstance.on("player-guessed", (match, playerId) => {
       const newMatchData = getMatchJson(match);
       setMatchData(newMatchData); // Atualiza o estado da sala
 
       // Cria o log no chat
-      const playerName = getMatchPlayerName(
-        newMatchData.playersGameData,
-        playerId
-      );
+      const player = getMatchPlayer(newMatchData.playersGameData, playerId);
       const newLog: ChatLog = {
-        player: String(playerName),
+        player: String(player?.name),
         type: "game",
         message: "log_player_guessed",
-        value: value,
+        value: player?.guess,
+      };
+      setChat((prevChat) => [...prevChat, newLog]);
+    });
+
+    socketInstance.on("player-revealed", (match, playerId) => {
+      const newMatchData = getMatchJson(match);
+      setMatchData(newMatchData); // Atualiza o estado da sala
+
+      // Cria o log no chat
+      const player = getMatchPlayer(newMatchData.playersGameData, playerId);
+      const newLog: ChatLog = {
+        player: String(player?.name),
+        type: "game",
+        message: "log_player_revealed",
+        value: player?.chosen,
       };
       setChat((prevChat) => [...prevChat, newLog]);
     });

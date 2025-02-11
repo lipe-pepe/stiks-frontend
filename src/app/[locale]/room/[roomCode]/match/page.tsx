@@ -70,7 +70,7 @@ export default function MatchPage() {
   }, [roomCode, socket]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleUpdate = async (data: any, event: string, value?: number) => {
+  const handleUpdate = async (data: any, event: string) => {
     try {
       const res = await updateMatchPlayerData(match.id, String(savedId), data);
       if (res.status === 200) {
@@ -79,7 +79,6 @@ export default function MatchPage() {
             roomCode,
             matchId: match.id,
             playerId: getSavedPlayerId(),
-            value,
           });
         }
       } else {
@@ -97,7 +96,7 @@ export default function MatchPage() {
 
   const handlePlayerGuess = async (value: number) => {
     const data = { guess: value };
-    await handleUpdate(data, "player-guessed", value);
+    await handleUpdate(data, "player-guessed");
   };
 
   const handlePlayerReveal = async () => {
