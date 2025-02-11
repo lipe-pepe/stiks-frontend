@@ -33,6 +33,8 @@ const Timer: React.FC<TimerProps> = ({
     { volume: 1.0 }
   );
 
+  const [playTimeUp] = useSound("/sounds/time_up.mp3");
+
   // Toca o som do timer ao montar o componente
   useEffect(() => {
     if (hasSound) {
@@ -60,6 +62,7 @@ const Timer: React.FC<TimerProps> = ({
       }
 
       if (remaining === 0) {
+        if (hasSound) playTimeUp();
         cancelAnimationFrame(timerId.current!);
         onEnd();
       } else {
