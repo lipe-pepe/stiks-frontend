@@ -3,13 +3,17 @@ import React, { ReactElement } from "react";
 import useSound from "use-sound";
 
 interface SpecialButtonProps {
-  width: string[] | string;
-  maxWidth: string[] | string;
   text: string;
-  size: (string | null)[];
+  size: (string | null)[] | string;
   leftIcon: ReactElement;
-  isLoading: boolean;
   onClick: () => void;
+
+  // Opcionais
+  width?: string[] | string;
+  maxWidth?: string[] | string;
+  variant?: string;
+  isLoading?: boolean;
+  type?: "button" | "submit" | "reset" | undefined;
 }
 
 const SpecialButton: React.FC<SpecialButtonProps> = ({
@@ -18,8 +22,10 @@ const SpecialButton: React.FC<SpecialButtonProps> = ({
   text,
   size,
   leftIcon,
-  isLoading,
+  isLoading = false,
+  type = "button",
   onClick,
+  variant = "primary",
 }: SpecialButtonProps) => {
   const [playClick1] = useSound("/sounds/click_1.mp3");
   const [playClick2] = useSound("/sounds/click_2.mp3");
@@ -43,6 +49,8 @@ const SpecialButton: React.FC<SpecialButtonProps> = ({
       size={size}
       leftIcon={leftIcon}
       isLoading={isLoading}
+      type={type}
+      variant={variant}
     >
       {text}
     </Button>

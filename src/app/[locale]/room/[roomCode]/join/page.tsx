@@ -3,19 +3,12 @@
 import AvatarSelector from "@/components/avatarSelector";
 import ErrorMessage from "@/components/errorMessage";
 import MainBox from "@/components/mainBox";
+import SpecialButton from "@/components/specialButton";
 import { useRoomContext } from "@/context/roomContext";
 import { useRouter } from "@/i18n/routing";
 import createPlayer from "@/services/players/createPlayer";
 import { PlayerCreation, PlayerRole } from "@/types/player";
-import {
-  Box,
-  Button,
-  Center,
-  Flex,
-  GridItem,
-  Input,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Center, Flex, GridItem, Input, Text } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -120,20 +113,20 @@ export default function JoinPage() {
                   {errors.name && (
                     <ErrorMessage message={String(errors.name.message)} />
                   )}
-                  <Button
-                    mt={"1.8rem"}
+                  <Box h={"1.8rem"} />
+                  <SpecialButton
+                    onClick={() => {}}
+                    text={t("join_button")}
                     size={"lg"}
+                    type="submit"
+                    isLoading={isLoading}
+                    variant={"primary"}
                     leftIcon={
                       <Box mb={1}>
                         <MdMeetingRoom />
                       </Box>
                     }
-                    variant={"primary"}
-                    type="submit"
-                    isLoading={isLoading}
-                  >
-                    {t("join_button")}
-                  </Button>
+                  />
                 </Flex>
               </Flex>
             </Flex>
