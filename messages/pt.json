@@ -63,7 +63,8 @@
   },
   "Chat": {
     "input_placeholder": "Converse!",
-    "log_player_joined": "{name} entrou na sala!"
+    "log_player_joined": "{name} entrou na sala!",
+    "log_player_chose": "{name} escolheu seus palitinhos!"
   },
   "MatchPage": {
     "round": "Rodada {number}",

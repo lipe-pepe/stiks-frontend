@@ -1,7 +1,8 @@
-import { ChatMessage } from "@/types/chat";
+import { ChatLog, ChatMessage } from "@/types/chat";
 import { Match, MatchStatus } from "@/types/match";
 import getNextTurnPlayer from "@/utils/game/getNextTurnPlayer";
 import getMatchJson from "@/utils/match/getMatchJson";
+import getMatchPlayerName from "@/utils/match/getMatchPlayerName";
 import React, { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 
@@ -21,6 +22,23 @@ const useMatchSocket = (
 
     socketInstance.on("match-update", (data) => {
       setMatchData(getMatchJson(data)); // Atualiza o estado da sala
+    });
+
+    socketInstance.on("player-chose", (match, playerId) => {
+      const newMatchData = getMatchJson(match);
+      setMatchData(newMatchData); // Atualiza o estado da sala
+
+      // Cria o log no chat
+      const playerName = getMatchPlayerName(
+        newMatchData.playersGameData,
+        playerId
+      );
+      const newLog: ChatLog = {
+        player: String(playerName),
+        type: "game",
+        message: "log_player_chose",
+      };
+      setChat((prevChat) => [...prevChat, newLog]);
     });
 
     socketInstance.on("chat-message-received", (data) => {

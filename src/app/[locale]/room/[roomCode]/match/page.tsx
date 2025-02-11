@@ -70,12 +70,16 @@ export default function MatchPage() {
   }, [roomCode, socket]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleUpdate = async (data: any) => {
+  const handleUpdate = async (data: any, event: string) => {
     try {
       const res = await updateMatchPlayerData(match.id, String(savedId), data);
       if (res.status === 200) {
         if (socket) {
-          socket.emit("match-update", { roomCode, matchId: match.id });
+          socket.emit(event, {
+            roomCode,
+            matchId: match.id,
+            playerId: getSavedPlayerId(),
+          });
         }
       } else {
         console.log("ERRO!"); // TODO: Tratar
@@ -87,18 +91,18 @@ export default function MatchPage() {
 
   const handlePlayerChose = async (value: number) => {
     const data = { chosen: value };
-    await handleUpdate(data);
+    await handleUpdate(data, "player-chose");
   };
 
   const handlePlayerGuess = async (value: number) => {
     const data = { guess: value };
-    await handleUpdate(data);
+    await handleUpdate(data, "player-guessed");
   };
 
   const handlePlayerReveal = async () => {
     const data = { revealed: true };
     if (player?.id === match.turn) {
-      await handleUpdate(data);
+      await handleUpdate(data, "player-revealed");
     }
     playSwoosh();
   };
@@ -223,6 +227,33 @@ export default function MatchPage() {
     }
   }, [match, player, getConsoleProps]);
 
+  const winners = [
+    {
+      id: "123456",
+      name: "Jorgin",
+      role: PlayerRole.player,
+      avatar: "pepe_1.svg",
+    },
+    {
+      id: "123456",
+      name: "Jorgin",
+      role: PlayerRole.player,
+      avatar: "arnaldo_5.svg",
+    },
+    {
+      id: "123456",
+      name: "Jorgin",
+      role: PlayerRole.player,
+      avatar: "lurdes_2.svg",
+    },
+    {
+      id: "123456",
+      name: "Oerical",
+      role: PlayerRole.player,
+      avatar: "tiffany_1.svg",
+    },
+  ];
+
   return (
     <>
       <GridItem color={"white"} colSpan={[4, 6, 12]}>
@@ -337,7 +368,8 @@ export default function MatchPage() {
           <GridItem rowSpan={2} colSpan={[4, 6, 7]}>
             <PlayerGrid
               players={players}
-              winners={match.winners}
+              // winners={match.winners}
+              winners={winners}
               matchStatus={match.status}
             />
           </GridItem>
