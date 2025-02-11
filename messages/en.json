@@ -58,7 +58,6 @@
   },
   "PlayerList": {
     "current_player_tag": "you",
-    "kick_button": "Kick out",
     "empty_player": "Empty"
   },
   "Chat": {

@@ -92,15 +92,6 @@ export default function LobbyPage() {
     }
   };
 
-  const onKickPlayer = () => {
-    // Emite para o backend o evento de que o player saiu da sala
-    if (socket) {
-      socket.emit("player-left", {
-        roomCode: room?.code,
-      });
-    }
-  };
-
   return (
     <GridItem
       colSpan={[4, 6, 12, null, 10]}
@@ -151,12 +142,7 @@ export default function LobbyPage() {
             <MainBox borderTopRadius={[0]}>
               <FlexContainer
                 scrollableContent={
-                  <PlayerList
-                    players={players}
-                    maxPlayers={MAX_PLAYERS}
-                    onKickPlayer={onKickPlayer}
-                    isHost={isHost}
-                  />
+                  <PlayerList players={players} maxPlayers={MAX_PLAYERS} />
                 }
                 fixedEnd={
                   <InviteButton
@@ -208,12 +194,7 @@ export default function LobbyPage() {
                   >{`${t("players")} (${players.length}/${MAX_PLAYERS})`}</Text>
                 }
                 scrollableContent={
-                  <PlayerList
-                    players={players}
-                    maxPlayers={MAX_PLAYERS}
-                    onKickPlayer={onKickPlayer}
-                    isHost={isHost}
-                  />
+                  <PlayerList players={players} maxPlayers={MAX_PLAYERS} />
                 }
                 fixedEnd={
                   <InviteButton

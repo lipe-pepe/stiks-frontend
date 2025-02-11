@@ -58,8 +58,7 @@
   },
   "PlayerList": {
     "empty_player": "Vazio",
-    "current_player_tag": "você",
-    "kick_button": "Expulsar"
+    "current_player_tag": "você"
   },
   "Chat": {
     "input_placeholder": "Converse!",

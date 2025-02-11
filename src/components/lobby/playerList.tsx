@@ -7,36 +7,20 @@ import { useTranslations } from "next-intl";
 interface PlayerListProps {
   players: Player[];
   maxPlayers: number;
-  isHost: boolean;
-  onKickPlayer: () => void;
 }
 
 const PlayerList: React.FC<PlayerListProps> = ({
   players,
   maxPlayers,
-  isHost,
-  onKickPlayer,
 }: PlayerListProps) => {
   const t = useTranslations("PlayerList");
   return (
     <SimpleGrid w={"100%"} columns={[1, null, null, 2]}>
       {players.map((player, index) => (
-        <PlayerLobbyDisplay
-          key={index}
-          player={player}
-          isHost={isHost}
-          translations={t}
-          onKick={onKickPlayer}
-        />
+        <PlayerLobbyDisplay key={index} player={player} translations={t} />
       ))}
       {Array.from({ length: maxPlayers - players.length }, (_, index) => (
-        <PlayerLobbyDisplay
-          isHost={isHost}
-          key={index}
-          player={null}
-          translations={t}
-          onKick={onKickPlayer}
-        />
+        <PlayerLobbyDisplay key={index} player={null} translations={t} />
       ))}
     </SimpleGrid>
   );
