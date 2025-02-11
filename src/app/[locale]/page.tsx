@@ -10,12 +10,15 @@ import { useRouter } from "@/i18n/routing";
 import { useState } from "react";
 import ErrorMessage from "@/components/errorMessage";
 import SpecialButton from "@/components/specialButton";
+import useSound from "use-sound";
 
 export default function HomePage() {
   const t = useTranslations("HomePage");
   const router = useRouter();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>();
+
+  const [playError] = useSound("/sounds/error.mp3");
 
   const handleCreateRoom = async () => {
     setIsLoading(true);
@@ -25,6 +28,7 @@ export default function HomePage() {
       if (res.status === 201) {
         router.push(`/room/${res.data.room.code}/join?role=host`);
       } else {
+        playError();
         setError(t(`error.${res.data.error}`));
         setIsLoading(false);
       }

@@ -16,6 +16,7 @@ import { MdArrowBack } from "react-icons/md";
 import HeaderMenu from "./headerMenu";
 import LeaveModal from "./modals/leaveModal";
 import HowToPlayModal from "./modals/howToPlayModal";
+import useSound from "use-sound";
 
 const Header = () => {
   const t = useTranslations("Header");
@@ -23,6 +24,8 @@ const Header = () => {
 
   const leaveModal = useDisclosure();
   const howToPlayModal = useDisclosure();
+
+  const [playLeaveModal] = useSound("/sounds/attention.mp3");
 
   return (
     <Box py={4} textColor={"white"} fontWeight={"semibold"}>
@@ -33,7 +36,10 @@ const Header = () => {
         {/* BACK BUTTON */}
         <HStack
           display={pathname === "/" ? "none" : "flex"}
-          onClick={leaveModal.onOpen}
+          onClick={() => {
+            leaveModal.onOpen();
+            playLeaveModal();
+          }}
           borderRadius={[10]}
           px={[0, null, 3]}
           py={[1]}

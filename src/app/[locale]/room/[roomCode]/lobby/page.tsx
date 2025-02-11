@@ -29,6 +29,7 @@ import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { MdVideogameAsset } from "react-icons/md";
+import useSound from "use-sound";
 
 const MAX_PLAYERS = 6;
 
@@ -43,6 +44,8 @@ export default function LobbyPage() {
   const [error, setError] = useState<string>();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [playError] = useSound("/sounds/error.mp3");
 
   // Atualiza os jogadores sempre que a sala muda
   useEffect(() => {
@@ -79,6 +82,7 @@ export default function LobbyPage() {
           roomCode: room?.code,
         });
       } else {
+        playError();
         console.log(res);
         setIsLoading(false);
         setError(t(`error.${res.data.error}`));
