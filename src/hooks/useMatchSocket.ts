@@ -41,6 +41,24 @@ const useMatchSocket = (
       setChat((prevChat) => [...prevChat, newLog]);
     });
 
+    socketInstance.on("player-guessed", (match, playerId, value) => {
+      const newMatchData = getMatchJson(match);
+      setMatchData(newMatchData); // Atualiza o estado da sala
+
+      // Cria o log no chat
+      const playerName = getMatchPlayerName(
+        newMatchData.playersGameData,
+        playerId
+      );
+      const newLog: ChatLog = {
+        player: String(playerName),
+        type: "game",
+        message: "log_player_guessed",
+        value: value,
+      };
+      setChat((prevChat) => [...prevChat, newLog]);
+    });
+
     socketInstance.on("chat-message-received", (data) => {
       const newMessage: ChatMessage = {
         player: data.player,

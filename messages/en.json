@@ -64,7 +64,8 @@
   "Chat": {
     "input_placeholder": "Chat!",
     "log_player_joined": "{name} joined the room!",
-    "log_player_chose": "{name} chose their sticks!"
+    "log_player_chose": "{name} chose their sticks!",
+    "log_player_guessed": "{name} guessed {value} sticks!"
   },
   "MatchPage": {
     "round": "Round {number}",

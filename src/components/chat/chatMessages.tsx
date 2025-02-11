@@ -49,7 +49,10 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({
               color={message.type == "join" ? "green.base" : "yellow.base"}
               fontSize="sm"
             >
-              {t(message.message, { name: message.player })}
+              {t(message.message, {
+                name: message.player,
+                value: message.value,
+              })}
             </Text>
           )}
         </Flex>
