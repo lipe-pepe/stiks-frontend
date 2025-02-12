@@ -1,12 +1,12 @@
 "use client";
 
 import {
-  Box,
-  Button,
+  HStack,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
+  Text,
 } from "@chakra-ui/react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import React from "react";
@@ -48,20 +48,21 @@ const LanguageMenu: React.FC = () => {
           transition: "transform 0.2s ease-in-out, bgColor 0.2s ease-in-out", // Adiciona suavidade à animação
         }}
       >
-        <Button
-          leftIcon={
-            <Box>
-              <TfiWorld />
-            </Box>
-          }
+        <HStack
+          color={"white"}
+          fontWeight={"bold"}
+          fontFamily={"quicksand"}
           textTransform={"uppercase"}
-          size={["sm"]}
-          bgColor={["blue.base", null, "base.transparent"]}
           borderWidth={[0, null, 2]}
           borderColor={"white"}
+          bgColor={["blue.base", null, "base.transparent"]}
+          py={[1]}
+          px={[2]}
+          borderRadius={[6]}
         >
-          {locale}
-        </Button>
+          <TfiWorld />
+          <Text fontSize="sm">{locale}</Text>
+        </HStack>
       </MenuButton>
       <MenuList
         borderColor="base.dark"
