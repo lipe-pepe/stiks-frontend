@@ -5,6 +5,7 @@ import getPlayerName from "@/utils/room/getPlayerName";
 import getRoomJson from "@/utils/room/getRoomJson";
 import React, { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
+import useSound from "use-sound";
 
 const useRoomSocket = (
   roomCode: string,
@@ -13,6 +14,18 @@ const useRoomSocket = (
 ) => {
   const [socket, setSocket] = useState<Socket | null>(null);
   const router = useRouter();
+
+  const [playJoin] = useSound("/sounds/join.mp3", {
+    volume: 0.5,
+  });
+  const [shouldPlayJoin, setShouldPlayJoin] = useState(false);
+
+  useEffect(() => {
+    if (shouldPlayJoin) {
+      playJoin();
+      setShouldPlayJoin(false); // Reseta o estado
+    }
+  }, [shouldPlayJoin]);
 
   // Configurar Socket.io
   useEffect(() => {
@@ -37,6 +50,10 @@ const useRoomSocket = (
           message: "log_player_joined",
         };
         setChat((prevChat) => [...prevChat, newLog]);
+
+        // Efeito sonoro
+        // Define o estado para tocar o som
+        setShouldPlayJoin(true);
       }
     );
 
