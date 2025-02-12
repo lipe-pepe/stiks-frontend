@@ -5,12 +5,31 @@ import getMatchJson from "@/utils/match/getMatchJson";
 import getMatchPlayer from "@/utils/match/getMatchPlayer";
 import React, { useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
+import useSound from "use-sound";
 
 const useMatchSocket = (
   setChat: React.Dispatch<React.SetStateAction<ChatMessage[]>>,
   setMatchData: React.Dispatch<React.SetStateAction<Match | null>>
 ) => {
   const [socket, setSocket] = useState<Socket | null>(null);
+
+  const [playSwoosh1] = useSound("/sounds/swoosh_1.mp3");
+  const [playSwoosh2] = useSound("/sounds/swoosh_2.mp3");
+  const [playSwoosh3] = useSound("/sounds/swoosh_3.mp3");
+
+  const playSwoosh = () => {
+    const sounds = [playSwoosh1, playSwoosh2, playSwoosh3];
+    const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
+    randomSound();
+  };
+  const [shouldPlaySwoosh, setShouldPlaySwoosh] = useState(false);
+
+  useEffect(() => {
+    if (shouldPlaySwoosh) {
+      playSwoosh();
+      setShouldPlaySwoosh(false); // Reseta o estado
+    }
+  }, [shouldPlaySwoosh]);
 
   // Configurar Socket.io
   useEffect(() => {
@@ -23,6 +42,8 @@ const useMatchSocket = (
     socketInstance.on("match-update", (data) => {
       setMatchData(getMatchJson(data)); // Atualiza o estado da sala
     });
+
+    // -----------------------------------------------------------------------------------
 
     socketInstance.on("player-chose", (match, playerId) => {
       const newMatchData = getMatchJson(match);
@@ -40,7 +61,13 @@ const useMatchSocket = (
         message: "log_player_chose",
       };
       setChat((prevChat) => [...prevChat, newLog]);
+
+      // Efeito sonoro
+      // Define o estado para tocar o som
+      setShouldPlaySwoosh(true);
     });
+
+    // -----------------------------------------------------------------------------------
 
     socketInstance.on("player-guessed", (match, playerId) => {
       const newMatchData = getMatchJson(match);
@@ -57,6 +84,8 @@ const useMatchSocket = (
       setChat((prevChat) => [...prevChat, newLog]);
     });
 
+    // -----------------------------------------------------------------------------------
+
     socketInstance.on("player-revealed", (match, playerId) => {
       const newMatchData = getMatchJson(match);
       setMatchData(newMatchData); // Atualiza o estado da sala
@@ -70,7 +99,13 @@ const useMatchSocket = (
         value: player?.chosen,
       };
       setChat((prevChat) => [...prevChat, newLog]);
+
+      // Efeito sonoro
+      // Define o estado para tocar o som
+      setShouldPlaySwoosh(true);
     });
+
+    // -----------------------------------------------------------------------------------
 
     socketInstance.on("chat-message-received", (data) => {
       const newMessage: ChatMessage = {
@@ -79,6 +114,8 @@ const useMatchSocket = (
       };
       setChat((prevChat: ChatMessage[]) => [...prevChat, newMessage]);
     });
+
+    // -----------------------------------------------------------------------------------
 
     socketInstance.on("next-round", (data) => {
       setMatchData((prev) => {

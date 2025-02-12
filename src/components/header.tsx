@@ -25,7 +25,7 @@ const Header = () => {
   const leaveModal = useDisclosure();
   const howToPlayModal = useDisclosure();
 
-  const [playLeaveModal] = useSound("/sounds/attention.mp3");
+  const [playLeaveModal] = useSound("/sounds/attention.mp3", { volume: 0.5 });
 
   return (
     <Box py={4} textColor={"white"} fontWeight={"semibold"}>

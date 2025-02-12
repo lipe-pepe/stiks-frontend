@@ -32,7 +32,6 @@ import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { MdChatBubbleOutline } from "react-icons/md";
-import useSound from "use-sound";
 
 export default function MatchPage() {
   const t = useTranslations("MatchPage");
@@ -49,16 +48,6 @@ export default function MatchPage() {
   const chatModal = useDisclosure();
 
   const router = useRouter();
-
-  const [playSwoosh1] = useSound("/sounds/swoosh_1.mp3");
-  const [playSwoosh2] = useSound("/sounds/swoosh_2.mp3");
-  const [playSwoosh3] = useSound("/sounds/swoosh_3.mp3");
-
-  const playSwoosh = () => {
-    const sounds = [playSwoosh1, playSwoosh2, playSwoosh3];
-    const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
-    randomSound();
-  };
 
   useEffect(() => {
     // Reinsere o socket na sala ao recarregar a página
@@ -104,7 +93,6 @@ export default function MatchPage() {
     if (player?.id === match.turn) {
       await handleUpdate(data, "player-revealed");
     }
-    playSwoosh();
   };
 
   const handleNextRound = async () => {
