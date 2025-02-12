@@ -1,4 +1,6 @@
 import {
+  Center,
+  Image,
   ListItem,
   Modal,
   ModalBody,
@@ -33,7 +35,14 @@ const HowToPlayModal: React.FC<HowToPlayModalProps> = ({
       >
         <ModalCloseButton />
         <ModalHeader p={0} fontWeight={"bold"} fontFamily="quicksand">
-          {t("title")}
+          <Center>
+            <Image
+              width={["20%", null, "10%"]}
+              src={"/images/logo/darkLogo.svg"}
+              // src={"/images/logo/secondaryLogo.svg"}
+              alt="Stiks logo"
+            />
+          </Center>
         </ModalHeader>
         <ModalBody
           borderColor={"gray.1"}

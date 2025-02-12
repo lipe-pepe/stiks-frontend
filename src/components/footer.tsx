@@ -1,5 +1,6 @@
 import { Flex, GridItem, Text } from "@chakra-ui/react";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 const Footer = () => {
   const t = useTranslations("Footer");
@@ -24,7 +25,9 @@ const Footer = () => {
           gap={[2]}
         >
           <Text cursor={"pointer"}>{t("terms")}</Text>
-          <Text cursor={"pointer"}>{t("contact")}</Text>
+          <Link href="mailto:felipepepe21@gmail.com?subject=Contact via Stiks!">
+            {t("contact")}
+          </Link>
         </Flex>
         <Text>{t("credits")}</Text>
       </Flex>

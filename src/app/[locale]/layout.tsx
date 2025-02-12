@@ -11,6 +11,13 @@ import Footer from "@/components/footer";
 import { Box, Flex, Grid } from "@chakra-ui/react";
 import { gridGap, gridTemplateColumns } from "@/themes/gridConfig";
 
+export const metadata = {
+  title: "Stiks!",
+  icons: {
+    icon: "/favicon.png", // Define o ícone PNG
+  },
+};
+
 export default async function LocaleLayout({
   children,
   params,
