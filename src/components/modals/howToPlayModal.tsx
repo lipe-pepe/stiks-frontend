@@ -32,21 +32,23 @@ const HowToPlayModal: React.FC<HowToPlayModalProps> = ({
         gap={"1rem"}
       >
         <ModalCloseButton />
-        <ModalHeader p={0}>{t("title")}</ModalHeader>
+        <ModalHeader p={0} fontWeight={"bold"} fontFamily="quicksand">
+          {t("title")}
+        </ModalHeader>
         <ModalBody
           borderColor={"gray.1"}
           borderWidth={2}
           borderRadius={[6]}
           textColor={"black"}
           overflowY={"auto"}
-          fontSize={["sm"]}
+          fontSize={["sm", null, "md"]}
         >
           <VStack alignItems={"start"} my={[4]} gap={["2rem"]}>
-            <Text fontSize={["xl"]} fontWeight={"bold"}>
+            <Text fontWeight={"bold"} fontFamily="quicksand" fontSize={["xl"]}>
               {t("about")}
             </Text>
-            <Text>{t("about_1")}</Text>
-            <Text fontSize={["xl"]} fontWeight={"bold"}>
+            <Text fontFamily={"inter"}>{t("about_1")}</Text>
+            <Text fontSize={["xl"]} fontFamily="quicksand" fontWeight={"bold"}>
               {t("how_to_play")}
             </Text>
             <UnorderedList spacing={[8]}>
@@ -58,6 +60,7 @@ const HowToPlayModal: React.FC<HowToPlayModalProps> = ({
               <ListItem>{t("how_to_2_6")}</ListItem>
               <ListItem>{t("how_to_2_7")}</ListItem>
               <ListItem>{t("how_to_2_8")}</ListItem>
+              <ListItem>{t("how_to_2_9")}</ListItem>
             </UnorderedList>
           </VStack>
         </ModalBody>
