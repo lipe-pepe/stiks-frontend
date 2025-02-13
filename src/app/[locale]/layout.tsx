@@ -49,11 +49,13 @@ export default async function LocaleLayout({
         <NextIntlClientProvider messages={messages}>
           <Providers>
             <Box
+              minH={"100vh"}
+              h="100%"
               w="100vw"
-              h="100vh"
-              position="fixed" // Fixa o background
               zIndex="-1" // Coloca o fundo atrás do conteúdo
               bgGradient="linear(to-tl, background.light, background.base, background.dark)" // Fundo gradiente, base do Background
+              backgroundPosition="center"
+              backgroundAttachment={"fixed"}
             >
               <Flex
                 w="100%"
@@ -62,6 +64,7 @@ export default async function LocaleLayout({
                 backgroundImage="url('/images/bg_pattern.png')"
                 backgroundSize="cover" // Ajusta a imagem para cobrir todo o Box
                 backgroundPosition="center" // Centraliza a imagem
+                backgroundAttachment={"fixed"}
                 backgroundRepeat="no-repeat" // Evita a repetição da imagem
                 px={pagePadding}
                 flexDir="column"
