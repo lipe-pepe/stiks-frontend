@@ -34,7 +34,6 @@ const MainBox: React.FC<MainBoxProps> = ({
       pb={pb || ["1rem"]}
       pl={pl || ["1rem"]}
       pr={pr || ["1rem"]}
-      maxH={"70vh"}
       height={height || "100%"} // Certifica que o MainBox usa toda a altura disponível
       overflow="hidden" // Impede que qualquer conteúdo saia do MainBox
     >
