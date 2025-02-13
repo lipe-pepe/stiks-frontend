@@ -215,33 +215,6 @@ export default function MatchPage() {
     }
   }, [match, player, getConsoleProps]);
 
-  const winners = [
-    {
-      id: "123456",
-      name: "Jorgin",
-      role: PlayerRole.player,
-      avatar: "pepe_1.svg",
-    },
-    {
-      id: "123456",
-      name: "Jorgin",
-      role: PlayerRole.player,
-      avatar: "arnaldo_5.svg",
-    },
-    {
-      id: "123456",
-      name: "Jorgin",
-      role: PlayerRole.player,
-      avatar: "lurdes_2.svg",
-    },
-    {
-      id: "123456",
-      name: "Oerical",
-      role: PlayerRole.player,
-      avatar: "tiffany_1.svg",
-    },
-  ];
-
   return (
     <>
       <GridItem color={"white"} colSpan={[4, 6, 12]}>
@@ -319,6 +292,7 @@ export default function MatchPage() {
             colSpan={5}
             rowSpan={1}
             rowStart={2}
+            maxH={"30vh"}
           >
             <Box
               p={"1rem"}
@@ -356,8 +330,7 @@ export default function MatchPage() {
           <GridItem rowSpan={2} colSpan={[4, 6, 7]}>
             <PlayerGrid
               players={players}
-              // winners={match.winners}
-              winners={winners}
+              winners={match.winners}
               matchStatus={match.status}
             />
           </GridItem>
