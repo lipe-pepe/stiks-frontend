@@ -2,7 +2,10 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin();
 
-/** @type {import('next').NextConfig} */
+// Certifique-se de que a variável de ambiente está definida
+const backendUrl =
+  process.env.NEXT_PUBLIC_BACKEND_HOST || "http://localhost:3030";
+
 const nextConfig = {
   reactStrictMode: false,
   experimental: {
@@ -11,8 +14,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: "/api/:path*", // Endpoint local no Next.js
-        destination: "http://localhost:3030/:path*", // URL do backend
+        source: "/api/:path*",
+        destination: `${backendUrl}/:path*`,
       },
     ];
   },
