@@ -129,7 +129,6 @@ const useMatchSocket = (
             total: p.id === data.winnerId ? p.total - 1 : p.total,
           };
         });
-        const winners = updatedPlayers.filter((p) => p.total == 0);
         const remainingPlayers = updatedPlayers.filter((p) => p.total != 0);
 
         // Pula 2 jogadores para a próxima vez
@@ -150,7 +149,6 @@ const useMatchSocket = (
             remainingPlayers.length > 1
               ? MatchStatus.choosing
               : MatchStatus.end,
-          winners: winners,
         };
       });
     });

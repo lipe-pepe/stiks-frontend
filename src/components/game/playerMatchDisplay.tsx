@@ -13,6 +13,7 @@ import {
 import { useTranslations } from "next-intl";
 import NumberCircle from "../numberCircle";
 import Hand from "./hand";
+import { useEffect, useState } from "react";
 
 interface PlayerMatchDisplayProps {
   player: PlayerGameData;
@@ -27,6 +28,7 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
 }: PlayerMatchDisplayProps) => {
   const id = getSavedPlayerId();
   const t = useTranslations("PlayerDisplay");
+  const [winner, setWinner] = useState<boolean>(false);
 
   const getStatusText = () => {
     if (player.chosen == null) {
@@ -44,6 +46,12 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
     xl: true,
     "2xl": true,
   });
+
+  useEffect(() => {
+    setWinner(player.position !== null);
+  }, [player]);
+
+  const medals = ["🥇", "🥈", "🥉"];
 
   return (
     <SimpleGrid spacing={["1rem"]} columns={[3, null, 1]} alignItems={"center"}>
@@ -66,23 +74,25 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
           src={`/images/avatars/${player.avatar}`}
           alt={`Player ${player.name} avatar`}
         />
-        <Box
-          pos={"absolute"}
-          bottom={0}
-          left={[0, null, "50%"]}
-          transform={[null, null, "translate(-200%, 0)"]}
-        >
-          <NumberCircle
-            number={player.total}
-            size={["2rem"]}
-            color={"white"}
-            bgColor={"base.dark"}
-            onClick={() => {}}
-            borderColor="black"
-            borderWidth={[2, 2, 2, 3]}
-            hoverBgColor="base.dark"
-          />
-        </Box>
+        {!winner && (
+          <Box
+            pos={"absolute"}
+            bottom={0}
+            left={[0, null, "50%"]}
+            transform={[null, null, "translate(-200%, 0)"]}
+          >
+            <NumberCircle
+              number={player.total}
+              size={["2rem"]}
+              color={"white"}
+              bgColor={"base.dark"}
+              onClick={() => {}}
+              borderColor="black"
+              borderWidth={[2, 2, 2, 3]}
+              hoverBgColor="base.dark"
+            />
+          </Box>
+        )}
         {player.guess != null && matchStatus != MatchStatus.end && (
           <Box
             pos={"absolute"}
@@ -115,6 +125,11 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
         textAlign={["start", null, "center"]}
       >
         <HStack flexWrap={"wrap"}>
+          {winner && player.position && player.position <= medals.length && (
+            <Text fontSize={["lg", null, "xl"]}>
+              {medals[player.position - 1]}
+            </Text>
+          )}
           <Text
             fontStyle={"italic"}
             fontWeight={700}
@@ -134,7 +149,7 @@ const PlayerMatchDisplay: React.FC<PlayerMatchDisplayProps> = ({
             </Text>
           )}
         </HStack>
-        {matchStatus != MatchStatus.end && (
+        {!winner && (
           <Text
             fontFamily={"inter"}
             fontWeight={"normal"}

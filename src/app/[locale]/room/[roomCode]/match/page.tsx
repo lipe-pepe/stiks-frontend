@@ -49,6 +49,10 @@ export default function MatchPage() {
 
   const router = useRouter();
 
+  // useEffect(() => {
+  //   console.log("Match: ", match);
+  // }, [match]);
+
   useEffect(() => {
     // Reinsere o socket na sala ao recarregar a página
     if (socket) {
@@ -190,7 +194,6 @@ export default function MatchPage() {
     }
 
     if (match.status === MatchStatus.end) {
-      props.subtext = t("winner", { name: match.winners[0].name });
       props.text = t("loser", { name: match.playersGameData[0].name });
       props.buttonText = t("lobby_button");
       props.onButtonClick = handleBackToLobby;
@@ -328,11 +331,7 @@ export default function MatchPage() {
           </GridItem>
           {/* PLAYERS */}
           <GridItem rowSpan={2} colSpan={[4, 6, 7]}>
-            <PlayerGrid
-              players={players}
-              winners={match.winners}
-              matchStatus={match.status}
-            />
+            <PlayerGrid players={players} matchStatus={match.status} />
           </GridItem>
         </Grid>
       </GridItem>
