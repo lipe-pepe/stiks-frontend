@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import NumberCircle from "../numberCircle";
 import SpecialButton from "../specialButton";
 import useSound from "use-sound";
+import ErrorMessage from "../errorMessage";
 
 interface ConsoleProps {
   text: string;
@@ -44,15 +45,32 @@ const Console: React.FC<ConsoleProps> = ({
 
   const [playClick1] = useSound("/sounds/click_1.mp3");
 
-  const { handleSubmit, setValue, watch, resetField } = useForm<{
+  const {
+    handleSubmit,
+    setValue,
+    watch,
+    resetField,
+    formState: { errors },
+    setError,
+    clearErrors,
+  } = useForm<{
     value: number;
   }>();
   const value = watch("value");
 
   const onSubmit = handleSubmit(async (data) => {
-    if (onFormSubmit != null) {
-      resetField("value");
-      onFormSubmit(data.value);
+    // Seta um erro se não tiver valor selecionado
+    if (data.value == null) {
+      setError("value", {
+        type: "custom",
+        message: t("undefined_value_error"),
+      });
+    } else {
+      // Envia o valor
+      if (onFormSubmit != null) {
+        resetField("value");
+        onFormSubmit(data.value);
+      }
     }
   });
 
@@ -106,12 +124,19 @@ const Console: React.FC<ConsoleProps> = ({
                     bgColor={value === opt ? "blue.base" : "gray.1"}
                     onClick={() => {
                       setValue("value", opt);
+                      clearErrors("value"); // Limpa os erros antes de enviar
                       playClick1();
                     }}
                     cursor="pointer"
                   />
                 ))}
               </Flex>
+              {errors.value && (
+                <ErrorMessage
+                  message={String(errors.value.message)}
+                  color="red.base"
+                />
+              )}
               <SpecialButton
                 text={t("confirm_button")}
                 type="submit"

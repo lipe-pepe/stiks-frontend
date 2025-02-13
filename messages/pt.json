@@ -91,7 +91,8 @@
   },
   "Console": {
     "confirm_button": "Confirmar",
-    "total": "Total"
+    "total": "Total",
+    "undefined_value_error": "Selecione um valor!"
   },
   "PlayerDisplay": {
     "choosing": "escolhendo...",
