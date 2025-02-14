@@ -45,6 +45,7 @@ export default function MatchPage() {
   const [winnerId, setWinnerId] = useState<string>();
 
   const [playGuessRight] = useSound("/sounds/guess_right.mp3", { volume: 0.6 });
+  const [playGuessWrong] = useSound("/sounds/guess_wrong.mp3");
 
   const savedId = getSavedPlayerId();
 
@@ -58,10 +59,15 @@ export default function MatchPage() {
   }, [endModal, match]);
 
   useEffect(() => {
-    if (winnerId === savedId) {
-      playGuessRight();
+    if (match.status === MatchStatus.results) {
+      if (winnerId === savedId) {
+        playGuessRight();
+      } else {
+        playGuessWrong();
+      }
     }
-  }, [winnerId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [winnerId, match]);
 
   // useEffect(() => {
   //   console.log("Match: ", match);

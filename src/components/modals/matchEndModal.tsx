@@ -37,6 +37,7 @@ const MatchEndModal: React.FC<MatchEndProps> = ({
   const [playLose] = useSound("/sounds/lose.mp3");
   const [playWin] = useSound("/sounds/win.mp3");
   const [playEnd] = useSound("/sounds/lose.mp3");
+  const [hasPlayed, setHasPlayed] = useState<boolean>(false);
 
   const playSound = () => {
     if (player?.position === 1) {
@@ -46,6 +47,7 @@ const MatchEndModal: React.FC<MatchEndProps> = ({
     } else {
       playEnd();
     }
+    setHasPlayed(true);
   };
 
   // Atualiza o player
@@ -55,11 +57,11 @@ const MatchEndModal: React.FC<MatchEndProps> = ({
 
   // Efeito sonoro
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && !hasPlayed) {
       playSound();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [player, isOpen]);
+  }, [player, isOpen, hasPlayed]);
 
   const getTitle = () => {
     if (player?.position === 1) {
@@ -121,12 +123,8 @@ const MatchEndModal: React.FC<MatchEndProps> = ({
           </Text>
           <SimpleGrid
             columns={[1, null, 2]}
-            borderWidth={[2, null, 3]}
-            borderColor={"gray.1"}
-            borderRadius={[10, null, 12]}
             width={"100%"}
-            p={[4]}
-            gap={[4, null, 6]}
+            gap={[2]}
             mb={[2, null, 4]}
           >
             {playersGameData.map((p, index) => (
@@ -135,14 +133,18 @@ const MatchEndModal: React.FC<MatchEndProps> = ({
                 w="100%"
                 fontWeight={"semibold"}
                 fontSize={["md", null, "lg"]}
+                borderWidth={[2, null, 3]}
+                borderColor={"gray.1"}
+                borderRadius={[10, null, 12]}
+                p={[4]}
               >
                 <Text>{index + 1}.</Text>
+                <Text>{getIcon(index + 1)}</Text>
                 <Image
                   boxSize={[16, null, 24]}
                   src={`/images/avatars/${p.avatar}`}
                   alt={`Player ${p.name} avatar`}
                 />
-                <Text>{getIcon(index + 1)}</Text>
                 <Text fontStyle={"italic"} fontWeight={700}>
                   {p.name}
                 </Text>
