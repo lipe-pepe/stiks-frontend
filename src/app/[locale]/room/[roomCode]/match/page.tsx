@@ -220,7 +220,7 @@ export default function MatchPage() {
     }
 
     return props;
-  }, [match, player, t, winnerId]); // Dependências necessárias
+  }, [match, player, t, winnerId, formLoading]); // Dependências necessárias
 
   const [gameConsole, setConsole] = useState<ConsoleProps>();
 
