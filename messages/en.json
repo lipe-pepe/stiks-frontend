@@ -85,9 +85,14 @@
     "wait_instruction": "Waiting for the other players",
     "next_round": "Next round",
     "waiting_host": "Wait for the host to continue",
-    "winner": "🏆 {name} won",
-    "loser": "💩 {name} lost!",
-    "lobby_button": "Back to lobby"
+    "end": "Game over!"
+  },
+  "MatchEndModal": {
+    "you_won": "🏆 You won!",
+    "player_lost": "💩 {name} lost!",
+    "you_lost": "💩 You lost!",
+    "lobby_button": "Back to lobby",
+    "ranking": "Ranking"
   },
   "Console": {
     "confirm_button": "Confirm",

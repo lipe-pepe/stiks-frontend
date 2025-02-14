@@ -22,8 +22,6 @@ interface ConsoleProps {
   isHost: boolean;
   hostButtonText?: string;
   onHostButtonClick?: () => void;
-  buttonText?: string;
-  onButtonClick?: () => void;
 }
 
 const Console: React.FC<ConsoleProps> = ({
@@ -38,8 +36,6 @@ const Console: React.FC<ConsoleProps> = ({
   isHost,
   hostButtonText,
   onHostButtonClick,
-  buttonText,
-  onButtonClick,
 }: ConsoleProps) => {
   const t = useTranslations("Console");
 
@@ -157,9 +153,6 @@ const Console: React.FC<ConsoleProps> = ({
         </Text>
         {isHost && hostButtonText != null && onHostButtonClick != null && (
           <SpecialButton onClick={onHostButtonClick} text={hostButtonText} />
-        )}
-        {buttonText != null && onButtonClick != null && (
-          <SpecialButton onClick={onButtonClick} text={buttonText} />
         )}
       </VStack>
     </VStack>

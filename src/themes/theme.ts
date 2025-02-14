@@ -60,7 +60,6 @@ const colors = {
   },
 };
 
-// Font sizes adjusted for different font families
 const fontSizes = {
   xs: "12px",
   sm: "14px",

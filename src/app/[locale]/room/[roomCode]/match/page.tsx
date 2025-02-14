@@ -5,8 +5,8 @@ import ChatMessages from "@/components/chat/chatMessages";
 import FlexContainer from "@/components/flexContainer";
 import Console, { ConsoleProps } from "@/components/game/console";
 import PlayerGrid from "@/components/game/playerGrid";
+import MatchEndModal from "@/components/modals/matchEndModal";
 import { useMatchContext } from "@/context/matchContext";
-import { useRouter } from "@/i18n/routing";
 import updateMatch from "@/services/matches/updateMatch";
 import updateMatchPlayerData from "@/services/matches/updateMatchPlayerData";
 import { gridGap, gridTemplateColumns } from "@/themes/gridConfig";
@@ -32,6 +32,7 @@ import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { MdChatBubbleOutline } from "react-icons/md";
+import useSound from "use-sound";
 
 export default function MatchPage() {
   const t = useTranslations("MatchPage");
@@ -43,11 +44,24 @@ export default function MatchPage() {
   const [player, setPlayer] = useState<PlayerGameData>();
   const [winnerId, setWinnerId] = useState<string>();
 
+  const [playGuessRight] = useSound("/sounds/guess_right.mp3", { volume: 0.6 });
+
   const savedId = getSavedPlayerId();
 
   const chatModal = useDisclosure();
+  const endModal = useDisclosure();
 
-  const router = useRouter();
+  useEffect(() => {
+    if (match.status === MatchStatus.end && !endModal.isOpen) {
+      endModal.onOpen();
+    }
+  }, [endModal, match]);
+
+  useEffect(() => {
+    if (winnerId === savedId) {
+      playGuessRight();
+    }
+  }, [winnerId]);
 
   // useEffect(() => {
   //   console.log("Match: ", match);
@@ -112,10 +126,6 @@ export default function MatchPage() {
     } catch (error) {
       console.log(error); // TODO: Tratar esse erro
     }
-  };
-
-  const handleBackToLobby = () => {
-    router.push(`/room/${roomCode}/lobby`);
   };
 
   // useCallback memoriza a função getConsoleProps e só a recria se as dependências listadas no array (segundo argumento) mudarem.
@@ -194,9 +204,7 @@ export default function MatchPage() {
     }
 
     if (match.status === MatchStatus.end) {
-      props.text = t("loser", { name: match.playersGameData[0].name });
-      props.buttonText = t("lobby_button");
-      props.onButtonClick = handleBackToLobby;
+      props.text = t("end");
     }
 
     return props;
@@ -284,8 +292,6 @@ export default function MatchPage() {
                 isHost={gameConsole.isHost}
                 onHostButtonClick={gameConsole.onHostButtonClick}
                 hostButtonText={gameConsole.hostButtonText}
-                buttonText={gameConsole.buttonText}
-                onButtonClick={gameConsole.onButtonClick}
               />
             )}
           </GridItem>
@@ -371,6 +377,11 @@ export default function MatchPage() {
           </Box>
         </ModalContent>
       </Modal>
+      <MatchEndModal
+        isOpen={endModal.isOpen}
+        onClose={endModal.onClose}
+        playersGameData={players}
+      />
     </>
   );
 }

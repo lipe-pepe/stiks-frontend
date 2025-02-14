@@ -84,10 +84,15 @@
     "lose_stick": "Perde um palitinho",
     "next_round": "Próxima rodada",
     "player_won": "{name} acertou!",
-    "winner": "🏆 {name} ganhou",
-    "loser": "💩 {name} perdeu!",
     "waiting_host": "Aguarde o host continuar a partida",
-    "lobby_button": "Voltar para o lobby"
+    "end": "Fim do jogo!"
+  },
+  "MatchEndModal": {
+    "you_won": "🏆 Você ganhou!",
+    "player_lost": "{name} perdeu!",
+    "you_lost": "💩 Você perdeu!",
+    "lobby_button": "Voltar ao lobby",
+    "ranking": "Ranking"
   },
   "Console": {
     "confirm_button": "Confirmar",
