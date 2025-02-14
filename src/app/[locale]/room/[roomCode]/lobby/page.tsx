@@ -83,7 +83,6 @@ export default function LobbyPage() {
         });
       } else {
         playError();
-        console.log(res);
         setIsLoading(false);
         setError(t(`error.${res.data.error}`));
       }

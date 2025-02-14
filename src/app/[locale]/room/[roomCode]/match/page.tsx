@@ -71,10 +71,6 @@ export default function MatchPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [winnerId, match]);
 
-  // useEffect(() => {
-  //   console.log("Match: ", match);
-  // }, [match]);
-
   useEffect(() => {
     // Reinsere o socket na sala ao recarregar a página
     if (socket) {

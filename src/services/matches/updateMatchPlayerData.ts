@@ -18,8 +18,6 @@ async function updateMatchPlayerData(
     body: JSON.stringify({ update }),
   });
 
-  console.log(response);
-
   return {
     status: response.status,
     data: await response.json(),
