@@ -52,6 +52,8 @@ export default function MatchPage() {
   const chatModal = useDisclosure();
   const endModal = useDisclosure();
 
+  const [formLoading, setFormLoading] = useState<boolean>(false);
+
   useEffect(() => {
     if (match.status === MatchStatus.end && !endModal.isOpen) {
       endModal.onOpen();
@@ -84,6 +86,7 @@ export default function MatchPage() {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleUpdate = async (data: any, event: string) => {
+    setFormLoading(true);
     try {
       const res = await updateMatchPlayerData(match.id, String(savedId), data);
       if (res.status === 200) {
@@ -97,6 +100,7 @@ export default function MatchPage() {
       } else {
         console.log("ERRO!"); // TODO: Tratar
       }
+      setFormLoading(false);
     } catch (error) {
       console.log(error); // TODO: Tratar esse erro
     }
@@ -149,6 +153,7 @@ export default function MatchPage() {
       );
       props.hasForm = true;
       props.onFormSubmit = handlePlayerChose;
+      props.formLoading = formLoading;
       props.timerSeconds = 20;
       props.onTimerEnd = () =>
         handlePlayerChose(
@@ -167,6 +172,7 @@ export default function MatchPage() {
       props.formOptions = getAvailableGuesses(match.playersGameData);
       props.hasForm = true;
       props.onFormSubmit = handlePlayerGuess;
+      props.formLoading = formLoading;
       props.timerSeconds = 20;
       props.timerHasSound = true;
       props.onTimerEnd = () =>
@@ -295,6 +301,7 @@ export default function MatchPage() {
                 hasForm={gameConsole.hasForm}
                 onFormSubmit={gameConsole.onFormSubmit}
                 formOptions={gameConsole.formOptions}
+                formLoading={gameConsole.formLoading}
                 isHost={gameConsole.isHost}
                 onHostButtonClick={gameConsole.onHostButtonClick}
                 hostButtonText={gameConsole.hostButtonText}

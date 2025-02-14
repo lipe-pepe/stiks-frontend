@@ -19,6 +19,7 @@ interface ConsoleProps {
   hasForm?: boolean;
   onFormSubmit?: (data: number) => void;
   formOptions?: number[];
+  formLoading?: boolean;
   isHost: boolean;
   hostButtonText?: string;
   onHostButtonClick?: () => void;
@@ -33,6 +34,7 @@ const Console: React.FC<ConsoleProps> = ({
   hasForm,
   onFormSubmit,
   formOptions,
+  formLoading = false,
   isHost,
   hostButtonText,
   onHostButtonClick,
@@ -134,6 +136,7 @@ const Console: React.FC<ConsoleProps> = ({
                 />
               )}
               <SpecialButton
+                isLoading={formLoading}
                 text={t("confirm_button")}
                 type="submit"
                 size={"md"}
