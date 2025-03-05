@@ -190,7 +190,7 @@ export default function MatchPage() {
             : getPlayerName(match.playersGameData, match.turn),
       });
       props.hasForm = false;
-      props.timerSeconds = 5;
+      props.timerSeconds = 3;
       props.timerHasSound = false;
       props.onTimerEnd = handlePlayerReveal;
     }
